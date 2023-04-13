@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      <div className="app">
+      <div className="">
         <h1>Fullstack Boilerplate - with Fruits!</h1>
         <ul>
           {fruits.map((fruit) => (
