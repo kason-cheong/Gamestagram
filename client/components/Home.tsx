@@ -1,3 +1,6 @@
+import EventCard from './EventCard'
+import GameCard from './GamesCard'
+
 function Home() {
   return (
     <main className="container mx-auto">
@@ -6,38 +9,21 @@ function Home() {
       </h2>
 
       <section className="flex flex-wrap">
-        <ul>
-          <li>
-            <img src="" alt="" /> <br />
-            eventname:dreamfest <br />
-            Board game:monopoly <br />
-            location: dev Academy <br />
-            Time: 9:00-3:00
-          </li>
+        <EventCard />
+        <EventCard />
+        <EventCard />
+        <EventCard />
+      </section>
 
-          <li>
-            <img src="" alt="" /> <br />
-            eventname:dreamfest <br />
-            Board game:monopoly <br />
-            location: dev Academy <br />
-            Time: 9:00-3:00
-          </li>
+      <h2 className="mt-5 mb-5 font-sans text-2xl font-bold text-center md:text-left">
+        Popular Games
+      </h2>
 
-          <li>
-            <img src="" alt="" /> <br />
-            eventname:dreamfest <br />
-            Board game:monopoly <br />
-            location: dev Academy <br />
-            Time: 9:00-3:00
-          </li>
-          <li>
-            <img src="" alt="" /> <br />
-            eventname:dreamfest <br />
-            Board game:monopoly <br />
-            location: dev Academy <br />
-            Time: 9:00-3:00
-          </li>
-        </ul>
+      <section className="flex flex-wrap">
+        <GameCard />
+        <GameCard />
+        <GameCard />
+        <GameCard />
       </section>
     </main>
   )
