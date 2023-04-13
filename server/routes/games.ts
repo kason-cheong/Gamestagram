@@ -1,13 +1,13 @@
 import express from 'express'
 
-import * as db from '../db/users'
+import * as db from '../db/games'
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  db.getFruits()
+  db.getGames()
     .then((results) => {
-      res.json({ fruits: results.map((fruit) => fruit.name) })
+      res.json(results)
     })
     .catch((err) => {
       console.log(err)
