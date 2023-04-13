@@ -15,4 +15,15 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+  db.getUsersById(Number(req.params.id))
+    .then((results) => {
+      res.json(results)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json({ message: 'Something went wrong' })
+    })
+})
+
 export default router
