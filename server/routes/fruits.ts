@@ -1,6 +1,6 @@
 import express from 'express'
 
-import * as db from '../db/fruits'
+import * as db from '../db/users'
 
 const router = express.Router()
 

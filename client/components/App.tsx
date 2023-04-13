@@ -1,19 +1,18 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import { fetchFruits } from '../slices/fruits'
-import Home from './Home'
+// import { fetchFruits } from '../slices/fruits'
 
 function App() {
   const fruits = useAppSelector((state) => state.fruits)
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    dispatch(fetchFruits())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(fetchFruits())
+  // }, [dispatch])
 
   return (
     <>
-      <div className="bg-pink">
+      <div className="bg-red-500">
         <h1>Fullstack Boilerplate - with Fruits!</h1>
         <ul>
           {fruits.map((fruit) => (
