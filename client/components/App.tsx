@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { fetchFruits } from '../slices/fruits'
+import Home from './Home'
 
 function App() {
   const fruits = useAppSelector((state) => state.fruits)
@@ -19,6 +20,7 @@ function App() {
             <li key={fruit}>{fruit}</li>
           ))}
         </ul>
+        <Home />
       </div>
     </>
   )
