@@ -9,7 +9,7 @@ export default function Nav() {
             <NavLink to="/" className="text-2xl font-bold text-gray-800">
               <img
                 className="rounded-full w-20 h-20"
-                src="https://w7.pngwing.com/pngs/647/116/png-transparent-yahtzee-starcraft-the-board-game-dixit-games-game-text-logo.png"
+                src="./pics/temporary-logo.png"
                 alt="website logo"
               ></img>
             </NavLink>
