@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      <div className="">
+      <div className="bg-pink">
         <h1>Fullstack Boilerplate - with Fruits!</h1>
         <ul>
           {fruits.map((fruit) => (
