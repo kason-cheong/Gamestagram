@@ -16,16 +16,10 @@ function EventDetail() {
   )
 
   fetchEvent()
-  
-  // {`${event.gamePhoto}`}
-  // https://s3-us-west-1.amazonaws.com/5cc.images/games/uploaded/1540147295104
-  return (
+ return (
     <>
       <div className="border-black">
-        <img
-          src={`${event.gamePhoto}`}
-          alt=""
-        />
+        <img src={`${event.gamePhoto}`} alt="" />
       </div>
       <div className="flex">
         {event.users.map((user) => {
