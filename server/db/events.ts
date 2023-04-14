@@ -1,47 +1,56 @@
 import connection from './connection'
 import type { Event } from '../../models/Event'
-import { formatEventList } from '../public/formatter'
+import { formatEvent, formatEventList } from '../public/formatter'
+import { FormattedEventWithUser } from '../../models/Event'
 
 export function getEvents(db = connection): Promise<FormattedEventWithUser[]> {
   return db('user_event')
     .join('events', 'user_event.event_id', 'events.id')
-    .join('user', 'user_event.user_id', 'user.id')
+    .join('users', 'user_event.user_id', 'users.id')
+    .join('games', 'events.game_id', 'games.id')
     .select(
       'events.id as eventId',
       'events.host_id as hostId',
       'users.id as userId',
-      'users.name as userName',
+      'users.user_name as userName',
       'games.id as gameId',
-      'game_name as gameName',
+      'games.name as gameName',
       'games.photo_url as gamePhoto',
-      'events.name as eventName',
+      'events.event_name as eventName',
       'events.number_ppl_playing as numberOfPeople',
       'events.created_at as createdAt',
       'time',
       'location',
-      'description',
+      'events.description as description',
       'users.photo_url as photoUrl'
     )
     .then((orderLines) => formatEventList(orderLines))
 }
 
-export interface FormattedEventWithUser {
-  eventId: number
-  hostId: number
-  eventName: string
-  gameId: number
-  location: string
-  time: string
-  description: string
-  numberOfPeople: number
-  createdAt: string
-  gameName: string
-  gamePhoto: string
-  users: EventUser[]
-}
-
-export function getEventsById(id: number, db = connection): Promise<Event[]> {
-  return db('events').select().where('id', id)
+export function getEventsById(id: number, db = connection) {
+  // ): Promise<FormattedEventWithUser>
+  return db('user_event')
+    .join('events', 'user_event.event_id', 'events.id')
+    .join('users', 'user_event.user_id', 'users.id')
+    .join('games', 'events.game_id', 'games.id')
+    .select(
+      'events.id as eventId',
+      'events.host_id as hostId',
+      'users.id as userId',
+      'users.user_name as userName',
+      'games.id as gameId',
+      'games.name as gameName',
+      'games.photo_url as gamePhoto',
+      'events.event_name as eventName',
+      'events.number_ppl_playing as numberOfPeople',
+      'events.created_at as createdAt',
+      'time',
+      'location',
+      'events.description as description',
+      'users.photo_url as photoUrl'
+    )
+    .where('events.id', id)
+    .then(formatEvent)
 }
 
 export function addEvent(data: Event, db = connection): Promise<Event[]> {
