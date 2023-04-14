@@ -10,9 +10,7 @@ function Home() {
     shallow
   )
 
-  useEffect(() => {
-    fetchEvents()
-  }, [])
+  fetchEvents()
 
   return (
     <main className="container mx-auto">
@@ -20,7 +18,7 @@ function Home() {
         Events
       </h2>
 
-      <section className="flex flex-wrap">
+      <section className="flex">
         {events.map((event) => (
           <EventCard key={event.eventId} event={event} />
         ))}
