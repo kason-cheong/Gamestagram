@@ -38,3 +38,9 @@ export interface FormattedEventWithUser {
   gamePhoto: string
   users: EventUser[]
 }
+
+export interface UserEventDB{
+  user_id:number
+  event_id:number
+  created_at:Date
+} 
