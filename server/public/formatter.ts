@@ -1,4 +1,4 @@
-import { EventUser, Event } from '../../models/Event'
+import { Event, FormattedEventWithUser } from '../../models/Event'
 
 export function createEvent(eventLine: Event) {
   return {
@@ -15,21 +15,6 @@ export function createEvent(eventLine: Event) {
     gamePhoto: eventLine.gamePhoto,
     users: [createUser(eventLine)],
   }
-}
-
-export interface FormattedEventWithUser {
-  id: number
-  hostId: number
-  eventName: string
-  gameId: number
-  location: string
-  time: string
-  description: string
-  numberOfPeople: number
-  createdAt: string
-  gameName: string
-  gamePhoto: string
-  users: EventUser[]
 }
 
 export function createUser(eventLine: Event) {
