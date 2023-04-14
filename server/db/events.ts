@@ -18,3 +18,17 @@ export function getEvents(db = connection): Promise<Event[]> {
 export function getEventsById(id: number, db = connection): Promise<Event[]> {
   return db('events').select().where('id', id)
 }
+
+export function addEvent(data: Event, db = connection): Promise<Event[]> {
+  const timestamp = new Date(Date.now())
+  const newData = { ...data, created_at: timestamp }
+  return db('events').insert(newData)
+}
+
+export function editEvent(
+  id: number,
+  data: Event,
+  db = connection
+): Promise<Event[]> {
+  return db('events').update(data).where('id', id).returning('*')
+}
