@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import { Provider } from 'react-redux'
-import store from './store'
+
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Auth0Provider } from '@auth0/auth0-react'
 
@@ -20,5 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <App />
       </Router>
     </Auth0Provider>
+
   )
 })
