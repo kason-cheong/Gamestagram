@@ -1,14 +1,41 @@
-import React from 'react'
-import { Event } from '../../models/Event'
-import { useEventsStore } from '../store/userEventsStore'
+import { useEventStore } from '../store/useEventStore'
+
 import { shallow } from 'zustand/shallow'
 import { useEffect } from 'react'
 
-function EventDetail(event: Event) {
+import { useParams } from 'react-router-dom'
+
+function EventDetail() {
+  const { id } = useParams()
+  const { event } = useEventStore(
+    (state) => ({
+      event: state.event,
+      fetchEvent: () => state.fetchEvent(Number(id)),
+    }),
+    shallow
+  )
+
+  // {`${event.gamePhoto}`}
+  // https://s3-us-west-1.amazonaws.com/5cc.images/games/uploaded/1540147295104
   return (
     <>
       <div className="border-black">
-        <img src={`${event.photoUrl}`} alt="" />
+        <img
+          src="https://s3-us-west-1.amazonaws.com/5cc.images/games/uploaded/1540147295104"
+          alt=""
+        />
+      </div>
+      <div className="flex">
+        {event.users.map((user) => {
+          return (
+            <img
+              className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+              key={user.name}
+              src={`${user.photoUrl}`}
+              alt={`${user.name}`}
+            />
+          )
+        })}
       </div>
       <div className="border-black">
         <ul>

@@ -1,15 +1,22 @@
 import request from 'superagent'
-import { EventDB, Event } from '../../models/Event'
+import { EventDB, Event,FormattedEventWithUser } from '../../models/Event'
 
 const rootUrlEvents = '/api/v1/events'
 
 
 export async function  getEvents() {
   const res = await request.get(rootUrlEvents)
- console.log(res.body)
- return res.body as Promise<Event[]>
+ 
+ return res.body as Promise<FormattedEventWithUser[]>
 
   }
+
+export async function getEventById(id:number){
+  const res = await request.get(`${rootUrlEvents}/${id}`)
+
+  
+  return res.body as Promise<FormattedEventWithUser>
+}
 
 
 export async function addEvents(event:EventDB) {

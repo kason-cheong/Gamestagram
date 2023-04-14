@@ -1,8 +1,8 @@
 import React from 'react'
-import type { Event } from '../../models/Event'
+import type { Event, FormattedEventWithUser } from '../../models/Event'
 import { Link } from 'react-router-dom'
 
-function EventCard({ event }: { event: Event }) {
+function EventCard({ event }: { event: FormattedEventWithUser }) {
   return (
     <Link to={`/events/${event.eventId}`}>
       <section className=" bg-slate-200 w-1/5 rounded-2xl shadow-2xl shadow-slate-400 ml-12">
