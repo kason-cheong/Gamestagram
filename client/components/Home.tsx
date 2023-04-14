@@ -1,16 +1,23 @@
 import EventCard from './EventCard'
-import GameCard from './GamesCard'
+import GameCard from './GameCard'
 import { useEventsStore } from '../store/useEventsStore'
+import { useGameStore } from '../store/useGameStore'
 import { shallow } from 'zustand/shallow'
-import { useEffect } from 'react'
 
 function Home() {
   const { events, fetchEvents } = useEventsStore(
     (state) => ({ events: state.events, fetchEvents: state.fetchEvents }),
     shallow
   )
-
   fetchEvents()
+
+  const { games, fetchGames } = useGameStore(
+    (state) => ({ games: state.games, fetchGames: state.fetchGames }),
+    shallow
+  )
+  fetchGames()
+
+
 
   return (
     <main className="container mx-auto">
@@ -29,10 +36,9 @@ function Home() {
       </h2>
 
       <section className="flex flex-wrap">
-        <GameCard />
-        <GameCard />
-        <GameCard />
-        <GameCard />
+        {games.map((game) => (
+          <GameCard key={game.name} game={game} />
+        ))}
       </section>
     </main>
   )
