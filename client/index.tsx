@@ -2,15 +2,23 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import store from './store'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Auth0Provider } from '@auth0/auth0-react'
 
 import App from './components/App'
 
 document.addEventListener('DOMContentLoaded', () => {
   createRoot(document.getElementById('app') as HTMLElement).render(
-    <Provider store={store}>
+    <Auth0Provider
+      domain="dev-aaqk30w0szx78zcc.us.auth0.com"
+      clientId="riEloNJSftN0VUYexvgE1DWSkSZpv95t"
+      authorizationParams={{
+        redirect_uri: `${window.location.origin}`,
+        audience: 'https://boardgame/api',
+      }}
+    >
       <Router>
         <App />
       </Router>
-    </Provider>
+    </Auth0Provider>
   )
 })
