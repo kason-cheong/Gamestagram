@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 
 function EventDetail() {
   const { id } = useParams()
-  const { event } = useEventStore(
+  const { event, fetchEvent } = useEventStore(
     (state) => ({
       event: state.event,
       fetchEvent: () => state.fetchEvent(Number(id)),
@@ -15,15 +15,12 @@ function EventDetail() {
     shallow
   )
 
-  // {`${event.gamePhoto}`}
-  // https://s3-us-west-1.amazonaws.com/5cc.images/games/uploaded/1540147295104
+  fetchEvent()
+
   return (
     <>
       <div className="border-black">
-        <img
-          src="https://s3-us-west-1.amazonaws.com/5cc.images/games/uploaded/1540147295104"
-          alt=""
-        />
+        <img src={`${event.gamePhoto}`} alt="" />
       </div>
       <div className="flex">
         {event.users.map((user) => {
