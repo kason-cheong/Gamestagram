@@ -8,7 +8,7 @@ import {
 
 export default function Nav() {
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const { loginWithRedirect, logout } = useAuth0()
+  const { user, loginWithRedirect, logout } = useAuth0()
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
@@ -62,44 +62,33 @@ export default function Nav() {
             </IfNotAuthenticated>
 
             <IfAuthenticated>
-              <div className="hidden md:block">
-                <button onClick={handleLogOut}>Sign out</button>
+              <div className="relative">
+                <button onClick={toggleDropdown}>
+                  My Account
+                  <svg
+                    className="w-4 h-4 inline-block ml-1 mb-1 text-gray-600"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  ></svg>
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl">
+                    <NavLink
+                      to="/my-events"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                    >
+                      My Events
+                    </NavLink>
+                    <button
+                      onClick={handleLogOut}
+                      className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
               </div>
             </IfAuthenticated>
-
-            {/* <div className="hidden md:block">
-              <div className="ml-4 flex items-center md:ml-6">
-                <div className="relative">
-                  <NavLink
-                    to="/profile"
-                    className="text-gray-800 hover:text-gray-900 px-3 py-2 rounded-md text-xl font-medium cursor-pointer"
-                    onClick={toggleDropdown}
-                  >
-                    Profile
-                  </NavLink>
-                  {dropdownOpen && (
-                    <div className="absolute top-10 right-0 z-50 w-48 py-2 mt-1 bg-white rounded-md shadow-lg">
-                      <NavLink
-                        to="/my-events"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        onClick={toggleDropdown}
-                      >
-                        My Events
-                      </NavLink>
-                      <IfAuthenticated>
-                        <button
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          // onClick={() => logout({ returnTo: window.location.origin })}
-                          role="menuitem"
-                        >
-                          Sign out
-                        </button>
-                      </IfAuthenticated>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </nav>
