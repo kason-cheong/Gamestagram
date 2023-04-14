@@ -4,10 +4,12 @@ export interface EventDB {
   eventName: string
   location: string
   time: string
+  eventName: string
+  gameName: string
+  location: string
   description: string
   numberOfPeople: number
   createdAt: string
-  gameName: string
   gamePhoto: string
   userId: number
   userName: string
@@ -15,7 +17,7 @@ export interface EventDB {
 }
 
 export interface Event extends EventDB {
-  id: number
+  eventId: number
 }
 
 export interface EventUser {
