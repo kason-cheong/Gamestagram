@@ -2,9 +2,10 @@ import moment from 'moment'
 
 
 
-export function formatTime() {
-  const today=moment()
-  const formattedTime = today.format("ddd D MMM")
-  const day=formattedTime.slice(7)
-  return day
+export function formatTime(time:string) {
+  const unFormattedTime = moment(time,'DD-MM-YYYY').format("ddd D MMM")
+  const day = unFormattedTime.slice(7).toUpperCase()
+  const date=unFormattedTime.slice(0,6)
+  const FormattedDate=date+" "+day
+  return FormattedDate
 }
