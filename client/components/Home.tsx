@@ -17,13 +17,15 @@ function Home() {
   )
   fetchGames()
 
+
+
   return (
     <main className="container mx-auto">
       <h2 className="mt-5 mb-5 font-sans text-2xl font-bold text-center md:text-left">
         Events
       </h2>
 
-      <section className="flex flex-wrap">
+      <section className="flex">
         {events.map((event) => (
           <EventCard key={event.eventId} event={event} />
         ))}

@@ -1,10 +1,12 @@
-import React from 'react'
-import type { Event, FormattedEventWithUser } from '../../models/Event'
+import type { FormattedEventWithUser } from '../../models/Event'
 import { Link } from 'react-router-dom'
 import { formatTime } from '../helper/helperFunction'
 
 function EventCard({ event }: { event: FormattedEventWithUser }) {
-  const date = formatTime()
+  const date = event.time.slice(0, 10)
+  const time = event.time.slice(10)
+
+  const formattedTime=formatTime(date)
 
   return (
     <Link
