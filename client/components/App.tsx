@@ -20,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/events/:id" element={<EventDetail />} />
       </Routes>
+
     </>
   )
 }
