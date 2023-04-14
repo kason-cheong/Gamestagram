@@ -10,9 +10,7 @@ function Home() {
     shallow
   )
 
-  useEffect(() => {
-    fetchEvents()
-  }, [])
+  fetchEvents()
 
   return (
     <main className="container mx-auto">

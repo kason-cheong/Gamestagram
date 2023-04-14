@@ -1,7 +1,6 @@
 import { create } from 'zustand'
-import { getEventById, getEvents } from '../apis/apiClientEvents'
+import { getEventById} from '../apis/apiClientEvents'
 import type {
-  Event,
   FormattedEventWithUser,
   EventUser,
 } from '../../models/Event'

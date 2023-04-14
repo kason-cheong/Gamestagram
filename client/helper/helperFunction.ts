@@ -1,7 +1,5 @@
 import moment from 'moment'
 
-
-
 export function formatTime(time:string) {
   const unFormattedTime = moment(time,'DD-MM-YYYY').format("ddd D MMM")
   const day = unFormattedTime.slice(7).toUpperCase()
