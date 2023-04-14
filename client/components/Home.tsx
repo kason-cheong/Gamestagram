@@ -1,6 +1,6 @@
 import EventCard from './EventCard'
 import GameCard from './GamesCard'
-import { useEventsStore } from '../store/userEventsStore'
+import { useEventsStore } from '../store/useEventsStore'
 import { shallow } from 'zustand/shallow'
 import { useEffect } from 'react'
 
