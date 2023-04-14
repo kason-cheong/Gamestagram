@@ -2,7 +2,7 @@ import { Event, FormattedEventWithUser } from '../../models/Event'
 
 export function createEvent(eventLine: Event) {
   return {
-    id: eventLine.id,
+    eventId: eventLine.eventId,
     time: eventLine.time,
     gameId: eventLine.gameId,
     hostId: eventLine.hostId,
@@ -19,7 +19,7 @@ export function createEvent(eventLine: Event) {
 
 export function createUser(eventLine: Event) {
   return {
-    id: eventLine.userId,
+    userId: eventLine.userId,
     name: eventLine.userName,
     photoUrl: eventLine.photoUrl,
   }
@@ -36,7 +36,7 @@ export function formatEvent(eventLines: Event[]) {
 export function formatEventList(eventLines: Event[]) {
   const eventList = [] as FormattedEventWithUser[]
   eventLines.forEach((item) => {
-    const event = eventList.find((e) => e.id === item.id)
+    const event = eventList.find((e) => e.eventId === item.eventId)
     !event
       ? eventList.push(createEvent(item))
       : (event.users = [createUser(item)])
