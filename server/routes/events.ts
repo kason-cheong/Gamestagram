@@ -26,6 +26,28 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.post('/add', (req, res) => {
+  db.addEvent(req.body)
+    .then((results) => {
+      res.json(results)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json({ message: 'Something went wrong' })
+    })
+})
+
+router.patch('/:id/edit', (req, res) => {
+  db.editEvent(Number(req.params.id), req.body)
+    .then((results) => {
+      res.json(results)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json({ message: 'Something went wrong' })
+    })
+})
+
 // router.get('/:id', (req, res) => {
 //   db.findEventById(req.params.id)
 //     .then((results) => {
