@@ -1,15 +1,17 @@
 export interface EventDB {
   
   hostId: number
-  gameId: number
-  name: string
-  location: string
+  gameId:number
   time: string
+  eventName: string
+  gameName: string
+  location: string
   description: string
   numberOfPeople: number
+  createdAt:string
 }
 
 
 export interface Event extends EventDB {
-  id: number
+  eventId: number
 }
