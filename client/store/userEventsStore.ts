@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { getEvents } from '../apis/apiClient'
+import { getEvents } from '../apis/apiClientEvents'
 import type { Event } from '../../models/Event'
 
 
