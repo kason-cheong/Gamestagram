@@ -88,6 +88,12 @@ export default function Nav() {
                 {dropdownOpen && (
                   <div className="absolute z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl">
                     <NavLink
+                      to="/profile"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                    >
+                      Profile
+                    </NavLink>
+                    <NavLink
                       to="/my-events"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
