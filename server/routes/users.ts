@@ -37,4 +37,16 @@ router.post('/add', (req, res) => {
     })
 })
 
+
+router.get('/auth0/:id', (req, res) => {
+  db.getUsersByAuthId(req.params.id)
+    .then((results) => {
+      res.json(results)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json({ message: 'Something went wrong' })
+    })
+})
+
 export default router
