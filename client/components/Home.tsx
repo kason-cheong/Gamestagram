@@ -3,6 +3,7 @@ import GameCard from './GameCard'
 import { useEventsStore } from '../store/useEventsStore'
 import { useGameStore } from '../store/useGameStore'
 import { shallow } from 'zustand/shallow'
+import { useEffect } from 'react'
 
 function Home() {
   const { events, fetchEvents } = useEventsStore(
@@ -15,9 +16,10 @@ function Home() {
     (state) => ({ games: state.games, fetchGames: state.fetchGames }),
     shallow
   )
-  fetchGames()
 
-
+  useEffect(() => {
+    fetchGames()
+  }, [])
 
   return (
     <main className="container mx-auto">
