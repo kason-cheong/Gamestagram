@@ -5,6 +5,7 @@ import type { Event, FormattedEventWithUser } from '../../models/Event'
 interface IEvent {
   events: FormattedEventWithUser[]
   fetchEvents: () => void
+  setFilterEvents:(filteredEvents:FormattedEventWithUser[])=>void
 }
 
 export const useEventsStore = create<IEvent>((set) => ({
@@ -13,4 +14,7 @@ export const useEventsStore = create<IEvent>((set) => ({
     const events = await getEvents()
     set({ events: events })
   },
+  setFilterEvents: (filteredEvents:FormattedEventWithUser[]) => {
+    set({events:filteredEvents})
+  }
 }))

@@ -11,12 +11,12 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
   return (
     <Link
       to={`/events/${event.eventId}`}
-      className="scroll-smooth snap-x bg-slate-200 w-1/5 rounded-2xl shadow-2xl shadow-slate-400 ml-12"
+      className=" bg-slate-200 w-72 rounded-2xl shadow-2xl shadow-slate-400 ml-12"
     >
-      <img src={`${event.gamePhoto}`} alt="" className="h-1/2 rounded-t-2xl" />
+      <img src={`${event.gamePhoto}`} alt="" className="h-3/5 rounded-t-2xl w-full" />
 
-      <div className="p-2 text-center">
-        <h4 className="text-orange-900 mb-2">{event.time}</h4>
+      <div className="p-2 text-center h-2/5">
+        <h4 className="text-orange-900 mb-2">{formattedTime}{time}</h4>
         <p className="font-semibold mb-1">{event.eventName}</p>
         <p className="italic mb-1">{event.gameName}</p>
         <p className="font-thin">{event.location}</p>
