@@ -1,11 +1,15 @@
 import { useEventStore } from '../store/useEventStore'
 
 import { shallow } from 'zustand/shallow'
-
+import { getUserById } from '../apis/apiClientUsers'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { addUserEvent } from '../apis/apiClientEvents'
 
 function EventDetail() {
+  const [host, setHost] = useState({
+    photoUrl: '',
+  })
   const { id } = useParams()
   const { event, fetchEvent } = useEventStore(
     (state) => ({
@@ -15,43 +19,102 @@ function EventDetail() {
     shallow
   )
 
-  // fetchEvent()
-
   useEffect(() => {
     fetchEvent()
-  }, [])
+    if (event.hostId) {
+      fetchHost(event.hostId)
+    }
+  }, [event.hostId])
+
+  async function fetchHost(id: number) {
+    const host = await getUserById(id)
+    console.log('host is', host.photoUrl)
+
+    setHost(() => ({
+      photoUrl: host.photoUrl,
+    }))
+  }
+
+  async function handleSumbit() {
+    await addUserEvent({ eventId: Number(id), userId: 3 })
+  }
 
   return (
-    <section className="my-3 w-5/6">
-      <div className="border-black">
-        <img src={`${event.gamePhoto}`} alt={`${event.gameName}`} />
+    <div className="my-4  mx-auto w-3/5 ">
+      <div className=" rounded-lg flex justify-center">
+        <img
+          className="rounded-2xl w-1/3"
+          src={`${event.gamePhoto}`}
+          alt={`${event.gameName}`}
+        />
       </div>
-      {/* <div>
-        <img src={`${event.users[0].photoUrl}`} alt="host" />
-      </div> */}
-      <div className=" float-right flex flex-wrap">
-        {event.users.map((user) => {
-          return (
-            <img
-              className="  h-12  rounded-full ring-2 ring-white"
-              src={`${user.photoUrl}`}
-              alt={`${user.name}`}
-              key={user.name}
-            />
-          )
-        })}
-      </div>
-      <div className="border-black">
+
+      <div className="text-center mt-4">
         <ul>
-          <li>Event Name: {event.eventName}</li>
-          <li>Game Name: {event.gameName}</li>
-          <li>Description: {event.description}</li>
-          <li>Location: {event.location}</li>
-          <li>Time: {event.time}</li>
-          <li>Number of People: {event.numberOfPeople}</li>
+          <li className="text-xl font-bold">{event.eventName}</li>
+          <li className="italic text-lg"> {event.gameName}</li>
+          <li>
+            <span className="font-bold">Description:</span> {event.description}
+          </li>
+          <li>
+            <span className="font-bold">Location:</span> {event.location}
+          </li>
+          <li>
+            <span className="font-bold">Time:</span> {event.time}
+          </li>
+          <li>
+            <span className="font-bold">Suggested Players:</span>{' '}
+            {event.numberOfPeople}
+          </li>
         </ul>
       </div>
-    </section>
+      <div className=" ">
+        <div className="flex justify-between items-center space-x-2 text-base">
+          <div>
+            <h4 className="font-semibold text-slate-900">Host</h4>
+          </div>
+          <div className="flex flex-row-reverse">
+            <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
+              {event.users.length}
+            </span>
+            <h4 className="font-semibold text-slate-900">Players</h4>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <div className=" text-right sm:h-32 h-10">
+            <img
+              className=" inline-block w-2/3 h-1/2 rounded-full ring-2 ring-white"
+              src={`${host.photoUrl}`}
+              alt="host"
+            />
+          </div>
+          <div className=" flex flex-row-reverse">
+            {event.users.map((user) => {
+              return (
+                <div key={user.name} className=" text-right sm:h-32 h-14">
+                  <img
+                    className=" inline-block w-2/3 h-1/2 rounded-full ring-2 ring-white"
+                    src={`${user.photoUrl}`}
+                    alt={`${user.name}`}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="flex float-right w-1/3 my-5 justify-between">
+        <button
+          onClick={handleSumbit}
+          className="w-2/5 py-4 text-center  bg-stone-300 drop-shadow-md hover:bg-stone-400 hover:drop-shadow-xl rounded-lg text-sm"
+        >
+          Join
+        </button>
+        <button className="w-2/5 py-4 text-center  bg-stone-300 drop-shadow-md hover:bg-stone-400 hover:drop-shadow-xl rounded-lg text-sm">
+          Message
+        </button>
+      </div>
+    </div>
   )
 }
 

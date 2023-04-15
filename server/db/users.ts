@@ -15,7 +15,7 @@ export function getUsersById(id: number, db = connection): Promise<User[]> {
       'photo_url as photoUrl',
       'singed_up_at as signedUpAt'
     )
-    .where('id', id)
+    .where('id', id).first()
 }
 
 export function addUser(data: User, db = connection): Promise<User[]> {
