@@ -10,7 +10,9 @@ export default function ImageBanner({ name, url }: Props) {
       style={{ backgroundImage: `url('${url}')` }}
     >
       <article className="container flex">
-        <h2 className="font-sans text-white text-4xl font-bold py-6">{name}</h2>
+        <h2 className="font-pacifico text-white text-5xl py-6 drop-shadow-xl">
+          {name}
+        </h2>
       </article>
     </section>
   )

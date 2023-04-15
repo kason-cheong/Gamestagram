@@ -27,19 +27,27 @@ router.get('/:id', (req, res) => {
     })
 })
 
-// router.post('/add', (req, res) => {
-//   db.addEvent(req.body)
-//     .then((results) => {
-//       {res.json(results)
-//       const index = db.getEvents.length-1
-//       const eventsArr = db.getEvents()
-//       const eventId = eventsArr[index].eventId }
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//       res.status(500).json({ message: 'Something went wrong' })
-//     })
-// })
+
+
+
+router.post('/add/user-event', async (req, res) => {
+  try {
+    const {userId,eventId} = req.body
+
+    const timestamp = new Date(Date.now())
+    const newData = {
+      user_id: Number(userId),
+      event_id: Number(eventId),
+      created_at: timestamp,
+    }
+    await db.addUserEvent(newData)
+    res.status(201).json({ message: 'created event and user_event' })
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+})
+
+
 
 router.post('/add', async (req, res) => {
   try {
