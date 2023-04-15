@@ -1,9 +1,6 @@
 import { create } from 'zustand'
-import { getEventById} from '../apis/apiClientEvents'
-import type {
-  FormattedEventWithUser,
-  EventUser,
-} from '../../models/Event'
+import { getEventById } from '../apis/apiClientEvents'
+import type { FormattedEventWithUser, EventUser } from '../../models/Event'
 
 interface IEvent {
   event: FormattedEventWithUser
@@ -28,7 +25,6 @@ export const useEventStore = create<IEvent>((set) => ({
 
   fetchEvent: async (id: number) => {
     const event = (await getEventById(id)) as FormattedEventWithUser
-    // console.log(event)
 
     set({
       event,
