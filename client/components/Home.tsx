@@ -1,7 +1,7 @@
 import EventCard from './EventCard'
 import GameCard from './GameCard'
 import { useEventsStore } from '../store/useEventsStore'
-import { useGameStore } from '../store/useGameStore'
+import { useGameStore } from '../store/useGamesStore'
 import { shallow } from 'zustand/shallow'
 import { useEffect } from 'react'
 import ImageBanner from './subcomponents/ImageBanner'
@@ -16,8 +16,6 @@ function Home() {
     (state) => ({ games: state.games, fetchGames: state.fetchGames }),
     shallow
   )
-
-
 
   useEffect(() => {
     fetchEvents()
