@@ -16,7 +16,17 @@ export default function Nav() {
 
   const handleLogIn = () => {
     console.log('log in function ran')
-    loginWithRedirect()
+
+    loginWithRedirect({
+      redirectUri: 'http://localhost:3000',
+    })
+  }
+
+  const handleSignUp = () => {
+    console.log('sign up function ran')
+    loginWithRedirect({
+      redirectUri: 'http://localhost:3000/register',
+    })
   }
 
   const handleLogOut = () => {
@@ -57,14 +67,15 @@ export default function Nav() {
 
             <IfNotAuthenticated>
               <div className="hidden md:block">
-                <button onClick={handleLogIn}>Sign in</button>
+                <button className='mr-5' onClick={handleLogIn}>Sign in</button>
+                <button className='ml-5 mr-2swws' onClick={handleSignUp}>Sign up</button>
               </div>
             </IfNotAuthenticated>
 
             <IfAuthenticated>
               <div className="relative">
                 <button onClick={toggleDropdown}>
-                  My Account
+                  {user?.name}
                   <svg
                     className="w-4 h-4 inline-block ml-1 mb-1 text-gray-600"
                     viewBox="0 0 20 20"
