@@ -1,4 +1,3 @@
-
 import { useEventStore } from '../store/useEventStore'
 
 import { shallow } from 'zustand/shallow'
@@ -6,6 +5,7 @@ import { getUserById } from '../apis/apiClientUsers'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { addUserEvent } from '../apis/apiClientEvents'
+import { useGameStore } from '../store/useGameStore'
 
 function EventDetail() {
   const [host, setHost] = useState({
@@ -20,8 +20,15 @@ function EventDetail() {
     shallow
   )
 
+  const { game, fetchGame } = useGameStore(
+    (state) => ({ game: state.game, fetchGame: state.fetchGame }),
+    shallow
+  )
+
   useEffect(() => {
+    fetchGame(event.gameId)
     fetchEvent()
+    calculatePlayer()
     if (event.hostId) {
       fetchHost(event.hostId)
     }
@@ -29,7 +36,6 @@ function EventDetail() {
 
   async function fetchHost(id: number) {
     const host = await getUserById(id)
-    console.log('host is', host.photoUrl)
 
     setHost(() => ({
       photoUrl: host.photoUrl,
@@ -37,7 +43,12 @@ function EventDetail() {
   }
 
   async function handleSumbit() {
-    await addUserEvent({ eventId: Number(id), userId: 3 })
+    await addUserEvent({ eventId: Number(id), userId: 1 })
+  }
+
+  function calculatePlayer(): number {
+    const remainingPlayer = game.playerCount - event.numberOfPeople
+    return remainingPlayer
   }
 
   return (
@@ -104,13 +115,30 @@ function EventDetail() {
           </div>
         </div>
       </div>
+      {/* {event.numberOfPeople < game.playerCount ? (
+        <>
+          <h4>Space Left</h4>
+          <p className="my-2 text-center">
+            {remainingPlayer} of {game.playerCount}
+          </p>
+        </>
+      ) : (
+        <p>No Space Left</p>
+      )} */}
       <div className="flex float-right w-1/3 my-5 justify-between">
-        <button
-          onClick={handleSumbit}
-          className="w-2/5 py-4 text-center  bg-stone-300 drop-shadow-md hover:bg-stone-400 hover:drop-shadow-xl rounded-lg text-sm"
-        >
-          Join
-        </button>
+        {event.users.find((e) => e.userId === 1) ? (
+          <button className="w-2/5 py-4 text-center  bg-purple-300 drop-shadow-md  hover:drop-shadow-xl rounded-lg text-sm">
+            You are going
+          </button>
+        ) : (
+          <button
+            onClick={handleSumbit}
+            className="w-2/5 py-4 text-center  bg-stone-300 drop-shadow-md hover:bg-stone-400 hover:drop-shadow-xl rounded-lg text-sm"
+          >
+            Join
+          </button>
+        )}
+
         <button className="w-2/5 py-4 text-center  bg-stone-300 drop-shadow-md hover:bg-stone-400 hover:drop-shadow-xl rounded-lg text-sm">
           Message
         </button>
