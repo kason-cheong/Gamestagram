@@ -21,17 +21,16 @@ export default function Nav() {
       redirectUri: 'http://localhost:3000',
     })
   }
+  const handleLogOut = () => {
+    console.log('log out function ran')
+    logout()
+  }
 
   const handleSignUp = () => {
     console.log('sign up function ran')
     loginWithRedirect({
-      redirectUri: 'http://localhost:3000/register',
+      redirectUri: 'http://localhost:3000/profile',
     })
-  }
-
-  const handleLogOut = () => {
-    console.log('log out function ran')
-    logout()
   }
 
   return (
@@ -67,8 +66,12 @@ export default function Nav() {
 
             <IfNotAuthenticated>
               <div className="hidden md:block">
-                <button className='mr-5' onClick={handleLogIn}>Sign in</button>
-                <button className='ml-5 mr-2swws' onClick={handleSignUp}>Sign up</button>
+                <button className="mr-5" onClick={handleLogIn}>
+                  Sign in
+                </button>
+                <button className="ml-5 mr-2swws" onClick={handleSignUp}>
+                  Sign up
+                </button>
               </div>
             </IfNotAuthenticated>
 
@@ -84,6 +87,12 @@ export default function Nav() {
                 </button>
                 {dropdownOpen && (
                   <div className="absolute z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl">
+                    <NavLink
+                      to="/profile"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                    >
+                      Profile
+                    </NavLink>
                     <NavLink
                       to="/my-events"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
