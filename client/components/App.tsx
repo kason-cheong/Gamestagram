@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import Home from './Home'
 import Nav from './Nav'
+import Events from './Events'
 import Notice from './subcomponents/Notice'
 import Boardgames from './Boardgames'
 import { Route, Routes } from 'react-router-dom'
@@ -22,6 +23,7 @@ function App() {
       <Notice />
 
       <Routes>
+
         <Route
           path="/"
           element={
@@ -54,6 +56,7 @@ function App() {
             </PageTransition>
           }
         />
+
       </Routes>
     </>
   )
