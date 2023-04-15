@@ -1,24 +1,28 @@
 import request from 'superagent'
-import {User} from '../../models/Users'
-
-
+import { User, UserDB } from '../../models/Users'
 
 const rootUrlUsers = '/api/v1/users'
 
 interface EditUser {
- userName: string
- bio:string
+  userName: string
+  bio: string
 }
 
-
-export async function  getUserById(id:number) {
+export async function getUserById(id: number) {
   const res = await request.get(`${rootUrlUsers}/${id}`)
- console.log(res.body)
- return res.body as Promise<User>
+  console.log(res.body)
+  return res.body as Promise<User>
+}
 
-  }
+export async function editUserById(id: number, input: EditUser) {
+  return await request.post(`${rootUrlUsers}/${id}`).send(input)
+}
+export async function addUser(user: UserDB) {
+  return await request.post(`${rootUrlUsers}/add`).send(user)
+}
 
-
-export async function  editUserById(id:number, input:EditUser) {
-   return await request.post(`${rootUrlUsers}/${id}`).send(input)
- }
+export async function getUserByAuth0Id(authId: string) {
+  const res = await request.get(`${rootUrlUsers}/auth0/${authId}`)
+  console.log(res.body)
+  return res.body as Promise<User>
+}

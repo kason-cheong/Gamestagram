@@ -7,22 +7,20 @@ import Notice from './subcomponents/Notice'
 import Boardgames from './Boardgames'
 import { Route, Routes } from 'react-router-dom'
 import EventDetail from './EventDetail'
+
 import PageTransition from './subcomponents/PageTransition'
 
+import Register from './Registration/Register'
+
+
 function App() {
-  // const fruits = useAppSelector((state) => state.fruits)
-  // const dispatch = useAppDispatch()
-
-  // useEffect(() => {
-  //   dispatch(fetchFruits())
-  // }, [dispatch])
-
   return (
     <>
       <Nav />
       <Notice />
 
       <Routes>
+
 
         <Route
           path="/"
@@ -56,6 +54,12 @@ function App() {
             </PageTransition>
           }
         />
+
+
+
+        <Route path="/profile" element={<Register />} />
+
+
 
       </Routes>
     </>
