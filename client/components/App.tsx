@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import Home from './Home'
 import Nav from './Nav'
+import Notice from './Notice'
 import { Route, Routes } from 'react-router-dom'
 import EventDetail from './EventDetail'
 
@@ -16,11 +17,11 @@ function App() {
   return (
     <>
       <Nav />
+      <Notice />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events/:id" element={<EventDetail />} />
       </Routes>
-
     </>
   )
 }

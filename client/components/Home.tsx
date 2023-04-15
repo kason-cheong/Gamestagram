@@ -10,7 +10,6 @@ function Home() {
     (state) => ({ events: state.events, fetchEvents: state.fetchEvents }),
     shallow
   )
-  fetchEvents()
 
   const { games, fetchGames } = useGameStore(
     (state) => ({ games: state.games, fetchGames: state.fetchGames }),
@@ -19,6 +18,7 @@ function Home() {
 
   useEffect(() => {
     fetchGames()
+    fetchEvents()
   }, [])
 
   return (

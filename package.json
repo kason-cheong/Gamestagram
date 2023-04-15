@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.0.1",
+    "@heroicons/react": "^2.0.17",
     "@redux-devtools/extension": "^3.2.3",
     "express": "^4.17.2",
     "install": "^0.13.0",
