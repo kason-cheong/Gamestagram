@@ -39,8 +39,13 @@ export interface FormattedEventWithUser {
   users: EventUser[]
 }
 
-export interface UserEventDB{
-  user_id:number
-  event_id:number
-  created_at:Date
-} 
+export interface UserEventDB {
+  user_id: number
+  event_id: number
+  created_at: Date
+}
+
+export interface UserJoinEvent {
+  userId: number
+  eventId: number
+}
