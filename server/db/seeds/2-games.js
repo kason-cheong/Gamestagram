@@ -14,7 +14,7 @@ exports.seed = (knex) => {
       id: 2,
       name: 'Scythe',
       description:
-        "gives players almost complete control over their fate. Other than each player's individual hidden objective card, the only elements of luck or variability are &quot;Encounter&quot; cards that players will draw as they interact with the citizens of newly explored lands. Each encounter card provides the player with several options, allowing them to mitigate the luck of the draw through their selection. Combat is also driven by choices, not luck or randomness",
+        "Gives players almost complete control over their fate. Other than each player's individual hidden objective card, the only elements of luck or variability are Encounter cards that players will draw as they interact with the citizens of newly explored lands. Each encounter card provides the player with several options, allowing them to mitigate the luck of the draw through their selection. Combat is also driven by choices, not luck or randomness",
       number_player: '1-5',
       play_time: '90-120 mins',
       photo_url:

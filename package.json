@@ -44,6 +44,7 @@
     "@heroicons/react": "^2.0.17",
     "@redux-devtools/extension": "^3.2.3",
     "express": "^4.17.2",
+    "framer-motion": "^10.12.2",
     "install": "^0.13.0",
     "knex": "^2.3.0",
     "moment": "^2.29.4",
