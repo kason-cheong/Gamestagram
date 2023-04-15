@@ -21,17 +21,16 @@ export default function Nav() {
       redirectUri: 'http://localhost:3000',
     })
   }
+  const handleLogOut = () => {
+    console.log('log out function ran')
+    logout()
+  }
 
   const handleSignUp = () => {
     console.log('sign up function ran')
     loginWithRedirect({
-      redirectUri: 'http://localhost:3000/register',
+      redirectUri: 'http://localhost:3000/profile',
     })
-  }
-
-  const handleLogOut = () => {
-    console.log('log out function ran')
-    logout()
   }
 
   return (
@@ -67,8 +66,12 @@ export default function Nav() {
 
             <IfNotAuthenticated>
               <div className="hidden md:block">
-                <button className='mr-5' onClick={handleLogIn}>Sign in</button>
-                <button className='ml-5 mr-2swws' onClick={handleSignUp}>Sign up</button>
+                <button className="mr-5" onClick={handleLogIn}>
+                  Sign in
+                </button>
+                <button className="ml-5 mr-2swws" onClick={handleSignUp}>
+                  Sign up
+                </button>
               </div>
             </IfNotAuthenticated>
 
