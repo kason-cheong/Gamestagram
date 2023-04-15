@@ -13,7 +13,7 @@ export default function Nav() {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
-
+const signUp = useAuth0()
   const handleLogIn = () => {
     console.log('log in function ran')
 

@@ -11,13 +11,17 @@ export default function Register() {
   const setUser = useUserStore((state) => state.setUser)
 
   const { user, isLoading } = useAuth0()
-  const [showRegister, setshowRegister] = useState(true)
+  const [showRegister, setshowRegister] = useState(false)
+  console.log(user?.sub)
+
   useEffect(() => {
-    // // if (user?.sub) {
-    //   {fetchUser(user.sub)
-    // }
-    fetchUser('12341d88')
-  }, [])
+    if (user?.sub) {
+      {
+        fetchUser(user.sub)
+      }
+      // fetchUser('12341d88')
+    }
+  }, [user])
 
   async function fetchUser(authId: string) {
     const userDB = await getUserByAuth0Id(authId)
@@ -40,13 +44,26 @@ export default function Register() {
     event.preventDefault()
     if (user && user.email && user.sub) {
       const form = event.currentTarget
-      const userName = form.element.nameItem('userName').value
-      const photoUrl = form.element.nameItem('photoUrl').value
-      const bio = form.element.nameItem('bio').value as string
+      const formData = new FormData(form)
+      // const userName = form.element.nameItem('userName').value
+      // const photoUrl = form.element.nameItem('photoUrl').value
+      // const bio = form.element.nameItem('bio').value as string
+      const userName = formData.get('userName') as string
+      const photoUrl = formData.get('photoUrl') as string
+      const bio = formData.get('bio') as string
+
       const email = user?.email
       const auth0Id = user?.sub
-      const newUser = { username: userName, photoUrl, bio, email, auth0Id }
+      const newUser = {
+        user_name: userName,
+        photo_url: photoUrl,
+        bio,
+        email,
+        auth0_Id: auth0Id,
+      }
+
       await addUser(newUser)
+      // setshowRegister(false)
     } else {
       console.log('user not signed in')
     }
@@ -54,7 +71,7 @@ export default function Register() {
 
   return (
     <>
-      {/* {isLoading && <h1>Loading...</h1>} */}
+      {isLoading && <h1>Loading...</h1>}
       {showRegister && !isLoading ? (
         <>
           <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -122,9 +139,32 @@ export default function Register() {
       ) : currentUser.userName ? (
         !isLoading && (
           <>
-            <h4>{currentUser.userName} Profile</h4>
-            <img src={currentUser.photoUrl} alt="userPhoto"></img>
-            <p>Bio: {currentUser.bio}</p>
+            <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-md mx-auto">
+                <div className="text-center">
+                  <h2 className="text-3xl font-extrabold text-gray-900">
+                    Profile
+                  </h2>
+                  <p className="mt-2 text-lg font-medium text-gray-900">
+                    {currentUser.userName}
+                  </p>
+
+                  <img
+                    src={currentUser.photoUrl}
+                    alt="userPhoto"
+                    className="mt-4 h-32 w-32 rounded-full mx-auto"
+                  ></img>
+
+                  <p className="mt-1 text-md text-gray-500">
+                    {currentUser.bio}
+                  </p>
+                  {/* <p>
+                    Signed Up Since:{' '}
+                    {currentUser.signedUpAt.toLocaleDateString()}
+                  </p> */}
+                </div>
+              </div>
+            </div>
           </>
         )
       ) : (

@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.increments('id').primary()
     table.string('user_name')
     table.string('email')
-    table.string('auth0_id')
+    table.string('auth0_Id')
     table.string('bio')
     table.string('photo_url')
     table.date('singed_up_at')

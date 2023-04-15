@@ -12,7 +12,17 @@ exports.seed = (knex) => {
       event_id: 1,
       created_at: '11-04-2023',
     },
-    { id: 3, user_id: 1, event_id: 2, created_at: '11-04-2023' },
-    { id: 4, user_id: 2, event_id: 1, created_at: '11-04-2023' },
+    {
+      id: 3,
+      user_id: 1,
+      event_id: 2,
+      created_at: new Date(1681451450040 / 1000),
+    },
+    {
+      id: 4,
+      user_id: 2,
+      event_id: 1,
+      created_at: new Date(1681451450040 / 1000),
+    },
   ])
 }

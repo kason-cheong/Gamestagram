@@ -7,6 +7,13 @@ interface EditUser {
   userName: string
   bio: string
 }
+interface snakeCaseUser {
+  user_name: string
+  email: string
+  auth0_Id: string
+  bio: string
+  photo_url: string
+}
 
 export async function getUserById(id: number) {
   const res = await request.get(`${rootUrlUsers}/${id}`)
@@ -17,7 +24,7 @@ export async function getUserById(id: number) {
 export async function editUserById(id: number, input: EditUser) {
   return await request.post(`${rootUrlUsers}/${id}`).send(input)
 }
-export async function addUser(user: UserDB) {
+export async function addUser(user: snakeCaseUser) {
   return await request.post(`${rootUrlUsers}/add`).send(user)
 }
 
