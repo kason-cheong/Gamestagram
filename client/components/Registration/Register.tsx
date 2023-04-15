@@ -21,7 +21,7 @@ export default function Register() {
       }
       // fetchUser('12341d88')
     }
-  }, [user])
+  }, [user, showRegister])
 
   async function fetchUser(authId: string) {
     const userDB = await getUserByAuth0Id(authId)
@@ -63,7 +63,7 @@ export default function Register() {
       }
 
       await addUser(newUser)
-      // setshowRegister(false)
+      setshowRegister(false)
     } else {
       console.log('user not signed in')
     }
