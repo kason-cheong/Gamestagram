@@ -17,6 +17,8 @@ function Home() {
     shallow
   )
 
+
+
   useEffect(() => {
     fetchEvents()
     fetchGames()
