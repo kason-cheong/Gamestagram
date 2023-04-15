@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import Home from './Home'
 import Nav from './Nav'
-import Notice from './Notice'
+import Notice from './subcomponents/Notice'
 import { Route, Routes } from 'react-router-dom'
 import EventDetail from './EventDetail'
 
