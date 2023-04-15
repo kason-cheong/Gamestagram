@@ -1,17 +1,24 @@
 import { create } from 'zustand'
 
 import type { GameDB, Game } from '../../models/Game'
-import { getGames } from '../apis/apiClientGames'
+import { getGameById } from '../apis/apiClientGames'
 
 interface IGame {
-  games: Game[]
-  fetchGames: () => void
+  game: Game
+  fetchGame: (id: number) => void
 }
 
 export const useGameStore = create<IGame>((set) => ({
-  games: [] as Game[],
-  fetchGames: async () => {
-    const games = await getGames()
-    set({ games: games })
+  game: {
+    id: 0,
+    name: '',
+    description: '',
+    averagePlayTime: '',
+    playerCount: 0,
+    photoUrl: '',
+  },
+  fetchGame: async (id: number) => {
+    const game = await getGameById(id)
+    set({ game: game })
   },
 }))

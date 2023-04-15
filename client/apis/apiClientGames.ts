@@ -9,7 +9,7 @@ export async function getGames() {
   return res.body as Promise<Game[]>
 }
 
-export async function getEventById(id: number) {
+export async function getGameById(id: number) {
   const res = await request.get(`${rootUrlGames}/${id}`)
 
   return res.body as Promise<Game>

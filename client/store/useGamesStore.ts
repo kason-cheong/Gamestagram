@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-
 import type { GameDB, Game } from '../../models/Game'
 import { getGames } from '../apis/apiClientGames'
 
@@ -8,7 +7,7 @@ interface IGame {
   fetchGames: () => void
 }
 
-export const useGameStore = create<IGame>((set) => ({
+export const useGamesStore = create<IGame>((set) => ({
   games: [] as Game[],
   fetchGames: async () => {
     const games = await getGames()
