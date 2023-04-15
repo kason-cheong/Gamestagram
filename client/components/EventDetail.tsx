@@ -14,7 +14,7 @@ function EventDetail() {
     }),
     shallow
   )
-  // flex flex-wrap w-full h-12  rounded-full ring-2 ring-white
+
   // fetchEvent()
 
   useEffect(() => {
@@ -22,16 +22,18 @@ function EventDetail() {
   }, [])
 
   return (
-    <section className="my-3">
+    <section className="my-3 w-5/6">
       <div className="border-black">
         <img src={`${event.gamePhoto}`} alt={`${event.gameName}`} />
       </div>
-      <div>{/* <img src={`${event.users[0].photoUrl}`} alt="host" /> */}</div>
-      <div className="">
+      {/* <div>
+        <img src={`${event.users[0].photoUrl}`} alt="host" />
+      </div> */}
+      <div className=" float-right flex flex-wrap">
         {event.users.map((user) => {
           return (
             <img
-              className=""
+              className="  h-12  rounded-full ring-2 ring-white"
               src={`${user.photoUrl}`}
               alt={`${user.name}`}
               key={user.name}
