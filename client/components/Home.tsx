@@ -18,6 +18,7 @@ function Home() {
   )
 
   useEffect(() => {
+    fetchEvents()
     fetchGames()
     fetchEvents()
   }, [])
