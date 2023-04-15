@@ -9,7 +9,7 @@ exports.seed = (knex) => {
       location: '10 Morgan st, Auckland',
       time: '20-04-2023 21:00',
       number_ppl_playing: '2-4',
-      created_at: '11-04-2023',
+      created_at: new Date(1681450450040 / 1000),
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ exports.seed = (knex) => {
       location: '8 Morgan st, Auckland',
       time: '21-07-2023 21:00',
       number_ppl_playing: '2-4',
-      created_at: '06-04-2023',
+      created_at: new Date(1681453450040 / 1000),
     },
   ])
 }

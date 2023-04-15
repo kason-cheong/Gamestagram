@@ -21,6 +21,7 @@ export function getUsersById(id: number, db = connection): Promise<User[]> {
 export function addUser(data: UserDB, db = connection): Promise<User[]> {
   const timestamp = new Date(Date.now())
   const newData = { ...data, singed_up_at: timestamp }
+
   return db('users').insert(newData)
 }
 
@@ -36,8 +37,8 @@ export function getUsersByAuthId(
       'bio',
       'photo_url as photoUrl',
       'singed_up_at as signedUpAt',
-      'auth0_id as authId'
+      'auth0_Id as authId'
     )
-    .where('auth0_id', authId)
+    .where('auth0_Id', authId)
     .first()
 }
