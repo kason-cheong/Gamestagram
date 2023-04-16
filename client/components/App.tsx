@@ -5,6 +5,7 @@ import Nav from './Nav'
 import Events from './Events'
 import Notice from './subcomponents/Notice'
 import Boardgames from './Boardgames'
+import Footer from './Footer'
 import { Route, Routes } from 'react-router-dom'
 import EventDetail from './EventDetail'
 
@@ -13,7 +14,6 @@ import PageTransition from './subcomponents/PageTransition'
 import Register from './Registration/Register'
 import { Addevent } from './AddEvent'
 import EditEvent from './EditEvent'
-
 
 function App() {
   return (
@@ -56,6 +56,7 @@ function App() {
         />
 
 
+
         <Route path="/profile" element={<Register />} />
         <Route path="/events/add" element={<Addevent />} />
 
@@ -69,7 +70,9 @@ function App() {
         />
 
 
+
       </Routes>
+      <Footer />
     </>
   )
 }
