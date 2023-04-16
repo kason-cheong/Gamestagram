@@ -4,6 +4,7 @@ import {
   Event,
   FormattedEventWithUser,
   UserJoinEvent,
+  EditEvent,
 } from '../../models/Event'
 interface snakeEvent {
   host_id: number
@@ -14,6 +15,7 @@ interface snakeEvent {
   time: string
   number_ppl_playing: string
 }
+
 
 const rootUrlEvents = '/api/v1/events'
 
@@ -37,8 +39,8 @@ export async function deleteEvent(id: number) {
   await request.delete(`${rootUrlEvents}/${id}`)
 }
 
-export async function updateEvent(id: number, input: EventDB) {
-  return await request.post(`${rootUrlEvents}/${id}`).send(input)
+export async function updateEvent(id: number, input: EditEvent) {
+  return await request.patch(`${rootUrlEvents}/${id}/edit`).send(input)
 }
 
 export async function addUserEvent(input: UserJoinEvent) {

@@ -13,7 +13,7 @@ export default function Nav() {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
-const signUp = useAuth0()
+  const signUp = useAuth0()
   const handleLogIn = () => {
     console.log('log in function ran')
 
@@ -42,7 +42,7 @@ const signUp = useAuth0()
               <NavLink to="/" className="text-2xl font-bold text-gray-800">
                 <img
                   className="rounded-full w-20 h-20"
-                  src="./pics/temporary-logo.png"
+                  src="/pics/temporary-logo.png"
                   alt="website logo"
                 ></img>
               </NavLink>
