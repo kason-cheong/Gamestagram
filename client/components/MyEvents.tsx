@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getEventsByUserId} from '../apis/apiClientEvents'
 import MyHostEventCard from './MyHostEventCard'
@@ -29,7 +29,7 @@ const MyEvents = () => {
     if (currentUser.id !== 0) {
       
       fetchMyEvents(currentUser.id)
-      console.log(currentUser.id);
+
       
     }
 
@@ -48,14 +48,15 @@ const MyEvents = () => {
       {isAuthenticated && !isLoading ? (
         <div className="mx-auto w-4/5">
           <h1 className="text-2xl font-bold my-3">My Events</h1>
-          {/* <h2 className="text-xl font-semibold mb-2 text-blue-400">
-            {myEvents.length ? 'hosting Events' : null}
-          </h2> */}
+          <div className='flex justify-end'><Link to={'/events/add'}><button className="px-6 py-2 bg-purple-200 rounded-2xl my-3">Create an Event</button></Link></div>
+          <h2 className="text-xl font-semibold mb-2 text-blue-400">
+            {!myEvents.length && "NO EVENTS"}
+          </h2>
           {myEvents.map((event) => {
             if (event.hostId === event.userId) {
               return <MyHostEventCard event={event} />
             } else {
-              return <MyAttendEventCard event={event} />
+              return <MyAttendEventCard event={event} fetchMyEvents={fetchMyEvents} />
             }
           }
             
