@@ -11,6 +11,7 @@ import ImageBanner from './subcomponents/ImageBanner'
 import { Link } from 'react-router-dom'
 
 import { useUserStore } from '../store/useUserStore'
+import Map from './Map'
 
 function EventDetail() {
   const currentUser = useUserStore((state) => state.currentUser)
@@ -162,6 +163,9 @@ function EventDetail() {
           >
             Return to all events
           </Link>
+        </div>
+        <div>
+          <Map />
         </div>
       </div>
     </>
