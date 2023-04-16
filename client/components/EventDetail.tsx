@@ -1,25 +1,19 @@
 import { useEventStore } from '../store/useEventStore'
 
 import { shallow } from 'zustand/shallow'
-import { getUserById,getUserByAuth0Id } from '../apis/apiClientUsers'
+import { getUserById, getUserByAuth0Id } from '../apis/apiClientUsers'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { addUserEvent } from '../apis/apiClientEvents'
 import { useGameStore } from '../store/useGameStore'
 import { useUserStore } from '../store/useUserStore'
 
-import { useAuth0 } from '@auth0/auth0-react'
-
 function EventDetail() {
- 
-
   const currentUser = useUserStore((state) => state.currentUser)
 
-  const { user } = useAuth0()
   const [host, setHost] = useState({
     photoUrl: '',
   })
-
 
   const { id } = useParams()
   const { event, fetchEvent } = useEventStore(
@@ -38,17 +32,12 @@ function EventDetail() {
   useEffect(() => {
     fetchGame(event.gameId)
     fetchEvent()
-    console.log(event.users);
+    console.log(event.users)
 
-
-
-
-    
-    // calculatePlayer()
     if (event.hostId) {
       fetchHost(event.hostId)
     }
-  }, [event.hostId,currentUser.id])
+  }, [event.hostId, currentUser.id])
 
   async function fetchHost(id: number) {
     const host = await getUserById(id)
@@ -58,21 +47,10 @@ function EventDetail() {
     }))
   }
 
-// async function fetchUser(auth0Id:string) {
-//   const currentUser=await getUserByAuth0Id(auth0Id)
-  
-// }
-
-
   async function handleSumbit() {
-    await addUserEvent({ eventId: Number(id), userId: currentUser.id})
+    await addUserEvent({ eventId: Number(id), userId: currentUser.id })
     fetchEvent()
   }
-
-  // function calculatePlayer(): number {
-  //   const remainingPlayer = game.playerCount - event.numberOfPeople
-  //   return remainingPlayer
-  // }
 
   return (
     <div className="my-4  mx-auto w-3/5 ">
@@ -138,16 +116,7 @@ function EventDetail() {
           </div>
         </div>
       </div>
-      {/* {event.numberOfPeople < game.playerCount ? (
-        <>
-          <h4>Space Left</h4>
-          <p className="my-2 text-center">
-            {remainingPlayer} of {game.playerCount}
-          </p>
-        </>
-      ) : (
-        <p>No Space Left</p>
-      )} */}
+
       <div className="flex float-right w-1/3 my-5 justify-between">
         {event.users.find((e) => e.userId === currentUser.id) ? (
           <button className="w-2/5 py-4 text-center  bg-purple-300 drop-shadow-md  hover:drop-shadow-xl rounded-lg text-sm">
