@@ -14,6 +14,7 @@ import { useUserStore } from '../store/useUserStore'
 
 import { useAuth0 } from '@auth0/auth0-react'
 
+
 function EventDetail() {
   const currentUser = useUserStore((state) => state.currentUser)
 
@@ -186,6 +187,9 @@ function EventDetail() {
             Return to all events
           </Link>
         </div>
+      </div>
+      <div>
+
       </div>
     </>
   )
