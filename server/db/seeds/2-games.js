@@ -4,7 +4,7 @@ exports.seed = (knex) => {
       id: 1,
       name: 'Root',
       description:
-        'Find adventure in this marvelous asymmetric game. Root provides limitless replay value as you and your friends explore the unique factions all wanting to rule a fantastic forest kingdom. Play as the Marquise de Cat and dominate the woods, extracting its riches and policing its inhabitants, as the Woodland Alliance, gathering supporters and coordinate revolts against the ruling regime, the Eyrie Dynasties, regaining control of the woods while keeping your squabbling court at bay, or as the Vagabond, seeking fame and fortune as you forge alliances and rivalries with the other players. Each faction has its own play style and paths to victory, providing an immersive game experience you will want to play again and again',
+        'Find adventure in this marvelous asymmetric game. Root provides limitless replay value as you and your friends explore the unique factions all wanting to rule a fantastic forest kingdom. ',
       number_player: '2-4',
       play_time: '60-90 mins',
       photo_url:
@@ -19,6 +19,26 @@ exports.seed = (knex) => {
       play_time: '90-120 mins',
       photo_url:
         'https://cdn.shopify.com/s/files/1/0513/4077/1515/products/scythe-board-game.jpg?v=1611090922',
+    },
+    {
+      id: 3,
+      name: 'Catan',
+      description:
+        'The women and men of your expedition build the first two settlements. Fortunately, the land is rich in natural resources. You build roads and new settlements that eventually become cities. Will you succeed in gaining supremacy on Catan?',
+      number_player: '3-4',
+      play_time: '45-90 mins',
+      photo_url:
+        'https://d2k4q26owzy373.cloudfront.net/350x350/games/uploaded/1629324722072.jpg?format=webp',
+    },
+    {
+      id: 4,
+      name: 'Game of Life',
+      description:
+        "Good fortune is always around the corner. That's LIFE. Contains sturdy bi-fold game board with plastic buildings and mountains, money pad, cards, stock and insurance certificates, 8 plastic cars, pink and blue people-pegs, number board, bankers trays and rules. Two to six player game.",
+      number_player: '2-6',
+      play_time: '30 mins',
+      photo_url:
+        'https://d2k4q26owzy373.cloudfront.net/350x350/games/uploaded/1559257516250-61As7WgB2BdL.jpg?format=webp',
     },
   ])
 }
