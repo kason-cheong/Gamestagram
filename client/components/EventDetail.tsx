@@ -38,7 +38,6 @@ function EventDetail() {
     fetchEvent()
     console.log(event.users)
 
-
     if (event.hostId) {
       fetchHost(event.hostId)
     }
@@ -51,7 +50,6 @@ function EventDetail() {
       photoUrl: host.photoUrl,
     }))
   }
-
 
   async function handleSumbit() {
     await addUserEvent({ eventId: Number(id), userId: currentUser.id })
@@ -137,8 +135,8 @@ function EventDetail() {
             </div>
           </div>
         </div>
-
       </div>
+      <div>
         <div className="flex float-right w-1/3 my-5 justify-between">
           {event.users.find((e) => e.userId === currentUser.id) ? (
             <button className="w-2/5 py-4 text-center  bg-purple-300 drop-shadow-md  hover:drop-shadow-xl rounded-lg text-sm">
