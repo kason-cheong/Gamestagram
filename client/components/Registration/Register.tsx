@@ -46,9 +46,6 @@ export default function Register() {
     if (user && user.email && user.sub) {
       const form = event.currentTarget
       const formData = new FormData(form)
-      // const userName = form.element.nameItem('userName').value
-      // const photoUrl = form.element.nameItem('photoUrl').value
-      // const bio = form.element.nameItem('bio').value as string
       const userName = formData.get('userName') as string
       const photoUrl = formData.get('photoUrl') as string
       const bio = formData.get('bio') as string
