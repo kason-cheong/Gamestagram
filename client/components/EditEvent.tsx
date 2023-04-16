@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { EditEvent } from '../../models/Event'
 import { updateEvent, getEventById } from '../apis/apiClientEvents'
-import { useParams,useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 export default function EditEventPage() {
   const { id } = useParams()
 
-  const nav=useNavigate()
+  const nav = useNavigate()
   const [event, setEvent] = useState<EditEvent>({
     hostId: 0,
     time: '',
@@ -41,7 +41,7 @@ export default function EditEventPage() {
       await updateEvent(Number(id), newEvent)
       setSuccess(true)
       setTimeout(() => {
-        nav(`/my-events/${event.hostId}`)
+        nav('/my-events')
       }, 1800)
     } catch (error) {
       setError('Failed to update event.')

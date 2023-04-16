@@ -7,16 +7,25 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
-interface HostEvent {
+interface MyEvent {
   eventId: number
   userId: number
+  hostId:number
   userEventId: number
   eventName: string
   time: string
   location: string
 }
 
-const MyEventCard = ({ event }: { event: HostEvent }) => {
+
+
+
+
+const MyEventCard = ({ event,fetchMyEvents }: { event: MyEvent,fetchMyEvents:(id:number)=>Promise<void> }) => {
+  
+
+  
+
   async function handleOpen() {
     setOpen(true)
   }
@@ -26,6 +35,7 @@ const MyEventCard = ({ event }: { event: HostEvent }) => {
 
   const handleCancel = async (userEventId: number) => {
     await cancelEvent(userEventId)
+    fetchMyEvents(event.userId)
     setOpen(false)
     setShowCard(false)
   }
