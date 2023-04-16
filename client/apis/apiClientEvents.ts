@@ -5,6 +5,15 @@ import {
   FormattedEventWithUser,
   UserJoinEvent,
 } from '../../models/Event'
+interface snakeEvent {
+  host_id: number
+  event_name: string
+  game_id: number | undefined
+  description: string
+  location: string
+  time: string
+  number_ppl_playing: string
+}
 
 const rootUrlEvents = '/api/v1/events'
 
@@ -20,8 +29,8 @@ export async function getEventById(id: number) {
   return res.body as Promise<FormattedEventWithUser>
 }
 
-export async function addEvents(event: EventDB) {
-  return await request.post(rootUrlEvents).send(event)
+export async function addEvents(newEvent: snakeEvent) {
+  return await request.post(`${rootUrlEvents}/add`).send(newEvent)
 }
 
 export async function deleteEvent(id: number) {

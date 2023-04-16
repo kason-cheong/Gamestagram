@@ -11,7 +11,7 @@ import EventDetail from './EventDetail'
 import PageTransition from './subcomponents/PageTransition'
 
 import Register from './Registration/Register'
-
+import { Addevent } from './AddEvent'
 
 function App() {
   return (
@@ -20,8 +20,6 @@ function App() {
       <Notice />
 
       <Routes>
-
-
         <Route
           path="/"
           element={
@@ -55,12 +53,8 @@ function App() {
           }
         />
 
-
-
         <Route path="/profile" element={<Register />} />
-
-
-
+        <Route path="/events/add" element={<Addevent />} />
       </Routes>
     </>
   )
