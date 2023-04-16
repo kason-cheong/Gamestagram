@@ -31,12 +31,25 @@ export async function getEventById(id: number) {
   return res.body as Promise<FormattedEventWithUser>
 }
 
-export async function addEvents(newEvent: snakeEvent) {
-  return await request.post(`${rootUrlEvents}/add`).send(newEvent)
+
+export async function getEventsByUserId(id: number) {
+  const res = await request.get(`${rootUrlEvents}/my-events/user/${id}`)
+  return res.body 
 }
 
-export async function deleteEvent(id: number) {
-  await request.delete(`${rootUrlEvents}/${id}`)
+export async function getEventsByHostId(id: number) {
+  const res = await request.get(`${rootUrlEvents}/my-events/host/${id}`)
+  return res.body 
+}
+
+
+export async function addEvents(newEvent: snakeEvent) {
+  return await request.post(`${rootUrlEvents}/add`).send(newEvent)
+
+}
+
+export async function cancelEvent(id: number) {
+  await request.delete(`${rootUrlEvents}/my-events/${id}`)
 }
 
 export async function updateEvent(id: number, input: EditEvent) {

@@ -1,12 +1,16 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import {
   IfAuthenticated,
   IfNotAuthenticated,
 } from './subcomponents/Authenticated'
+
+import { useUserStore } from '../store/useUserStore'
+
 import { getUserByAuth0Id } from '../apis/apiClientUsers'
 import { useEffect } from 'react'
+
 
 export default function Nav() {
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -22,6 +26,11 @@ export default function Nav() {
     }
     fetchProfilePic()
   }, [user])
+
+  const currentUser = useUserStore((state) => state.currentUser)
+
+
+  
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
@@ -101,12 +110,14 @@ export default function Nav() {
                   <div className="absolute z-10 mt-16 py-2 w-48 bg-white rounded-md shadow-xl">
                     <NavLink
                       to="/profile"
+                      onClick={toggleDropdown}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
                       Profile
                     </NavLink>
                     <NavLink
-                      to="/my-events"
+                      to={`my-events/${currentUser.id}`}
+                      onClick={toggleDropdown}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
                       My Events
