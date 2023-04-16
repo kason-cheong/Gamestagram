@@ -19,9 +19,11 @@ export default function Register() {
       {
         fetchUser(user.sub)
       }
-      // fetchUser('12341d88')
+      
     }
-  }, [user, showRegister])
+    console.log(currentUser.id);
+    
+  }, [user,showRegister,currentUser.id])
 
   async function fetchUser(authId: string) {
     const userDB = await getUserByAuth0Id(authId)
@@ -33,7 +35,6 @@ export default function Register() {
         photoUrl: userDB.photoUrl,
         bio: userDB.bio,
         email: userDB.email,
-        signedUpAt: userDB.dateSignUp,
       })
     } else {
       setshowRegister(true)
@@ -62,7 +63,7 @@ export default function Register() {
         auth0_Id: auth0Id,
       }
 
-      await addUser(newUser)
+     await addUser(newUser)
       setshowRegister(false)
     } else {
       console.log('user not signed in')
