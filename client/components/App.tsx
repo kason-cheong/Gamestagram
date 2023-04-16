@@ -60,7 +60,7 @@ function App() {
 
         <Route path="/profile" element={<Register />} />
 
-        <Route path="/my-events/:id" element={< MyEvents/>} />
+        <Route path="/my-events" element={< MyEvents/>} />
 
         <Route path="/events/add" element={<Addevent />} />
 

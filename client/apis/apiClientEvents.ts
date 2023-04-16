@@ -37,10 +37,10 @@ export async function getEventsByUserId(id: number) {
   return res.body 
 }
 
-export async function getEventsByHostId(id: number) {
-  const res = await request.get(`${rootUrlEvents}/my-events/host/${id}`)
-  return res.body 
-}
+// export async function getEventsByHostId(id: number) {
+//   const res = await request.get(`${rootUrlEvents}/my-events/host/${id}`)
+//   return res.body 
+// }
 
 
 export async function addEvents(newEvent: snakeEvent) {
