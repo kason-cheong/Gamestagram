@@ -53,8 +53,11 @@ function EventDetail() {
   }
 
   async function handleSumbit() {
-    await addUserEvent({ eventId: Number(id), userId: currentUser.id })
-    fetchEvent()
+    if (currentUser.id !== 0) {
+      await addUserEvent({ eventId: Number(id), userId: currentUser.id })
+      fetchEvent()
+    }
+   
   }
 
   return (

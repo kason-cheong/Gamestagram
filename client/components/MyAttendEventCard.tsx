@@ -36,13 +36,11 @@ const MyEventCard = ({ event }: { event: HostEvent }) => {
 
   return (
     <>
-      {showCard ? (
-        <>
-          <h2 className="text-xl font-semibold mb-2 text-blue-400">
-            attending Events
-          </h2>
+   
+        
           <div className="border p-2 w-1/3 mb-12">
-            <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
+        <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
+        <p className="text-purple-500"><b className="text-black">Role:</b> player</p>
             <p>
               <b>Date:</b> {event.time}
             </p>
@@ -77,10 +75,8 @@ const MyEventCard = ({ event }: { event: HostEvent }) => {
               </DialogActions>
             </Dialog>
           </div>
-        </>
-      ) : (
-        <p>No attending events</p>
-      )}
+        
+      
     </>
   )
 }

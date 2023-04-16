@@ -15,17 +15,28 @@ export default function Nav() {
   const { user, loginWithRedirect, logout } = useAuth0()
   const [photoUrl, setPhotoUrl] = useState('')
 
+  const setUser = useUserStore((state) => state.setUser)
+  const currentUser = useUserStore((state) => state.currentUser)
+
+
   useEffect(() => {
     async function fetchProfilePic() {
       if (user) {
         const userData = await getUserByAuth0Id(String(user.sub))
         setPhotoUrl(userData.photoUrl)
+         setUser({
+        id: userData.id,
+        userName: userData.username,
+        photoUrl: userData.photoUrl,
+        bio: userData.bio,
+        email: userData.email,
+      })
       }
     }
     fetchProfilePic()
-  }, [user])
+  }, [user,currentUser.id])
 
-  const currentUser = useUserStore((state) => state.currentUser)
+
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
@@ -111,7 +122,7 @@ export default function Nav() {
                       Profile
                     </NavLink>
                     <NavLink
-                      to={`my-events/${currentUser.id}`}
+                      to={`/my-events`}
                       onClick={toggleDropdown}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
