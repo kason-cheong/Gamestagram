@@ -1,5 +1,7 @@
 import connection from './connection'
-import type { Event, UserEventDB } from '../../models/Event'
+
+import type { Event,EventDB,UserEventDB } from '../../models/Event'
+
 import { formatEvent, formatEventList } from '../public/formatter'
 import { FormattedEventWithUser } from '../../models/Event'
 
@@ -53,6 +55,7 @@ export function getEventsById(id: number, db = connection) {
     .then(formatEvent)
 }
 
+
 export function getEventsByUserId(id: number, db = connection) {
   return db('user_event')
     .join('events', 'user_event.event_id', 'events.id')
@@ -80,7 +83,8 @@ export function getEventsByHostId(id: number, db = connection) {
     )
 }
 
-export function addEvent(data: Event, db = connection): Promise<number[]> {
+
+export function addEvent(data: EventDB, db = connection): Promise<number[]> {
   const timestamp = new Date(Date.now())
   const newData = { ...data, created_at: timestamp }
   return db('events').insert(newData)

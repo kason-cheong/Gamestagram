@@ -5,11 +5,27 @@ import {
   IfAuthenticated,
   IfNotAuthenticated,
 } from './subcomponents/Authenticated'
+
 import { useUserStore } from '../store/useUserStore'
+
+import { getUserByAuth0Id } from '../apis/apiClientUsers'
+import { useEffect } from 'react'
+
 
 export default function Nav() {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const { user, loginWithRedirect, logout } = useAuth0()
+  const [photoUrl, setPhotoUrl] = useState('')
+
+  useEffect(() => {
+    async function fetchProfilePic() {
+      if (user) {
+        const userData = await getUserByAuth0Id(String(user.sub))
+        setPhotoUrl(userData.photoUrl)
+      }
+    }
+    fetchProfilePic()
+  }, [user])
 
   const currentUser = useUserStore((state) => state.currentUser)
 
@@ -19,7 +35,6 @@ export default function Nav() {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
-const signUp = useAuth0()
   const handleLogIn = () => {
     console.log('log in function ran')
 
@@ -82,17 +97,17 @@ const signUp = useAuth0()
             </IfNotAuthenticated>
 
             <IfAuthenticated>
-              <div className="relative">
-                <button onClick={toggleDropdown}>
-                  {user?.name}
-                  <svg
-                    className="w-4 h-4 inline-block ml-1 mb-1 text-gray-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  ></svg>
-                </button>
+              <div className="relative flex flex-row">
+                {/* <img className='rounded-full w-20 h-20' src={photoUrl} alt="profile pic"></img> */}
+                <button onClick={toggleDropdown}>{user?.name}</button>
+                <img
+                  className="rounded-full w-16 h-16"
+                  src={photoUrl}
+                  alt="profile pic"
+                  onClick={toggleDropdown}
+                ></img>
                 {dropdownOpen && (
-                  <div className="absolute z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl">
+                  <div className="absolute z-10 mt-16 py-2 w-48 bg-white rounded-md shadow-xl">
                     <NavLink
                       to="/profile"
                       onClick={toggleDropdown}
