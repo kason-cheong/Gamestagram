@@ -5,7 +5,7 @@ interface NewUser {
   userName: string
   bio: string
   photoUrl: string
-  signedUpAt: Date
+  // signedUpAt: Date
   email: string
 }
 
@@ -21,7 +21,7 @@ export const useUserStore = create<IUser>((set) => ({
     bio: '',
     email: '',
     photoUrl: '',
-    signedUpAt: new Date(),
+    // signedUpAt: new Date(),
   },
   setUser: (newUser: NewUser) =>
     set((state) => ({

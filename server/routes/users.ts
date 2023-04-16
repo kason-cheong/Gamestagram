@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
 router.post('/add', (req, res) => {
   db.addUser(req.body)
     .then((results) => {
-      res.json(results)
+      res.json(results[0])
     })
     .catch((err) => {
       console.log(err)
