@@ -27,7 +27,7 @@ function Home() {
     <>
       <ImageBanner name="Welcome to Gamestagram!" url="./pics/banner1.jpg" />
       <main className="container mx-auto">
-        <h2 className="mt-5 mb-5 font-sans text-2xl font-bold text-center md:text-left">
+        <h2 className="mt-5 mb-5 font-sans text-4xl font-bold text-center md:text-left">
           Events
         </h2>
 
@@ -37,7 +37,7 @@ function Home() {
           ))}
         </section>
 
-        <h2 className="mt-5 mb-5 font-sans text-2xl font-bold text-center md:text-left">
+        <h2 className="mt-5 mb-5 font-sans text-4xl font-bold text-center md:text-left">
           Popular Games
         </h2>
 
