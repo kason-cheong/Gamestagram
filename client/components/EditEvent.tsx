@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { EventDB, EditEvent } from '../../models/Event'
+import { EditEvent } from '../../models/Event'
 import { updateEvent, getEventById } from '../apis/apiClientEvents'
 import { useParams } from 'react-router-dom'
 
@@ -38,6 +38,9 @@ export default function EditEventPage() {
 
       await updateEvent(Number(id), newEvent)
       setSuccess(true)
+      setTimeout(() => {
+        window.location.href = 'http://localhost:3000/my-events'
+      }, 1800)
     } catch (error) {
       setError('Failed to update event.')
     }
@@ -60,7 +63,10 @@ export default function EditEventPage() {
       {success && (
         <p className="text-green-500 mb-5">Event updated successfully!</p>
       )}
-      <form onSubmit={handleSubmit} className="space-y-4 border border-gray-300 p-4">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 border border-gray-300 p-4"
+      >
         <div>
           <label htmlFor="time" className="block font-medium mb-2 ">
             Time:
