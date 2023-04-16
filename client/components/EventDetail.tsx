@@ -12,12 +12,9 @@ import { Link } from 'react-router-dom'
 
 import { useUserStore } from '../store/useUserStore'
 
-import { useAuth0 } from '@auth0/auth0-react'
-
 function EventDetail() {
   const currentUser = useUserStore((state) => state.currentUser)
 
-  const { user } = useAuth0()
   const [host, setHost] = useState({
     photoUrl: '',
   })
@@ -41,7 +38,7 @@ function EventDetail() {
     fetchEvent()
     console.log(event.users)
 
-    // calculatePlayer()
+
     if (event.hostId) {
       fetchHost(event.hostId)
     }
@@ -55,20 +52,11 @@ function EventDetail() {
     }))
   }
 
-  // async function fetchUser(auth0Id:string) {
-  //   const currentUser=await getUserByAuth0Id(auth0Id)
-
-  // }
 
   async function handleSumbit() {
     await addUserEvent({ eventId: Number(id), userId: currentUser.id })
     fetchEvent()
   }
-
-  // function calculatePlayer(): number {
-  //   const remainingPlayer = game.playerCount - event.numberOfPeople
-  //   return remainingPlayer
-  // }
 
   return (
     <>
@@ -149,17 +137,8 @@ function EventDetail() {
             </div>
           </div>
         </div>
-        {/* {event.numberOfPeople < game.playerCount ? (
-        <>
-          <h4>Space Left</h4>
-          <p className="my-2 text-center">
-            {remainingPlayer} of {game.playerCount}
-          </p>
-        </>
-      ) : (
-        <p>No Space Left</p>
-      )} */}
 
+      </div>
         <div className="flex float-right w-1/3 my-5 justify-between">
           {event.users.find((e) => e.userId === currentUser.id) ? (
             <button className="w-2/5 py-4 text-center  bg-purple-300 drop-shadow-md  hover:drop-shadow-xl rounded-lg text-sm">
