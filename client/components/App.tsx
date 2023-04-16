@@ -7,6 +7,7 @@ import Notice from './subcomponents/Notice'
 import Boardgames from './Boardgames'
 import { Route, Routes } from 'react-router-dom'
 import EventDetail from './EventDetail'
+import MyEvents from './MyEvents'
 
 import PageTransition from './subcomponents/PageTransition'
 
@@ -58,7 +59,7 @@ function App() {
 
 
         <Route path="/profile" element={<Register />} />
-
+        <Route path="/my-events/:id" element={< MyEvents/>} />
 
 
       </Routes>

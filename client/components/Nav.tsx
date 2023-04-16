@@ -1,14 +1,20 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import {
   IfAuthenticated,
   IfNotAuthenticated,
 } from './subcomponents/Authenticated'
+import { useUserStore } from '../store/useUserStore'
 
 export default function Nav() {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const { user, loginWithRedirect, logout } = useAuth0()
+
+  const currentUser = useUserStore((state) => state.currentUser)
+
+
+  
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
@@ -42,7 +48,7 @@ const signUp = useAuth0()
               <NavLink to="/" className="text-2xl font-bold text-gray-800">
                 <img
                   className="rounded-full w-20 h-20"
-                  src="./pics/temporary-logo.png"
+                  src="/pics/temporary-logo.png"
                   alt="website logo"
                 ></img>
               </NavLink>
@@ -89,12 +95,14 @@ const signUp = useAuth0()
                   <div className="absolute z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl">
                     <NavLink
                       to="/profile"
+                      onClick={toggleDropdown}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
                       Profile
                     </NavLink>
                     <NavLink
-                      to="/my-events"
+                      to={`my-events/${currentUser.id}`}
+                      onClick={toggleDropdown}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
                       My Events

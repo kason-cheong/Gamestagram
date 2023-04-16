@@ -20,12 +20,23 @@ export async function getEventById(id: number) {
   return res.body as Promise<FormattedEventWithUser>
 }
 
+export async function getEventsByUserId(id: number) {
+  const res = await request.get(`${rootUrlEvents}/my-events/user/${id}`)
+  return res.body 
+}
+
+export async function getEventsByHostId(id: number) {
+  const res = await request.get(`${rootUrlEvents}/my-events/host/${id}`)
+  return res.body 
+}
+
+
 export async function addEvents(event: EventDB) {
   return await request.post(rootUrlEvents).send(event)
 }
 
-export async function deleteEvent(id: number) {
-  await request.delete(`${rootUrlEvents}/${id}`)
+export async function cancelEvent(id: number) {
+  await request.delete(`${rootUrlEvents}/my-events/${id}`)
 }
 
 export async function updateEvent(id: number, input: EventDB) {
