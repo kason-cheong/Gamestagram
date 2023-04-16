@@ -3,12 +3,14 @@ import { addEvents } from '../apis/apiClientEvents'
 import { getGames } from '../apis/apiClientGames'
 import { useUserStore } from '../store/useUserStore'
 import { Game } from '../../models/Game'
+import { Autocomplete, TextField } from '@mui/material'
 
 export function Addevent() {
   const [isAdd, setAdd] = useState(false)
   const currentUser = useUserStore((state) => state.currentUser)
   const [games, setGames] = useState<Game[]>([])
-  const [selectedGameId, setSelectedGameId] = useState<number>()
+  const [selectedGameId, setSelectedGameId] = useState<number | null>(null)
+
   const [gameName, setGameName] = useState('')
   const [filteredGames, setFilteredGames] = useState<Game[]>(games)
 
@@ -24,29 +26,34 @@ export function Addevent() {
     }
     getGame()
   }, [])
-
-  function handleGameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const gameName = event.target.value
-    setGameName(gameName)
-    const matchingGame = games.find((game) => game.name === gameName)
-    if (matchingGame) {
-      setSelectedGameId(matchingGame.id)
-    } else {
-      setSelectedGameId(undefined)
-    }
-    const filteredGames = games.filter((game) =>
+  useEffect(() => {
+    const filtered = games.filter((game) =>
       game.name.toLowerCase().includes(gameName.toLowerCase())
     )
-    setFilteredGames(filteredGames)
+    setFilteredGames(filtered)
+  }, [games, gameName])
+
+  const handleGameChange = (event, game: Game) => {
+    if (game) {
+      setSelectedGameId(game.id)
+      setGameName(game.name)
+    } else {
+      setSelectedGameId(null)
+      setGameName('')
+    }
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!selectedGameId) {
+      alert('Please select a valid game.')
+      return
+    }
 
     const form = event.currentTarget
     const formData = new FormData(form)
     const eventName = formData.get('eventName') as string
-    // const gameId = formData.get('gameId') as string // need to change to  number
+
     const description = formData.get('description') as string
     const numberPpl = formData.get('numberPpl') as string
     const hostId = currentUser.id
@@ -77,6 +84,31 @@ export function Addevent() {
               </h2>
             </div>
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+              <div>
+                <Autocomplete
+                  disablePortal
+                  value={
+                    filteredGames.find((game) => game.id === selectedGameId) ||
+                    null
+                  }
+                  id="gameName"
+                  options={filteredGames}
+                  getOptionLabel={(game) => game.name}
+                  onChange={handleGameChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Game Name"
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                    />
+                  )}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="gameName"
+                />
+              </div>
               <input type="hidden" name="remember" value="true" />
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
@@ -93,7 +125,7 @@ export function Addevent() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="time" className="sr-only">
+                  {/* <label htmlFor="time" className="sr-only">
                     Time
                   </label>
                   <textarea
@@ -102,7 +134,48 @@ export function Addevent() {
                     required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="time"
-                  />
+                  /> */}
+                  {/* <div className="w-full">
+                    <TextField
+                      id="date"
+                      name="date"
+                      label="Date"
+                      type="date"
+                      required
+                      fullWidth
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </div>
+
+                  <div className="w-full">
+                    <TextField
+                      id="time"
+                      name="time"
+                      label="Time"
+                      type="time"
+                      required
+                      fullWidth
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </div> */}
+                  <label htmlFor="date">Choose a date:</label>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  ></input>
+                  <label htmlFor="time">Choose a time:</label>
+                  <input
+                    type="time"
+                    id="time"
+                    name="time"
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  ></input>
                 </div>
                 <div>
                   <label htmlFor="description" className="sr-only">
@@ -128,40 +201,7 @@ export function Addevent() {
                     placeholder="location"
                   />
                 </div>
-                <div>
-                  <label htmlFor="game" className="sr-only">
-                    Game
-                  </label>
-                  <input
-                    type="text"
-                    id="game"
-                    name="game"
-                   
-                    value={gameName}
-                    onChange={handleGameChange}
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="gameName"
-                  />
-                  {games.length > 0 && (
-                    <select
-                      id="gameId"
-                      name="gameId"
-                      required
-                      value={selectedGameId}
-                      onChange={(event) =>
-                        setSelectedGameId(event.target.value)
-                      }
-                    >
-                      <option value="">Select a game</option>{' '}
-                      {games.map((game) => (
-                        <option key={game.id} value={game.id}>
-                          {game.name}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </div>
+
                 <div>
                   <label htmlFor="numberPpl" className="sr-only">
                     Number of people playing
@@ -177,7 +217,7 @@ export function Addevent() {
                 </div>
                 <button
                   type="submit"
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 >
                   Add
                 </button>
