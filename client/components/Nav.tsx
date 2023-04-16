@@ -97,13 +97,8 @@ export default function Nav() {
                   alt="profile pic"
                   onClick={toggleDropdown}
                 ></img>
-                {/* <svg
-                  className="w-4 h-4 inline-block ml-1 mb-1 text-gray-600"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                ></svg> */}
                 {dropdownOpen && (
-                  <div className="absolute z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl">
+                  <div className="absolute z-10 mt-16 py-2 w-48 bg-white rounded-md shadow-xl">
                     <NavLink
                       to="/profile"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
