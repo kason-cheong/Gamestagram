@@ -49,3 +49,11 @@ export interface UserJoinEvent {
   userId: number
   eventId: number
 }
+
+export interface EditEvent {
+  hostId: number
+  time: string
+  eventName: string
+  location: string
+  description: string
+}
