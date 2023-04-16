@@ -67,9 +67,7 @@ function EventDetail() {
         </div>
         <div className="flex justify-center text-center mt-4">
           <ul>
-            <li className=" font-bold font-pacifico text-3xl">
-              {event.eventName}
-            </li>
+            <li className=" font-pacifico text-3xl">{event.eventName}</li>
             <li className="italic text-lg"> {event.gameName}</li>
           </ul>
         </div>
