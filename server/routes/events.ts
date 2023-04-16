@@ -38,16 +38,16 @@ router.get('/my-events/user/:userId', (req, res) => {
   })
 })
 
-router.get('/my-events/host/:hostId', (req, res) => {
-  db.getEventsByHostId(Number(req.params.hostId))
-  .then((results) => {
-    res.json(results)
-  })
-  .catch((err) => {
-    console.log(err)
-    res.status(500).json({ message: 'Something went wrong' })
-  })
-})
+// router.get('/my-events/host/:hostId', (req, res) => {
+//   db.getEventsByHostId(Number(req.params.hostId))
+//   .then((results) => {
+//     res.json(results)
+//   })
+//   .catch((err) => {
+//     console.log(err)
+//     res.status(500).json({ message: 'Something went wrong' })
+//   })
+// })
 
 
 
@@ -73,7 +73,7 @@ router.post('/add/user-event', async (req, res) => {
 router.post('/add', async (req, res) => {
   try {
     const id = await db.addEvent(req.body)
-console.log(req.body.host_id);
+    console.log(req.body.host_id);
 
     const timestamp = new Date(Date.now())
     const newData = {
@@ -105,7 +105,7 @@ router.patch('/:id/edit', (req, res) => {
 
 
 router.delete('/my-events/:userEventId', (req,res)=> {
-  db.cancelEvent(Number(req.params.userEventId))
+  db.cancelUserEvent(Number(req.params.userEventId))
   .then(() => {
     res.status(200).json({ message: 'user_event has been deleted' })
   })

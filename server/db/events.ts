@@ -63,6 +63,7 @@ export function getEventsByUserId(id: number, db = connection) {
     .select(
       'events.id as eventId',
       'user_event.user_id as userId',
+      'events.host_id as hostId',
       'user_event.id as userEventId',
       'events.event_name as eventName',
       'time',
@@ -107,6 +108,10 @@ export function editEvent(
 
 
 
-export function cancelEvent(id: number, db = connection) {
+export function cancelUserEvent(id: number, db = connection) {
   return db('user_event').where('id',id).del()
+}
+
+export function cancelEvent(id:number,db=connection) {
+  return db('events').where('id',id).del()
 }
