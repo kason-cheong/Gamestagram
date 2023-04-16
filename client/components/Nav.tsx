@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import {
@@ -9,8 +9,6 @@ import {
 import { useUserStore } from '../store/useUserStore'
 
 import { getUserByAuth0Id } from '../apis/apiClientUsers'
-
-
 
 export default function Nav() {
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -39,9 +37,6 @@ export default function Nav() {
   }, [user,currentUser.id])
 
 
-
-
-  
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
