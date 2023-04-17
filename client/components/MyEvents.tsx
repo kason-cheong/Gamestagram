@@ -46,9 +46,9 @@ const MyEvents = () => {
           </h2>
           {myEvents.map((event) => {
             if (event.hostId === event.userId) {
-              return <MyHostEventCard event={event} fetchMyEvents={fetchMyEvents} />
+              return <MyHostEventCard key={event.eventId} event={event} fetchMyEvents={fetchMyEvents} />
             } else {
-              return <MyAttendEventCard event={event} fetchMyEvents={fetchMyEvents} />
+              return <MyAttendEventCard key={event.eventId} event={event} fetchMyEvents={fetchMyEvents} />
             }
           }
             
