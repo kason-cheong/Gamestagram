@@ -21,12 +21,12 @@ function GameCard({ game }: { game: Game }) {
         <div className="p-2 text-center space-y-3">
           <h4 className="text-orange-900 mb-2 text-2xl">{game.name}</h4>
           {filterOutTags(game.description.slice(0, 200))}
-          <p className="italic">
-            <b>Playtime:</b>
-            {game.averagePlayTime}
+          <p>
+            <b>Playtime: </b>
+            {game.averagePlayTime} minutes
           </p>
           <p>
-            <b>players:</b>
+            <b>Players: </b>
             {game.playerCount}
           </p>
         </div>
