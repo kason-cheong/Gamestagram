@@ -93,7 +93,8 @@ export function Addevent() {
       location: address,
       time: timeDb,
     }
-
+ 
+  
     await addEvents(newEvent)
     setAdd(true)
     navigate('/my-events')

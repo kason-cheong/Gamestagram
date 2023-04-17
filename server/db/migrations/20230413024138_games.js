@@ -5,6 +5,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable('games', (table) => {
     table.increments('id').primary()
+    table.string('api_id')
     table.string('name')
     table.string('description')
     table.string('number_player')
