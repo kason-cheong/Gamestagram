@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { GameDB, Game } from '../../models/Game'
+import { Game,GameSnake } from '../../models/Game'
 
 const rootUrlGames = '/api/v1/games'
 let limit=""
@@ -23,4 +23,8 @@ export async function getGamesFromAPI(limit:string|number) {
   console.log(res.body.games);
   
   return res.body.games
+}
+
+export async function addGame(newGame:GameSnake) {
+  await request.post(`${rootUrlGames}/add`).send(newGame)
 }

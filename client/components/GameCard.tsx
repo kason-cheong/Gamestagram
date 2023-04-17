@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 function GameCard({ game }: { game: Game }) {
   return (
     <motion.div whileHover={{ scale: 1.2 }}>
-      <div className=" bg-slate-200 rounded-2xl w-80 shadow-2xl shadow-slate-400 ml-6 mb-8">
+      <div className=" bg-slate-200 rounded-2xl w-80 shadow-2xl shadow-slate-400 ml-12 mb-8">
         <div className=" h-56">
           <img
             src={`${game.photoUrl}`}

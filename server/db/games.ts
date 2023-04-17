@@ -1,5 +1,5 @@
 import connection from './connection'
-import type { Game } from '../../models/Game'
+import type { Game,GameSnake } from '../../models/Game'
 
 export function getGames(db = connection): Promise<Game[]> {
   return db('games').select(
@@ -23,4 +23,8 @@ export function getGamesById(id: number, db = connection): Promise<Game[]> {
       'photo_url as photoUrl'
     )
     .where('id', id)
+}
+
+export function addGame(newGame:GameSnake,db=connection) {
+  return db('games').insert(newGame)
 }
