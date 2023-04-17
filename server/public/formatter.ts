@@ -7,6 +7,7 @@ export function createEvent(eventLine: Event) {
     gameId: eventLine.gameId,
     hostId: eventLine.hostId,
     location: eventLine.location,
+    status:eventLine.status,
     eventName: eventLine.eventName,
     numberOfPeople: eventLine.numberOfPeople,
     createdAt: eventLine.createdAt,

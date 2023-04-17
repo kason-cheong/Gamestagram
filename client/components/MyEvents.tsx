@@ -5,17 +5,9 @@ import MyHostEventCard from './MyHostEventCard'
 import MyAttendEventCard from './MyAttendEventCard'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useUserStore } from '../store/useUserStore'
+import { MyEvent } from '../../models/Event'
 
 
-interface MyEvent {
-  eventId: number
-  userId: number
-  hostId:number
-  userEventId: number
-  eventName: string
-  time: string
-  location: string
-}
 
 const MyEvents = () => {
   // const { id } = useParams()
@@ -54,7 +46,7 @@ const MyEvents = () => {
           </h2>
           {myEvents.map((event) => {
             if (event.hostId === event.userId) {
-              return <MyHostEventCard event={event} />
+              return <MyHostEventCard event={event} fetchMyEvents={fetchMyEvents} />
             } else {
               return <MyAttendEventCard event={event} fetchMyEvents={fetchMyEvents} />
             }

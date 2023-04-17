@@ -1,6 +1,6 @@
 import connection from './connection'
 
-import type { Event,EventDB,UserEventDB } from '../../models/Event'
+import type { Event,EventDB,UserEventDB,Status } from '../../models/Event'
 
 import { formatEvent, formatEventList } from '../public/formatter'
 import { FormattedEventWithUser } from '../../models/Event'
@@ -23,6 +23,7 @@ export function getEvents(db = connection): Promise<FormattedEventWithUser[]> {
       'events.created_at as createdAt',
       'time',
       'location',
+      'status',
       'events.description as description',
       'users.photo_url as photoUrl'
     )
@@ -48,12 +49,15 @@ export function getEventsById(id: number, db = connection) {
       'events.created_at as createdAt',
       'time',
       'location',
+      'status',
       'events.description as description',
       'users.photo_url as photoUrl'
     )
     .where('events.id', id)
     .then(formatEvent)
 }
+
+
 
 
 export function getEventsByUserId(id: number, db = connection) {
@@ -67,7 +71,8 @@ export function getEventsByUserId(id: number, db = connection) {
       'user_event.id as userEventId',
       'events.event_name as eventName',
       'time',
-      'location'
+      'location',
+      'status'
     )
 }
 
@@ -87,7 +92,7 @@ export function getEventsByHostId(id: number, db = connection) {
 
 export function addEvent(data: EventDB, db = connection): Promise<number[]> {
   const timestamp = new Date(Date.now())
-  const newData = { ...data, created_at: timestamp }
+  const newData = { ...data, created_at: timestamp,status:'open' }
   return db('events').insert(newData)
 }
 
@@ -112,6 +117,7 @@ export function cancelUserEvent(id: number, db = connection) {
   return db('user_event').where('id',id).del()
 }
 
-export function cancelEvent(id:number,db=connection) {
-  return db('events').where('id',id).del()
+export  function cancelEvent(id: number,data:Status, db = connection) {
+  
+  return db('events').update(data).where('id', id).returning('*')
 }
