@@ -13,10 +13,12 @@ import { Link } from 'react-router-dom'
 import { useUserStore } from '../store/useUserStore'
 import Map from './Map'
 
+
 function EventDetail() {
   const currentUser = useUserStore((state) => state.currentUser)
 
   const [host, setHost] = useState({
+    username: '',
     photoUrl: '',
   })
 
@@ -48,6 +50,7 @@ function EventDetail() {
     const host = await getUserById(id)
 
     setHost(() => ({
+      username: host.username,
       photoUrl: host.photoUrl,
     }))
   }
@@ -57,7 +60,6 @@ function EventDetail() {
       await addUserEvent({ eventId: Number(id), userId: currentUser.id })
       fetchEvent()
     }
-   
   }
 
   return (
@@ -117,22 +119,31 @@ function EventDetail() {
             </div>
           </div>
           <div className="flex justify-between">
-            <div className=" text-right sm:h-32 h-10">
+            <div className=" group text-right sm:h-32 h-14 mt-10 group relative duration-300">
               <img
                 className=" inline-block w-2/3 h-1/2 rounded-full ring-2 ring-white"
                 src={`${host.photoUrl}`}
-                alt="host"
+                alt={host.username}
               />
+              <span className="absolute hidden group-hover:flex -right-1 -top-2 -translate-y-full  px-2 py-1 bg-gray-700 rounded-lg text-center text-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-700">
+                {host.username}
+              </span>
             </div>
             <div className=" flex flex-row-reverse">
               {event.users.map((user) => {
                 return (
-                  <div key={user.name} className=" text-right sm:h-32 h-14">
+                  <div
+                    key={user.name}
+                    className=" group text-right sm:h-32 h-14 mt-10 group relative duration-300"
+                  >
                     <img
-                      className=" inline-block w-2/3 h-1/2 rounded-full ring-2 ring-white"
+                      className="object-center inline-block w-2/3 h-1/2 rounded-full ring-2 ring-white"
                       src={`${user.photoUrl}`}
                       alt={`${user.name}`}
                     />
+                    <span className="absolute hidden group-hover:flex -right-1 -top-2 -translate-y-full  px-2 py-1 bg-gray-700 rounded-lg text-center text-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-700">
+                      {user.name}
+                    </span>
                   </div>
                 )
               })}
