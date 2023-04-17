@@ -93,7 +93,6 @@ export function Addevent() {
       location: address,
       time: timeDb,
     }
-    console.log(newEvent)
 
     await addEvents(newEvent)
     setAdd(true)
