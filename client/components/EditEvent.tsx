@@ -36,7 +36,7 @@ export default function EditEventPage() {
       const place = autocomplete.getPlace()
 
       // setAddress(place.formatted_address)
-      
+      setEvent((data) => ({ ...data, location: place.formatted_address }))
     })
   }, [])
 
