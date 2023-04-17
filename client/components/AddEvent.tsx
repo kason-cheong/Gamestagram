@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react'
 import { addEvents } from '../apis/apiClientEvents'
-import { getGames } from '../apis/apiClientGames'
+import { getGames,getGamesFromAPI } from '../apis/apiClientGames'
 import { useUserStore } from '../store/useUserStore'
 import { Game } from '../../models/Game'
+import { Autocomplete, TextField } from '@mui/material'
+import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
 
 export function Addevent() {
+  const navigate = useNavigate()
   const [isAdd, setAdd] = useState(false)
   const currentUser = useUserStore((state) => state.currentUser)
   const [games, setGames] = useState<Game[]>([])
-  const [selectedGameId, setSelectedGameId] = useState<number>()
+  const [selectedGameId, setSelectedGameId] = useState<number | null>(null)
   const [gameName, setGameName] = useState('')
   const [filteredGames, setFilteredGames] = useState<Game[]>(games)
-
+  const [address, setAddress] = useState<string|undefined>('')
+  const options = {
+    types: ['geocode'],
+    componentRestrictions: { country: 'nz' },
+  }
   useEffect(() => {
     async function getGame() {
       try {
-        const data = await getGames()
-        // const gameList = await data.json()
+        const data = await getGamesFromAPI(100)
+
         setGames(data)
       } catch (error) {
         console.error('Error fetching games:', error)
@@ -24,47 +32,71 @@ export function Addevent() {
     }
     getGame()
   }, [])
-
-  function handleGameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const gameName = event.target.value
-    setGameName(gameName)
-    const matchingGame = games.find((game) => game.name === gameName)
-    if (matchingGame) {
-      setSelectedGameId(matchingGame.id)
-    } else {
-      setSelectedGameId(undefined)
-    }
-    const filteredGames = games.filter((game) =>
+  useEffect(() => {
+    const filtered = games.filter((game) =>
       game.name.toLowerCase().includes(gameName.toLowerCase())
     )
-    setFilteredGames(filteredGames)
+    setFilteredGames(filtered)
+  }, [games, gameName])
+  useEffect(() => {
+    const input = document.getElementById('autocomplete') as HTMLInputElement
+    const autocomplete = new google.maps.places.Autocomplete(input, options)
+
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace()
+     
+      setAddress(place.formatted_address)
+    })
+  }, [])
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(event.target.value)
+  }
+
+  const handleGameChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    game: Game
+  ) => {
+    if (game) {
+      setSelectedGameId(game.id)
+      setGameName(game.name)
+    } else {
+      setSelectedGameId(null)
+      setGameName('')
+    }
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!selectedGameId) {
+      alert('Please select a valid game.')
+      return
+    }
 
     const form = event.currentTarget
     const formData = new FormData(form)
     const eventName = formData.get('eventName') as string
-    // const gameId = formData.get('gameId') as string // need to change to  number
+
     const description = formData.get('description') as string
     const numberPpl = formData.get('numberPpl') as string
     const hostId = currentUser.id
-    const location = formData.get('location') as string
     const time = formData.get('time') as string
+    const date = formData.get('date') as string
+    const FormattedDate = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY')
+    const timeDb = `${FormattedDate} ${time}`
+
     const newEvent = {
       event_name: eventName,
-      host_id: 3, // need to repalce this with daynmci variable
+      host_id: hostId, // need to repalce this with daynmci variable
       description,
       number_ppl_playing: numberPpl,
       game_id: selectedGameId,
-      location,
-      time,
+      location: address,
+      time: timeDb,
     }
-    console.log(newEvent)
 
     await addEvents(newEvent)
     setAdd(true)
+    navigate('/my-events')
   }
   return (
     <>
@@ -77,6 +109,31 @@ export function Addevent() {
               </h2>
             </div>
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+              <div>
+                <Autocomplete
+                  disablePortal
+                  value={
+                    filteredGames.find((game) => game.id === selectedGameId) ||
+                    null
+                  }
+                  id="gameName"
+                  options={filteredGames}
+                  getOptionLabel={(game) => game.name}
+                  onChange={handleGameChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Game Name"
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                    />
+                  )}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="gameName"
+                />
+              </div>
               <input type="hidden" name="remember" value="true" />
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
@@ -93,16 +150,20 @@ export function Addevent() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="time" className="sr-only">
-                    Time
-                  </label>
-                  <textarea
+                  <label htmlFor="date">Choose a date:</label>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  ></input>
+                  <label htmlFor="time">Choose a time:</label>
+                  <input
+                    type="time"
                     id="time"
                     name="time"
-                    required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="time"
-                  />
+                  ></input>
                 </div>
                 <div>
                   <label htmlFor="description" className="sr-only">
@@ -120,48 +181,19 @@ export function Addevent() {
                   <label htmlFor="location" className="sr-only">
                     Location
                   </label>
-                  <textarea
-                    id="location"
-                    name="location"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="location"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="game" className="sr-only">
-                    Game
-                  </label>
                   <input
                     type="text"
-                    id="game"
-                    name="game"
-                   
-                    value={gameName}
-                    onChange={handleGameChange}
+                    id="autocomplete"
+                    name="location"
+                    value={address}
+                    onChange={handleAddressChange}
                     required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="gameName"
+                    placeholder="Enter your address"
                   />
-                  {games.length > 0 && (
-                    <select
-                      id="gameId"
-                      name="gameId"
-                      required
-                      value={selectedGameId}
-                      onChange={(event) =>
-                        setSelectedGameId(event.target.value)
-                      }
-                    >
-                      <option value="">Select a game</option>{' '}
-                      {games.map((game) => (
-                        <option key={game.id} value={game.id}>
-                          {game.name}
-                        </option>
-                      ))}
-                    </select>
-                  )}
                 </div>
+                <p>{address}</p>
+
                 <div>
                   <label htmlFor="numberPpl" className="sr-only">
                     Number of people playing
@@ -177,7 +209,7 @@ export function Addevent() {
                 </div>
                 <button
                   type="submit"
-                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 >
                   Add
                 </button>

@@ -6,6 +6,7 @@ export interface EventDB {
   time: string
   gameName: string
   description: string
+  status: string
   numberOfPeople: number
   createdAt: string
   gamePhoto: string
@@ -16,6 +17,17 @@ export interface EventDB {
 
 export interface Event extends EventDB {
   eventId: number
+}
+
+export interface MyEvent {
+  eventId: number
+  userId: number
+  hostId: number
+  userEventId: number
+  eventName: string
+  time: string
+  location: string
+  status: string
 }
 
 export interface EventUser {
@@ -31,8 +43,9 @@ export interface FormattedEventWithUser {
   gameId: number
   location: string
   time: string
+  status: string
   description: string
-  numberOfPeople: number
+  numberOfPeople: string
   createdAt: string
   gameName: string
   gamePhoto: string
@@ -54,6 +67,11 @@ export interface EditEvent {
   hostId: number
   time: string
   eventName: string
-  location: string
+  location: string | undefined
   description: string
+  numberOfPeople: string
+}
+
+export interface Status {
+  status: string
 }

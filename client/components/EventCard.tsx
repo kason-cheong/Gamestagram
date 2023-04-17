@@ -11,7 +11,7 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
 
   return (
     <motion.div
-      className=" bg-slate-200 w-72 rounded-2xl shadow-2xl shadow-slate-400 ml-12"
+      className=" bg-slate-200 w-80 rounded-2xl shadow-2xl shadow-slate-400 ml-6"
       whileHover={{ scale: 1.2 }}
     >
       <Link to={`/events/${event.eventId}`}>
@@ -25,6 +25,7 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
           <h4 className="text-orange-900 mb-2">
             {formattedTime}
             {time}
+            {/* {event.time} */}
           </h4>
           <p className="font-semibold mb-1">{event.eventName}</p>
           <p className="italic mb-1">{event.gameName}</p>
