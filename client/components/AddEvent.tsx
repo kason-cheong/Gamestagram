@@ -4,21 +4,27 @@ import { getGames } from '../apis/apiClientGames'
 import { useUserStore } from '../store/useUserStore'
 import { Game } from '../../models/Game'
 import { Autocomplete, TextField } from '@mui/material'
+import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
 
 export function Addevent() {
+  const navigate = useNavigate()
   const [isAdd, setAdd] = useState(false)
   const currentUser = useUserStore((state) => state.currentUser)
   const [games, setGames] = useState<Game[]>([])
   const [selectedGameId, setSelectedGameId] = useState<number | null>(null)
-
   const [gameName, setGameName] = useState('')
   const [filteredGames, setFilteredGames] = useState<Game[]>(games)
-
+  const [address, setAddress] = useState('')
+  const options = {
+    types: ['geocode'],
+    componentRestrictions: { country: 'nz' },
+  }
   useEffect(() => {
     async function getGame() {
       try {
         const data = await getGames()
-        // const gameList = await data.json()
+
         setGames(data)
       } catch (error) {
         console.error('Error fetching games:', error)
@@ -32,8 +38,24 @@ export function Addevent() {
     )
     setFilteredGames(filtered)
   }, [games, gameName])
+  useEffect(() => {
+    const input = document.getElementById('autocomplete')
+    const autocomplete = new google.maps.places.Autocomplete(input, options)
 
-  const handleGameChange = (event, game: Game) => {
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace()
+
+      setAddress(place.formatted_address)
+    })
+  }, [])
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(event.target.value)
+  }
+
+  const handleGameChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    game: Game
+  ) => {
     if (game) {
       setSelectedGameId(game.id)
       setGameName(game.name)
@@ -57,21 +79,25 @@ export function Addevent() {
     const description = formData.get('description') as string
     const numberPpl = formData.get('numberPpl') as string
     const hostId = currentUser.id
-    const location = formData.get('location') as string
     const time = formData.get('time') as string
+    const date = formData.get('date') as string
+    const FormattedDate = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY')
+    const timeDb = `${FormattedDate} ${time}`
+
     const newEvent = {
       event_name: eventName,
-      host_id: 3, // need to repalce this with daynmci variable
+      host_id: hostId, // need to repalce this with daynmci variable
       description,
       number_ppl_playing: numberPpl,
       game_id: selectedGameId,
-      location,
-      time,
+      location: address,
+      time: timeDb,
     }
     console.log(newEvent)
 
     await addEvents(newEvent)
     setAdd(true)
+    navigate('/my-events')
   }
   return (
     <>
@@ -125,43 +151,6 @@ export function Addevent() {
                   />
                 </div>
                 <div>
-                  {/* <label htmlFor="time" className="sr-only">
-                    Time
-                  </label>
-                  <textarea
-                    id="time"
-                    name="time"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="time"
-                  /> */}
-                  {/* <div className="w-full">
-                    <TextField
-                      id="date"
-                      name="date"
-                      label="Date"
-                      type="date"
-                      required
-                      fullWidth
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </div>
-
-                  <div className="w-full">
-                    <TextField
-                      id="time"
-                      name="time"
-                      label="Time"
-                      type="time"
-                      required
-                      fullWidth
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </div> */}
                   <label htmlFor="date">Choose a date:</label>
                   <input
                     type="date"
@@ -193,14 +182,18 @@ export function Addevent() {
                   <label htmlFor="location" className="sr-only">
                     Location
                   </label>
-                  <textarea
-                    id="location"
+                  <input
+                    type="text"
+                    id="autocomplete"
                     name="location"
+                    value={address}
+                    onChange={handleAddressChange}
                     required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="location"
+                    placeholder="Enter your address"
                   />
                 </div>
+                <p>{address}</p>
 
                 <div>
                   <label htmlFor="numberPpl" className="sr-only">
