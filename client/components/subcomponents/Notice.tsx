@@ -45,10 +45,10 @@ export default function Notice() {
               </svg>
               Check out our selection of new boardgames
             </p>
-            <a className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+            <div className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
               <Link to="/boardgames">Check it out!</Link>{' '}
               <span aria-hidden="true">&rarr;</span>
-            </a>
+            </div>
           </div>
           <div className="flex flex-1 justify-end">
             <button
