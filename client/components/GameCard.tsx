@@ -1,7 +1,7 @@
-import { Game } from '../../models/Game'
+import { Game, GameDB } from '../../models/Game'
 import { motion } from 'framer-motion'
 
-function GameCard({ game }: { game: Game }) {
+function GameCard({ game }: { game: GameDB }) {
   return (
     <motion.div whileHover={{ scale: 1.2 }}>
       <div className=" bg-slate-200 rounded-2xl w-80 shadow-2xl shadow-slate-400 ml-12 mb-8">

@@ -7,7 +7,7 @@ interface IGame {
   isLoading:boolean
   fetchGames: () => void
   fetchGamesFromAPI: (limit:string|number) => void
-  setGames:(games:Game[])=>void
+  setGames:(games:GameDB[])=>void
 }
 
 export const useGamesStore = create<IGame>((set) => ({
@@ -33,7 +33,7 @@ export const useGamesStore = create<IGame>((set) => ({
     set({ games: games })
     set({isLoading:false})
   },
-  setGames:(games:Game[]) => {
+  setGames:(games:GameDB[]) => {
     set({games:games})
   }
 }))
