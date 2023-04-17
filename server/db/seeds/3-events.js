@@ -10,6 +10,7 @@ exports.seed = (knex) => {
       time: '20-04-2023 21:00',
       number_ppl_playing: '2-4',
       created_at: new Date(1681450450040 / 1000),
+      status:"open"
     },
     {
       id: 2,
@@ -21,6 +22,7 @@ exports.seed = (knex) => {
       time: '21-07-2023 21:00',
       number_ppl_playing: '2-4',
       created_at: new Date(1681453450040 / 1000),
+      status:"open"
     },
   ])
 }

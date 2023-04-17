@@ -1,4 +1,4 @@
-import { cancelEvent } from '../apis/apiClientEvents'
+import { cancelUserEvent } from '../apis/apiClientEvents'
 import { useState } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -6,16 +6,9 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+import { MyEvent } from '../../models/Event'
 
-interface MyEvent {
-  eventId: number
-  userId: number
-  hostId:number
-  userEventId: number
-  eventName: string
-  time: string
-  location: string
-}
+
 
 
 
@@ -34,7 +27,7 @@ const MyEventCard = ({ event,fetchMyEvents }: { event: MyEvent,fetchMyEvents:(id
   const [showCard, setShowCard] = useState(true)
 
   const handleCancel = async (userEventId: number) => {
-    await cancelEvent(userEventId)
+    await cancelUserEvent(userEventId)
     fetchMyEvents(event.userId)
     setOpen(false)
     setShowCard(false)
@@ -51,6 +44,7 @@ const MyEventCard = ({ event,fetchMyEvents }: { event: MyEvent,fetchMyEvents:(id
           <div className="border p-2 w-1/3 mb-12">
         <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
         <p className="text-purple-500"><b className="text-black">Role:</b> player</p>
+        <p className="text-green-500"><b className="text-black">Status:</b> { event.status}</p>
             <p>
               <b>Date:</b> {event.time}
             </p>

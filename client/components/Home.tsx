@@ -32,9 +32,13 @@ function Home() {
         </h2>
 
         <section className="flex">
-          {events.map((event) => (
-            <EventCard key={event.eventId} event={event} />
-          ))}
+          {events.map((event) => {
+            if (event.status === 'open') {
+              return <EventCard key={event.eventId} event={event} />
+          
+            }
+          }
+          )}
         </section>
 
         <h2 className="mt-5 mb-5 font-sans text-4xl font-bold text-center md:text-left">
