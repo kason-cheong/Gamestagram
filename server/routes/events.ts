@@ -27,6 +27,27 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.get('/my-events/user/:userId', (req, res) => {
+  db.getEventsByUserId(Number(req.params.userId))
+  .then((results) => {
+    res.json(results)
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).json({ message: 'Something went wrong' })
+  })
+})
+
+// router.get('/my-events/host/:hostId', (req, res) => {
+//   db.getEventsByHostId(Number(req.params.hostId))
+//   .then((results) => {
+//     res.json(results)
+//   })
+//   .catch((err) => {
+//     console.log(err)
+//     res.status(500).json({ message: 'Something went wrong' })
+//   })
+// })
 
 
 
@@ -52,7 +73,7 @@ router.post('/add/user-event', async (req, res) => {
 router.post('/add', async (req, res) => {
   try {
     const id = await db.addEvent(req.body)
-console.log(req.body.host_id);
+    console.log(req.body.host_id);
 
     const timestamp = new Date(Date.now())
     const newData = {
@@ -67,19 +88,6 @@ console.log(req.body.host_id);
   }
 })
 
-// router.post('/add/user_event', async (req, res) => {
-//   try {
-
-//      const timestamp=new Date(Date.now())
-//      const newData = { user_id:2,event_id:3,created_at: timestamp }
-//      console.log(newData);
-
-//      await db.addUserEvent(newData)
-//      res.status(201).json({message:"created event and user_event"})
-//   } catch (error) {
-//     res.status(500).json({ message: 'Something went wrong' })
-//   }
-//     })
 
 router.patch('/:id/edit', (req, res) => {
   db.editEvent(Number(req.params.id), req.body)
@@ -92,15 +100,19 @@ router.patch('/:id/edit', (req, res) => {
     })
 })
 
-// router.get('/:id', (req, res) => {
-//   db.findEventById(req.params.id)
-//     .then((results) => {
-//       res.json(results)
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//       res.status(500).json({ message: 'Something went wrong' })
-//     })
-// })
+
+
+
+
+router.delete('/my-events/:userEventId', (req,res)=> {
+  db.cancelUserEvent(Number(req.params.userEventId))
+  .then(() => {
+    res.status(200).json({ message: 'user_event has been deleted' })
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).json({ message: 'Something went wrong' })
+  })
+})
 
 export default router

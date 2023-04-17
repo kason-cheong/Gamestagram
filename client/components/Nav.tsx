@@ -1,27 +1,42 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import {
   IfAuthenticated,
   IfNotAuthenticated,
 } from './subcomponents/Authenticated'
+
+import { useUserStore } from '../store/useUserStore'
+
 import { getUserByAuth0Id } from '../apis/apiClientUsers'
-import { useEffect } from 'react'
 
 export default function Nav() {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const { user, loginWithRedirect, logout } = useAuth0()
   const [photoUrl, setPhotoUrl] = useState('')
 
+  const setUser = useUserStore((state) => state.setUser)
+  const currentUser = useUserStore((state) => state.currentUser)
+
+
   useEffect(() => {
     async function fetchProfilePic() {
       if (user) {
         const userData = await getUserByAuth0Id(String(user.sub))
         setPhotoUrl(userData.photoUrl)
+         setUser({
+        id: userData.id,
+        userName: userData.username,
+        photoUrl: userData.photoUrl,
+        bio: userData.bio,
+        email: userData.email,
+      })
       }
     }
     fetchProfilePic()
-  }, [user])
+  }, [user,currentUser.id])
+
+
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
@@ -97,21 +112,18 @@ export default function Nav() {
                   alt="profile pic"
                   onClick={toggleDropdown}
                 ></img>
-                {/* <svg
-                  className="w-4 h-4 inline-block ml-1 mb-1 text-gray-600"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                ></svg> */}
                 {dropdownOpen && (
-                  <div className="absolute z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl">
+                  <div className="absolute z-10 mt-16 py-2 w-48 bg-white rounded-md shadow-xl">
                     <NavLink
                       to="/profile"
+                      onClick={toggleDropdown}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
                       Profile
                     </NavLink>
                     <NavLink
-                      to="/my-events"
+                      to={`/my-events`}
+                      onClick={toggleDropdown}
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                     >
                       My Events
