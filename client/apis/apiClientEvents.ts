@@ -7,7 +7,7 @@ import {
 interface snakeEvent {
   host_id: number
   event_name: string
-  game_id: number | undefined
+  game_id: string
   description: string
   location: string |undefined
   time: string
