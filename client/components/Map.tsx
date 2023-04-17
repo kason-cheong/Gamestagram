@@ -1,40 +1,60 @@
 import { useEffect, useState } from 'react'
 
-function Map() {
-  const center: google.maps.LatLngLiteral = {
-    lat: -36.86462674976452,
-    lng: 174.77603170364966,
-  }
+interface MapProps {
+  address: string
+}
+
+function Map({ address }: MapProps) {
   const [map, setMap] = useState<google.maps.Map>()
 
   useEffect(() => {
     async function initMap() {
-      const newMap = await new google.maps.Map(
-        document.getElementById('map') as HTMLElement,
-        {
-          center,
-          zoom: 18,
+      const geocoder = new google.maps.Geocoder()
+      geocoder.geocode({ address: address }, function (results, status) {
+        if (status === 'OK' && results !== null) {
+          const center = results[0].geometry.location
+          const newMap = new google.maps.Map(
+            document.getElementById('map') as HTMLElement,
+            {
+              center,
+              zoom: 18,
+            }
+          )
+          const marker = new google.maps.Marker({
+            position: center,
+            map: newMap,
+          })
+          setMap(newMap)
+        } else {
+          console.error(
+            'Geocode was not successful for the following reason: ' + status
+          )
         }
-      )
-      const marker = new google.maps.Marker({ position: center, map: newMap })
-      setMap(newMap)
+      })
     }
-    // const script = document.createElement('script')
-    // script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDqnrwPtVodXJxOUQ_OqFnDn2fTs3wrY4k&callback=initMap`
-    // script.async = true
-    // document.body.appendChild(script)
-
-    // return () => {
-    //   document.body.removeChild(script)
-    // }
     initMap()
-  }, [])
+  }, [address])
 
-  return (
-    // <div className="h-full w-full float-right ">
-    <div id="map" className="w-1/4 h-40" />
-    // {/* </div> */}
-  )
+  return <div id="map" className="w-1/4 h-40" />
 }
 
 export default Map
+
+// const center: google.maps.LatLngLiteral = {
+//   lat: -36.86462674976452,
+//   lng: 174.77603170364966,
+// }
+
+// const containerStyle = {
+//   width: '400px',
+//   height: '400px',
+// }
+
+// return (
+//   <LoadScript googleMapsApiKey="YAIzaSyDqnrwPtVodXJxOUQ_OqFnDn2fTs3wrY4k">
+//     <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
+//       {/* Child components, such as markers, info windows, etc. */}
+//       <></>
+//     </GoogleMap>
+//   </LoadScript>
+// )
