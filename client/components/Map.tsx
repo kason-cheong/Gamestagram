@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function Map() {
   const center: google.maps.LatLngLiteral = { lat: 30, lng: -110 }
@@ -18,7 +18,7 @@ function Map() {
     initMap()
   }, [])
 
-  return <div id="map" style={{ height: '500px', width: '100%' }} />
+  return <div id="map" className="h-1/3 w-full" />
 }
 
 export default Map
