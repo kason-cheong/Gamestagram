@@ -25,6 +25,7 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
           <h4 className="text-orange-900 mb-2">
             {formattedTime}
             {time}
+            {/* {event.time} */}
           </h4>
           <p className="font-semibold mb-1">{event.eventName}</p>
           <p className="italic mb-1">{event.gameName}</p>

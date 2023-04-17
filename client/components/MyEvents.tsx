@@ -1,21 +1,13 @@
-import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getEventsByUserId} from '../apis/apiClientEvents'
 import MyHostEventCard from './MyHostEventCard'
 import MyAttendEventCard from './MyAttendEventCard'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useUserStore } from '../store/useUserStore'
+import { MyEvent } from '../../models/Event'
 
 
-interface MyEvent {
-  eventId: number
-  userId: number
-  hostId:number
-  userEventId: number
-  eventName: string
-  time: string
-  location: string
-}
 
 const MyEvents = () => {
   // const { id } = useParams()
@@ -29,7 +21,7 @@ const MyEvents = () => {
     if (currentUser.id !== 0) {
       
       fetchMyEvents(currentUser.id)
-      console.log(currentUser.id);
+
       
     }
 
@@ -48,14 +40,15 @@ const MyEvents = () => {
       {isAuthenticated && !isLoading ? (
         <div className="mx-auto w-4/5">
           <h1 className="text-2xl font-bold my-3">My Events</h1>
-          {/* <h2 className="text-xl font-semibold mb-2 text-blue-400">
-            {myEvents.length ? 'hosting Events' : null}
-          </h2> */}
+          <div className='flex justify-end'><Link to={'/events/add'}><button className="px-6 py-2 bg-purple-200 rounded-2xl my-3">Create an Event</button></Link></div>
+          <h2 className="text-xl font-semibold mb-2 text-blue-400">
+            {!myEvents.length && "NO EVENTS"}
+          </h2>
           {myEvents.map((event) => {
             if (event.hostId === event.userId) {
-              return <MyHostEventCard event={event} />
+              return <MyHostEventCard event={event} fetchMyEvents={fetchMyEvents} />
             } else {
-              return <MyAttendEventCard event={event} />
+              return <MyAttendEventCard event={event} fetchMyEvents={fetchMyEvents} />
             }
           }
             

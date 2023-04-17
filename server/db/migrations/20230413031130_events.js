@@ -13,6 +13,7 @@ exports.up = function (knex) {
     table.string('time')
     table.string('number_ppl_playing')
     table.date('created_at')
+    table.string('status')
   })
 }
 

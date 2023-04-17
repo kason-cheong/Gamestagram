@@ -66,9 +66,11 @@ const Events = () => {
         </form>
         <section className="flex mt-32">
           {events[0] ? (
-            events.map((event) => (
-              <EventCard key={event.eventId} event={event} />
-            ))
+            events.map((event) => {
+              if (event.status === 'open') {
+                return <EventCard key={event.eventId} event={event} />
+              }
+            })
           ) : (
             <h1>Game is not found, please search again.</h1>
           )}

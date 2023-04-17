@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react'
 import { EditEvent } from '../../models/Event'
 import { updateEvent, getEventById } from '../apis/apiClientEvents'
-import { useParams,useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
 export default function EditEventPage() {
   const { id } = useParams()
+  const options = {
+    types: ['geocode'],
+    componentRestrictions: { country: 'nz' },
+  }
 
-  const nav=useNavigate()
+  const nav = useNavigate()
   const [event, setEvent] = useState<EditEvent>({
     hostId: 0,
     time: '',
@@ -14,34 +19,59 @@ export default function EditEventPage() {
     location: '',
     description: '',
   })
-
+  const [address, setAddress] = useState(`${event.location}`)
   useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
     getEventById(Number(id)).then((event) => {
       setEvent(event)
     })
+    console.log(event.location)
+  }, [])
+
+  useEffect(() => {
+    const input = document.getElementById('autocomplete')
+    const autocomplete = new google.maps.places.Autocomplete(input, options)
+
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace()
+
+      // setAddress(place.formatted_address)
+      
+    })
   }, [])
 
   const [error, setError] = useState<string>('')
   const [success, setSuccess] = useState<boolean>(false)
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(event.target.value)
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const form = e.currentTarget
+
+    const formData = new FormData(form)
+
+    const time = formData.get('time') as string
+    const date = formData.get('date') as string
+    const FormattedDate = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY')
+    const timeDb = `${FormattedDate} ${time}`
+    console.log(timeDb)
 
     try {
       const newEvent = {
         id: id,
         host_id: event.hostId,
-        time: event.time,
+        time: timeDb,
         event_name: event.eventName,
-        location: event.location,
+        location: address,
         description: event.description,
       }
 
       await updateEvent(Number(id), newEvent)
       setSuccess(true)
       setTimeout(() => {
-        nav(`/my-events/${event.hostId}`)
+        nav('/my-events')
       }, 1800)
     } catch (error) {
       setError('Failed to update event.')
@@ -70,17 +100,22 @@ export default function EditEventPage() {
         className="space-y-4 border border-gray-300 p-4"
       >
         <div>
+          <label htmlFor="date"> Date:</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+          ></input>
           <label htmlFor="time" className="block font-medium mb-2 ">
             Time:
           </label>
           <input
-            type="text"
+            type="time"
             id="time"
             name="time"
-            value={event.time}
-            onChange={handleInputChange}
             className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
+          ></input>
         </div>
         <div>
           <label htmlFor="eventName" className="block font-medium mb-2">
@@ -101,11 +136,13 @@ export default function EditEventPage() {
           </label>
           <input
             type="text"
-            id="location"
+            id="autocomplete"
             name="location"
             value={event.location}
-            onChange={handleInputChange}
+            onChange={handleAddressChange}
+            required
             className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Enter your address"
           />
         </div>
         <div>
