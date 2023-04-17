@@ -45,7 +45,7 @@ export interface FormattedEventWithUser {
   time: string
   status: string
   description: string
-  numberOfPeople: number
+  numberOfPeople: string
   createdAt: string
   gameName: string
   gamePhoto: string

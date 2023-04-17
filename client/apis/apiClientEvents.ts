@@ -1,7 +1,5 @@
 import request from 'superagent'
 import {
-  EventDB,
-  Event,
   FormattedEventWithUser,
   UserJoinEvent,
   EditEvent,
@@ -11,7 +9,7 @@ interface snakeEvent {
   event_name: string
   game_id: number | undefined
   description: string
-  location: string
+  location: string |undefined
   time: string
   number_ppl_playing: string
 }
@@ -36,11 +34,6 @@ export async function getEventsByUserId(id: number) {
   const res = await request.get(`${rootUrlEvents}/my-events/user/${id}`)
   return res.body 
 }
-
-// export async function getEventsByHostId(id: number) {
-//   const res = await request.get(`${rootUrlEvents}/my-events/host/${id}`)
-//   return res.body 
-// }
 
 
 export async function addEvents(newEvent: snakeEvent) {
