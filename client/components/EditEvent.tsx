@@ -3,6 +3,7 @@ import { EditEvent } from '../../models/Event'
 import { updateEvent, getEventById } from '../apis/apiClientEvents'
 import { useParams, useNavigate } from 'react-router-dom'
 import moment from 'moment'
+import ImageBanner from './subcomponents/ImageBanner'
 
 export default function EditEventPage() {
   const { id } = useParams()
@@ -111,97 +112,100 @@ export default function EditEventPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-10 px-4">
-      <h1 className="text-3xl font-bold mb-5">Edit Event</h1>
-      {error && <p className="text-red-500 mb-5">{error}</p>}
-      {success && (
-        <p className="text-green-500 mb-5">Event updated successfully!</p>
-      )}
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-4 border border-gray-300 p-4"
-      >
-        <div>
-          <label htmlFor="date"> Date:</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={day}
-            onChange={handleInputChange}
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-          ></input>
-          <label htmlFor="time" className="block font-medium mb-2 ">
-            Time:
-          </label>
-          <input
-            type="time"
-            id="time"
-            name="time"
-            value={hour}
-            onChange={handleInputChange}
-            className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="eventName" className="block font-medium mb-2">
-            Event Name:
-          </label>
-          <input
-            type="text"
-            id="eventName"
-            name="eventName"
-            value={event.eventName}
-            onChange={handleInputChange}
-            className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        <div>
-          <label htmlFor="location" className="block font-medium mb-2">
-            Location:
-          </label>
-          <input
-            type="text"
-            id="autocomplete"
-            name="location"
-            value={event.location}
-            onChange={handleInputChange}
-            required
-            className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Enter your address"
-          />
-        </div>
-        <div>
-          <label htmlFor="description" className="block font-medium mb-2">
-            Description:
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={event.description}
-            onChange={handleInputChange}
-            className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          ></textarea>
-        </div>
-        <div>
-          <label htmlFor="numberOfPeople" className="block font-medium mb-2">
-            Number of People:
-          </label>
-          <textarea
-            id="numberOfPeople"
-            name="numberOfPeople"
-            value={event.numberOfPeople}
-            onChange={handleInputChange}
-            className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          ></textarea>
-        </div>
-        <button
-          type="submit"
-          className="inline-flex items-center px-4 py-2 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    <>
+      <ImageBanner name="Events" url="/pics/banner3.jpg" />
+      <div className="max-w-md mx-auto mt-10 px-4">
+        <h1 className="text-3xl font-bold mb-5">Edit Event</h1>
+        {error && <p className="text-red-500 mb-5">{error}</p>}
+        {success && (
+          <p className="text-green-500 mb-5">Event updated successfully!</p>
+        )}
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 border border-gray-300 p-4"
         >
-          Save
-        </button>
-      </form>
-    </div>
+          <div>
+            <label htmlFor="date"> Date:</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={day}
+              onChange={handleInputChange}
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            ></input>
+            <label htmlFor="time" className="block font-medium mb-2 ">
+              Time:
+            </label>
+            <input
+              type="time"
+              id="time"
+              name="time"
+              value={hour}
+              onChange={handleInputChange}
+              className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            ></input>
+          </div>
+          <div>
+            <label htmlFor="eventName" className="block font-medium mb-2">
+              Event Name:
+            </label>
+            <input
+              type="text"
+              id="eventName"
+              name="eventName"
+              value={event.eventName}
+              onChange={handleInputChange}
+              className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+          <div>
+            <label htmlFor="location" className="block font-medium mb-2">
+              Location:
+            </label>
+            <input
+              type="text"
+              id="autocomplete"
+              name="location"
+              value={event.location}
+              onChange={handleInputChange}
+              required
+              className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Enter your address"
+            />
+          </div>
+          <div>
+            <label htmlFor="description" className="block font-medium mb-2">
+              Description:
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={event.description}
+              onChange={handleInputChange}
+              className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            ></textarea>
+          </div>
+          <div>
+            <label htmlFor="numberOfPeople" className="block font-medium mb-2">
+              Number of People:
+            </label>
+            <textarea
+              id="numberOfPeople"
+              name="numberOfPeople"
+              value={event.numberOfPeople}
+              onChange={handleInputChange}
+              className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            className="inline-flex items-center px-4 py-2 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </>
   )
 }
