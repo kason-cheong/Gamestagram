@@ -9,13 +9,13 @@ export function getEvents(db = connection): Promise<FormattedEventWithUser[]> {
   return db('user_event')
     .join('events', 'user_event.event_id', 'events.id')
     .join('users', 'user_event.user_id', 'users.id')
-    .join('games', 'events.game_id', 'games.id')
+    .join('games', 'events.game_id', 'games.api_id')
     .select(
       'events.id as eventId',
       'events.host_id as hostId',
       'users.id as userId',
       'users.user_name as userName',
-      'games.id as gameId',
+      'games.api_id as gameId',
       'games.name as gameName',
       'games.photo_url as gamePhoto',
       'events.event_name as eventName',
@@ -35,13 +35,13 @@ export function getEventsById(id: number, db = connection) {
   return db('user_event')
     .join('events', 'user_event.event_id', 'events.id')
     .join('users', 'user_event.user_id', 'users.id')
-    .join('games', 'events.game_id', 'games.id')
+    .join('games', 'events.game_id', 'games.api_id')
     .select(
       'events.id as eventId',
       'events.host_id as hostId',
       'users.id as userId',
       'users.user_name as userName',
-      'games.id as gameId',
+      'games.api_id as gameId',
       'games.name as gameName',
       'games.photo_url as gamePhoto',
       'events.event_name as eventName',
