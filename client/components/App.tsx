@@ -18,7 +18,7 @@ import EditEvent from './EditEvent'
 
 function App() {
   return (
-    <>
+    <div>
       <Nav />
       <Notice />
 
@@ -72,13 +72,9 @@ function App() {
             </PageTransition>
           }
         />
-
-
-
-
       </Routes>
       <Footer />
-    </>
+    </div>
   )
 }
 

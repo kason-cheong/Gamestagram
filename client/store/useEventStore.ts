@@ -15,6 +15,7 @@ export const useEventStore = create<IEvent>((set) => ({
     gameId: 0,
     location: '',
     time: '',
+    status:'',
     description: '',
     numberOfPeople: 0,
     createdAt: '',

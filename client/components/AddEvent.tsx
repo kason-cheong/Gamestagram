@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { addEvents } from '../apis/apiClientEvents'
-import { getGames } from '../apis/apiClientGames'
+import { getGames,getGamesFromAPI } from '../apis/apiClientGames'
 import { useUserStore } from '../store/useUserStore'
 import { Game } from '../../models/Game'
 import { Autocomplete, TextField } from '@mui/material'
@@ -15,7 +15,7 @@ export function Addevent() {
   const [selectedGameId, setSelectedGameId] = useState<number | null>(null)
   const [gameName, setGameName] = useState('')
   const [filteredGames, setFilteredGames] = useState<Game[]>(games)
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState<string|undefined>('')
   const options = {
     types: ['geocode'],
     componentRestrictions: { country: 'nz' },
@@ -23,7 +23,7 @@ export function Addevent() {
   useEffect(() => {
     async function getGame() {
       try {
-        const data = await getGames()
+        const data = await getGamesFromAPI(100)
 
         setGames(data)
       } catch (error) {
@@ -39,12 +39,12 @@ export function Addevent() {
     setFilteredGames(filtered)
   }, [games, gameName])
   useEffect(() => {
-    const input = document.getElementById('autocomplete')
+    const input = document.getElementById('autocomplete') as HTMLInputElement
     const autocomplete = new google.maps.places.Autocomplete(input, options)
 
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace()
-
+     
       setAddress(place.formatted_address)
     })
   }, [])
