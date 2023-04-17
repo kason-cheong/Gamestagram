@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.increments('id').primary()
     table.integer('host_id')
     table.string('event_name')
-    table.integer('game_id')
+    table.string('game_id')
     table.string('description')
     table.string('location')
     table.string('time')

@@ -39,7 +39,7 @@ function Home() {
           Events
         </h2>
     
-        <section className="flex justify-between flex-wrap">
+        <section className="flex justify-start flex-wrap">
           {events.map((event) => {
             if (event.status === 'open') {
               return <EventCard key={event.eventId} event={event} />
@@ -55,7 +55,7 @@ function Home() {
           Popular Games
         </h2>
         {
-          !isLoading?<><section className="flex justify-between flex-wrap">
+          !isLoading?<><section className="flex justify-start flex-wrap">
           {games.map((game) => (
             <GameCard key={game.name} game={game} />
           ))}
