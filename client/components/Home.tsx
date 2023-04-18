@@ -9,6 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
 import { Link } from 'react-router-dom'
 
+
 function Home() {
   const { events, fetchEvents } = useEventsStore(
     (state) => ({ events: state.events, fetchEvents: state.fetchEvents }),
@@ -33,22 +34,29 @@ function Home() {
     <>
       <ImageBanner name="Welcome to Gamestagram!" url="./pics/banner1.jpg" />
       <main className="container mx-auto">
-        <h2 className="mt-5 mb-10 font-sans text-4xl font-bold text-center md:text-left">
+        <h2 className="mt-5  font-sans text-4xl font-bold text-center md:text-left">
           Events
         </h2>
 
-        <section className="flex justify-start flex-wrap">
-          {events.map((event) => {
-            if (event.status === 'open') {
-              return <EventCard key={event.eventId} event={event} />
-            }
-          })}
-        </section>
-        <Link to={'/events'}>
-          <div className="text-right text-xl mt-4 text-purple-500">
-            More &gt;&gt;
+        <section className="relative flex items-center">
+          <div
+            id="slider"
+            className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth snap-x "
+          >
+            {events.map((event) => {
+              if (event.status === 'open') {
+                return <EventCard key={event.eventId} event={event} />
+              }
+            })}
           </div>
-        </Link>
+        </section>
+         <Link to={'/events'}>
+        <div className="text-right text-xl mt-4 text-purple-500">
+          More &gt;&gt;
+        </div>
+           </Link>
+
+
         <h2 className=" my-10 font-sans text-4xl font-bold text-center md:text-left">
           Popular Games
         </h2>
@@ -59,6 +67,7 @@ function Home() {
                 <GameCard key={game.name} game={game} />
               ))}
             </section>
+
             <Link to={'/boardgames'}>
             <div className="text-right text-xl mt-4 text-purple-500">
               More &gt;&gt;
