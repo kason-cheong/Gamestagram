@@ -9,9 +9,13 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
 
   const formattedTime = formatTime(date)
 
+  function limitLocationLength(locationName: string): string {
+    return locationName.slice(0, 23)
+  }
+  const location = limitLocationLength(event.location)
+
   return (
     <motion.div
-
       className="inline-block  cursor-pointer bg-slate-200 w-60 h-80 rounded-2xl shadow-2xl shadow-slate-400 mx-4 my-20"
       whileHover={{ scale: 1.2 }}
     >
@@ -31,7 +35,7 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
           <p className="font-semibold mb-1 text-center">{event.eventName}</p>
           <p className="italic mb-1 ">{event.gameName}</p>
           <p className="font-thin text-ellipsis overflow-hidden ">
-            {event.location}
+            {location}...
           </p>
         </div>
       </Link>
