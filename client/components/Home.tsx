@@ -62,7 +62,7 @@ function Home() {
         </h2>
         {!isLoading ? (
           <>
-            <section className="flex justify-start flex-wrap">
+            <section className="flex justify-around flex-wrap">
               {games.map((game) => (
                 <GameCard key={game.name} game={game} />
               ))}
