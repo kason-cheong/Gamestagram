@@ -20,32 +20,32 @@ export default function Register() {
   const [showForm, setShowForm] = useState(false)
   const [photoUrl, setPhotoUrl] = useState('')
 
-  // useEffect(() => {
-  //   if (user?.sub) {
-  //     {
-  //       fetchUser(user.sub)
-  //     }
-  //   }
-  //   console.log(currentUser.id)
-  // }, [user, showRegister, currentUser.id])
+  useEffect(() => {
+    if (user?.sub) {
+      {
+        fetchUser(user.sub)
+      }
+    }
+    console.log(currentUser.id)
+  }, [user, showRegister, currentUser.id])
 
-  // async function fetchUser(authId: string) {
-  //   const userDB = await getUserByAuth0Id(authId)
+  async function fetchUser(authId: string) {
+    const userDB = await getUserByAuth0Id(authId)
 
-  //   if (userDB) {
-  //     setUser({
-  //       id: userDB.id,
-  //       userName: userDB.username,
-  //       photoUrl: userDB.photoUrl,
-  //       bio: userDB.bio,
-  //       email: userDB.email,
-  //     })
-  //   } else {
-  //     setshowRegister(true)
-  //   }
-  // }
-  ;(';')
-  ;('   ')
+    if (userDB) {
+      setUser({
+        id: userDB.id,
+        userName: userDB.username,
+        photoUrl: userDB.photoUrl,
+        bio: userDB.bio,
+        email: userDB.email,
+      })
+    } else {
+      setshowRegister(true)
+    }
+  }
+  // ;(';')
+  // ;('   ')
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (user && user.email && user.sub) {

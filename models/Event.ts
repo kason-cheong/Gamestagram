@@ -1,13 +1,13 @@
 export interface EventDB {
   hostId: number
-  gameId: number
+  gameId: string
   eventName: string
   location: string
   time: string
   gameName: string
   description: string
   status: string
-  numberOfPeople: number
+  numberOfPeople: string
   createdAt: string
   gamePhoto: string
   userId: number
