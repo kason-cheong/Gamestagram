@@ -42,3 +42,9 @@ export function getUsersByAuthId(
     .where('auth0_Id', authId)
     .first()
 }
+
+export function updateUserPhoto(id: number, photoUrl: string, db = connection) {
+  return db('users')
+  .where('id', id)
+  .update({photo_url: photoUrl})
+}
