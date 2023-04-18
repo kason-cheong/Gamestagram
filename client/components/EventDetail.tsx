@@ -13,7 +13,6 @@ import { Link } from 'react-router-dom'
 import { useUserStore } from '../store/useUserStore'
 import Map from './Map'
 
-
 function EventDetail() {
   const currentUser = useUserStore((state) => state.currentUser)
 
@@ -110,7 +109,7 @@ function EventDetail() {
               </div>
             </div>
           </div>
-          <Map />
+          <Map address={event.location} />
         </div>
         <div className="flex justify-around items-center mt-6 space-x-2 text-base">
           <div>
@@ -133,7 +132,6 @@ function EventDetail() {
           </div>
 
           <div className="flex justify-between">
-           
             <div className=" flex flex-row-reverse">
               {event.users.map((user) => {
                 return (
@@ -145,15 +143,14 @@ function EventDetail() {
                       className="object-center inline-block w-2/3 h-1/2 rounded-full ring-2 ring-white"
                       src={`${user.photoUrl}`}
                       alt={`${user.name}`}
-                    /> 
+                    />
                     <span className="absolute hidden group-hover:flex -right-1 -top-2 -translate-y-full  px-2 py-1 bg-gray-700 rounded-lg text-center text-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-700">
                       {user.name}
-                    </span> 
+                    </span>
                   </div>
                 )
               })}
             </div>
-
           </div>
         </div>
 
@@ -185,9 +182,7 @@ function EventDetail() {
             </button>
           </div>
         </div>
-        <div>
-          <Map />
-        </div>
+        <div></div>
       </div>
     </>
   )
