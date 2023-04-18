@@ -1,7 +1,7 @@
 import { useEventStore } from '../store/useEventStore'
 
 import { shallow } from 'zustand/shallow'
-import { getUserById} from '../apis/apiClientUsers'
+import { getUserById } from '../apis/apiClientUsers'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { addUserEvent } from '../apis/apiClientEvents'
@@ -38,7 +38,6 @@ function EventDetail() {
   useEffect(() => {
     fetchGame(event.gameId)
     fetchEvent()
-    console.log(event.users)
 
     if (event.hostId) {
       fetchHost(event.hostId)
@@ -130,7 +129,7 @@ function EventDetail() {
             <Link to={`/users/${event.hostId}`}>
               <img
                 className="object-center inline-block w-14 h-14 rounded-full ring-2 ring-white"
-                src={host.photoUrl?host.photoUrl:'/pics/default-avatar.png'}
+                src={host.photoUrl ? host.photoUrl : '/pics/default-avatar.png'}
                 alt={`${host.username}`}
               />
               <span className="absolute hidden group-hover:flex -right-1 -top-2 -translate-y-full  px-2 py-1 bg-gray-700 rounded-lg text-center text-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-700">
@@ -147,18 +146,20 @@ function EventDetail() {
                     key={user.name}
                     className=" group text-right sm:h-32 h-14 mt-10 group relative duration-300"
                   >
-
                     <Link to={`/users/${user.userId}`}>
                       <img
                         className="object-center inline-block w-14 h-14 rounded-full ring-2 ring-slate-200"
-                        src={user.photoUrl?user.photoUrl:'/pics/default-avatar.png'}
+                        src={
+                          user.photoUrl
+                            ? user.photoUrl
+                            : '/pics/default-avatar.png'
+                        }
                         alt={`${user.name}`}
                       />
                       <span className="absolute hidden group-hover:flex -right-1 -top-2 -translate-y-full  px-2 py-1 bg-gray-700 rounded-lg text-center text-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-700">
                         {user.name}
                       </span>
                     </Link>
-
                   </div>
                 )
               })}

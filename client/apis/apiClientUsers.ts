@@ -30,8 +30,6 @@ export async function addUser(user: snakeCaseUser) {
 
 export async function getUserByAuth0Id(authId: string) {
   const res = await request.get(`${rootUrlUsers}/auth0/${authId}`)
-  console.log(res.body)
+
   return res.body as Promise<User>
 }
-
-
