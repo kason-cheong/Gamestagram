@@ -1,37 +1,60 @@
 import { useEffect, useState } from 'react'
 import { addEvents } from '../apis/apiClientEvents'
-import { getGames, getGamesFromAPI } from '../apis/apiClientGames'
+
+import {
+  getGames,
+  getGamesFromAPI,
+  getGameByApiId,
+  addGame,
+} from '../apis/apiClientGames'
+
 import { useUserStore } from '../store/useUserStore'
-import { Game } from '../../models/Game'
+import { Game, GameDB } from '../../models/Game'
 import { Autocomplete, TextField } from '@mui/material'
 import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
+import { useGamesStore } from '../store/useGamesStore'
+import { shallow } from 'zustand/shallow'
 
 export function Addevent() {
+  const { games, fetchGamesFromAPI, setGames, isLoading } = useGamesStore(
+    (state) => ({
+      games: state.games,
+      isLoading: state.isLoading,
+      fetchGamesFromAPI: state.fetchGamesFromAPI,
+      setGames: state.setGames,
+    }),
+    shallow
+  )
+
   const navigate = useNavigate()
   const currentUser = useUserStore((state) => state.currentUser)
-  const [games, setGames] = useState<Game[]>([])
-  const [selectedGameId, setSelectedGameId] = useState<number | null>(null)
+  // const [games, setGames] = useState<Game[]>([])
+  const [selectedGameId, setSelectedGameId] = useState('')
   const [gameName, setGameName] = useState('')
-  const [filteredGames, setFilteredGames] = useState<Game[]>(games)
+
+  const [success, setSuccess] = useState<boolean>(false)  `
+  const [filteredGames, setFilteredGames] = useState<GameDB[]>(games)
   const [address, setAddress] = useState<string | undefined>('')
-  const [success, setSuccess] = useState<boolean>(false)
+
   const options = {
     types: ['geocode'],
     componentRestrictions: { country: 'nz' },
   }
   useEffect(() => {
-    async function getGame() {
-      try {
-        const data = await getGamesFromAPI(100)
+    // async function getGame() {
+    //   try {
+    //     const data = await getGamesFromAPI(100)
 
-        setGames(data)
-      } catch (error) {
-        console.error('Error fetching games:', error)
-      }
-    }
-    getGame()
+    //     setGames(data)
+    //   } catch (error) {
+    //     console.error('Error fetching games:', error)
+    //   }
+    // }
+    // getGame()
+    fetchGamesFromAPI(100)
   }, [])
+  
   useEffect(() => {
     const filtered = games.filter((game) =>
       game.name.toLowerCase().includes(gameName.toLowerCase())
@@ -57,10 +80,10 @@ export function Addevent() {
     game: Game
   ) => {
     if (game) {
-      setSelectedGameId(game.id)
+      setSelectedGameId(game.apiId)
       setGameName(game.name)
     } else {
-      setSelectedGameId(null)
+      setSelectedGameId('')
       setGameName('')
     }
   }
@@ -94,12 +117,39 @@ export function Addevent() {
       time: timeDb,
     }
 
-    await addEvents(newEvent)
+
+
+
+
+    const apiGame = games.find((game) => game.apiId === selectedGameId)
+    if (apiGame) {
+      const newGame = {
+        name: apiGame?.name,
+        api_id: apiGame?.apiId,
+        description: apiGame?.description,
+        play_time: apiGame?.averagePlayTime,
+        number_player: apiGame?.playerCount,
+        photo_url: apiGame?.photoUrl,
+      }
+
+      const apiId = await getGameByApiId(selectedGameId)
+      if (apiId) {
+        await addEvents(newEvent)
+      } else {
+        await addGame(newGame)
+        await addEvents(newEvent)
+        
+      }
+}
+   
+
     setSuccess(true)
-    // setAdd(true)
     setTimeout(() => {
       navigate('/my-events')
     }, 2000)
+
+ 
+
   }
   return (
     <>
@@ -121,8 +171,9 @@ export function Addevent() {
                 <Autocomplete
                   disablePortal
                   value={
-                    filteredGames.find((game) => game.id === selectedGameId) ||
-                    null
+                    filteredGames.find(
+                      (game) => game.apiId === selectedGameId
+                    ) || null
                   }
                   id="gameName"
                   options={filteredGames}

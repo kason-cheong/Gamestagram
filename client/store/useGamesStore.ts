@@ -3,15 +3,15 @@ import type { GameDB, Game } from '../../models/Game'
 import { getGames, getGamesFromAPI } from '../apis/apiClientGames'
 
 interface IGame {
-  games: Game[]
+  games: GameDB[]
   isLoading:boolean
   fetchGames: () => void
   fetchGamesFromAPI: (limit:string|number) => void
-  setGames:(games:Game[])=>void
+  setGames:(games:GameDB[])=>void
 }
 
 export const useGamesStore = create<IGame>((set) => ({
-  games: [] as Game[],
+  games: [] as GameDB[],
   isLoading:false,
   fetchGames: async () => {
     const games = await getGames()
@@ -21,7 +21,7 @@ export const useGamesStore = create<IGame>((set) => ({
     set({isLoading:true})
     const externalGames = await getGamesFromAPI(limit)
     const games = externalGames.map((game:any) => ({
-      id: game.id,
+      apiId: game.id,
       name: game.name,
       description: game.description,
       averagePlayTime: game.playtime,
@@ -33,7 +33,7 @@ export const useGamesStore = create<IGame>((set) => ({
     set({ games: games })
     set({isLoading:false})
   },
-  setGames:(games:Game[]) => {
+  setGames:(games:GameDB[]) => {
     set({games:games})
   }
 }))

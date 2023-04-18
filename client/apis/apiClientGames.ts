@@ -2,7 +2,8 @@ import request from 'superagent'
 import { Game,GameSnake } from '../../models/Game'
 
 const rootUrlGames = '/api/v1/games'
-let limit=""
+// let limit = ""
+// let id=""
 
 export async function getGames() {
   const res = await request.get(rootUrlGames)
@@ -10,7 +11,7 @@ export async function getGames() {
   return res.body as Promise<Game[]>
 }
 
-export async function getGameById(id: number) {
+export async function getGameByApiId(id: string) {
   const res = await request.get(`${rootUrlGames}/${id}`)
 
   return res.body as Promise<Game>
@@ -24,6 +25,15 @@ export async function getGamesFromAPI(limit:string|number) {
   
   return res.body.games
 }
+
+// export async function getGameFromAPI(apiId:string) {
+//   const res = await request.get(
+//     `https://api.boardgameatlas.com/api/search?id=${apiId}&client_id=NXgs9nuwJa`
+//   )
+//   console.log(res.body.games);
+  
+//   return res.body.games
+// }
 
 export async function addGame(newGame:GameSnake) {
   await request.post(`${rootUrlGames}/add`).send(newGame)

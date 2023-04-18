@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  db.getGamesById(Number(req.params.id))
+  db.getGamesByApiId(req.params.id)
     .then((results) => {
       res.json(results)
     })
