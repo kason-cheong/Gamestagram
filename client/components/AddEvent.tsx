@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { addEvents } from '../apis/apiClientEvents'
+
 import {
-  getGames,
-  getGamesFromAPI,
   getGameByApiId,
   addGame,
 } from '../apis/apiClientGames'
+
 import { useUserStore } from '../store/useUserStore'
 import { Game, GameDB } from '../../models/Game'
 import { Autocomplete, TextField } from '@mui/material'
@@ -26,30 +26,23 @@ export function Addevent() {
   )
 
   const navigate = useNavigate()
-  const [isAdd, setAdd] = useState(false)
   const currentUser = useUserStore((state) => state.currentUser)
   // const [games, setGames] = useState<Game[]>([])
   const [selectedGameId, setSelectedGameId] = useState('')
   const [gameName, setGameName] = useState('')
+
+  const [success, setSuccess] = useState<boolean>(false)
   const [filteredGames, setFilteredGames] = useState<GameDB[]>(games)
   const [address, setAddress] = useState<string | undefined>('')
+
   const options = {
     types: ['geocode'],
     componentRestrictions: { country: 'nz' },
   }
   useEffect(() => {
-    // async function getGame() {
-    //   try {
-    //     const data = await getGamesFromAPI(100)
-
-    //     setGames(data)
-    //   } catch (error) {
-    //     console.error('Error fetching games:', error)
-    //   }
-    // }
-    // getGame()
     fetchGamesFromAPI(100)
   }, [])
+
   useEffect(() => {
     const filtered = games.filter((game) =>
       game.name.toLowerCase().includes(gameName.toLowerCase())
@@ -130,143 +123,138 @@ export function Addevent() {
         await addGame(newGame)
         await addEvents(newEvent)
       }
-}
-   
+    }
 
-   
-
-    setAdd(true)
-    navigate('/my-events')
+    setSuccess(true)
+    setTimeout(() => {
+      navigate('/my-events')
+    }, 2000)
   }
   return (
     <>
-      {!isAdd ? (
-        <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md mx-auto">
-            <div>
-              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Add New Event
-              </h2>
-            </div>
-            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-              <div>
-                <Autocomplete
-                  disablePortal
-                  value={
-                    filteredGames.find(
-                      (game) => game.apiId === selectedGameId
-                    ) || null
-                  }
-                  id="gameName"
-                  options={filteredGames}
-                  getOptionLabel={(game) => game.name}
-                  onChange={handleGameChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Game Name"
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                    />
-                  )}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="gameName"
-                />
-              </div>
-              <input type="hidden" name="remember" value="true" />
-              <div className="rounded-md shadow-sm -space-y-px">
-                <div>
-                  <label htmlFor="eventName" className="sr-only">
-                    Event name
-                  </label>
-                  <input
-                    type="text"
-                    id="eventName"
-                    name="eventName"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="eventName"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="date">Choose a date:</label>
-                  <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  ></input>
-                  <label htmlFor="time">Choose a time:</label>
-                  <input
-                    type="time"
-                    id="time"
-                    name="time"
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  ></input>
-                </div>
-                <div>
-                  <label htmlFor="description" className="sr-only">
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="description"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="location" className="sr-only">
-                    Location
-                  </label>
-                  <input
-                    type="text"
-                    id="autocomplete"
-                    name="location"
-                    value={address}
-                    onChange={handleAddressChange}
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Enter your address"
-                  />
-                </div>
-                <p>{address}</p>
-
-                <div>
-                  <label htmlFor="numberPpl" className="sr-only">
-                    Number of people playing
-                  </label>
-                  <input
-                    type="text"
-                    id="numberPpl"
-                    name="numberPpl"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="numberPpl"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                >
-                  Add
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      ) : (
-        <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md mx-auto">
-            <h2 className="text-3xl font-extrabold text-gray-900">
-              You have added
+      (
+      <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md mx-auto">
+          <div>
+            {success && (
+              <p className="text-green-500 mb-5 text-center">
+                Event added successfully!
+              </p>
+            )}
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              Add New Event
             </h2>
           </div>
+          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+            <div>
+              <Autocomplete
+                disablePortal
+                value={
+                  filteredGames.find((game) => game.apiId === selectedGameId) ||
+                  null
+                }
+                id="gameName"
+                options={filteredGames}
+                getOptionLabel={(game) => game.name}
+                onChange={handleGameChange}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Game Name"
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                  />
+                )}
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="gameName"
+              />
+            </div>
+            <input type="hidden" name="remember" value="true" />
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="eventName" className="sr-only">
+                  Event name
+                </label>
+                <input
+                  type="text"
+                  id="eventName"
+                  name="eventName"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Event Name"
+                />
+              </div>
+              <br></br>
+              <div>
+                <label htmlFor="date">Choose a date:</label>
+                <input
+                  type="date"
+                  id="date"
+                  name="date"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                ></input>
+                <br></br>
+                <label htmlFor="time">Choose a time:</label>
+                <input
+                  type="time"
+                  id="time"
+                  name="time"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                ></input>
+              </div>
+              <br></br>
+              <div>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Description"
+                />
+              </div>
+              <br></br>
+              <div>
+                <label htmlFor="location">Location:</label>
+                <input
+                  type="text"
+                  id="autocomplete"
+                  name="location"
+                  value={address}
+                  onChange={handleAddressChange}
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Enter your address"
+                />
+              </div>
+              <p className="text-blue-500">{address}</p>
+              <br></br>
+
+              <div>
+                <label htmlFor="numberPpl">Number of Players:</label>
+                <input
+                  type="text"
+                  id="numberPpl"
+                  name="numberPpl"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Number of People"
+                />
+              </div>
+              <br></br>
+              <button
+                type="submit"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              >
+                Add
+              </button>
+            </div>
+          </form>
         </div>
-      )}
+      </div>
+      )
     </>
   )
 }

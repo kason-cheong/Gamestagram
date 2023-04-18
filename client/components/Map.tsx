@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 interface MapProps {
   address: string
@@ -6,35 +6,79 @@ interface MapProps {
 
 function Map({ address }: MapProps) {
   const [map, setMap] = useState<google.maps.Map>()
-
+  const [userLocation, setUserLocation] = useState<google.maps.LatLng>()
+  const cachedInitMap = useCallback(initMap, [address, userLocation])
   useEffect(() => {
-    async function initMap() {
-      const geocoder = new google.maps.Geocoder()
-      geocoder.geocode({ address: address }, function (results, status) {
-        if (status === 'OK' && results !== null) {
-          const center = results[0].geometry.location
-          const newMap = new google.maps.Map(
-            document.getElementById('map') as HTMLElement,
+    cachedInitMap()
+  }, [])
+
+  async function initMap() {
+    const directionsService = new google.maps.DirectionsService()
+    const directionsRenderer = new google.maps.DirectionsRenderer()
+    const geocoder = new google.maps.Geocoder()
+
+    // Request user's location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords
+          setUserLocation(() => new google.maps.LatLng(latitude, longitude))
+        },
+        (error) => {
+          console.error('Error getting user location:', error)
+        }
+      )
+    } else {
+      console.error('Geolocation is not supported by this browser.')
+    }
+
+    // Geocode the specified address
+    geocoder.geocode({ address: address }, function (results, status) {
+      if (status === 'OK' && results !== null) {
+        const center = results[0].geometry.location
+
+        // Create new map centered on the user's location (if available)
+        const newMap = new google.maps.Map(
+          document.getElementById('map') as HTMLElement,
+          {
+            center: userLocation ?? center,
+            zoom: 18,
+          }
+        )
+
+        // Add marker for the specified address
+        const addressMarker = new google.maps.Marker({
+          position: center,
+          map: newMap,
+        })
+
+        // Render directions from user's location (if available) to specified address
+        if (userLocation) {
+          directionsService.route(
             {
-              center,
-              zoom: 18,
+              origin: userLocation,
+              destination: center,
+              travelMode: google.maps.TravelMode.DRIVING,
+            },
+            (result, status) => {
+              if (status === 'OK') {
+                directionsRenderer.setDirections(result)
+                directionsRenderer.setMap(newMap)
+              } else {
+                console.error('Error rendering directions:', status, result)
+              }
             }
           )
-          const marker = new google.maps.Marker({
-            position: center,
-            map: newMap,
-          })
-          setMap(newMap)
-        } else {
-          console.error(
-            'Geocode was not successful for the following reason: ' + status
-          )
         }
-      })
-    }
-    initMap()
-  }, [address])
 
+        setMap(newMap)
+      } else {
+        console.error(
+          'Geocode was not successful for the following reason: ' + status
+        )
+      }
+    })
+  }
   return <div id="map" className="w-1/4 h-40" />
 }
 

@@ -2,7 +2,7 @@ import connection from './connection'
 import type { User, UserDB } from '../../models/Users'
 
 export function getUsers(db = connection): Promise<User[]> {
-  return db('users').select('photo_url as photoUrl', '')
+  return db('users').select('photo_url as photoUrl', 'user_name as username', 'email', "bio")
 }
 
 export function getUsersById(id: number, db = connection): Promise<User[]> {
