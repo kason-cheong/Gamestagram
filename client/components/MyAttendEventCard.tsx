@@ -5,6 +5,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
 import { MyEvent } from '../../models/Event'
+import { Link } from 'react-router-dom'
 
 const MyEventCard = ({
   event,
@@ -41,8 +42,8 @@ const MyEventCard = ({
 
   return (
     <>
-      <div className="border p-2 w-1/3 mb-12" style={{ color: textColor }}>
-        <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
+      <div className="rounded-2xl p-2 w-1/3 mb-12 shadow-md shadow-slate-200" style={{ color: textColor }}>
+       <Link to={`/events/${event.eventId}`}><h2 className="mb-4 font-bold text-lg hover:underline">{event.eventName}</h2></Link> 
         <p className="text-purple-500" style={{ color: textColor }}>
           <b className="text-black" style={{ color: textColor }}>Role:</b> player
         </p>

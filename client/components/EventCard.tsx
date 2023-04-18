@@ -11,6 +11,7 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
 
   return (
     <motion.div
+
       className="inline-block  cursor-pointer bg-slate-200 w-60 h-80 rounded-2xl shadow-2xl shadow-slate-400 mx-4 my-20"
       whileHover={{ scale: 1.2 }}
     >

@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
 import { addEvents } from '../apis/apiClientEvents'
 
-import {
-  getGameByApiId,
-  addGame,
-} from '../apis/apiClientGames'
+import { getGameByApiId, addGame } from '../apis/apiClientGames'
 
 import { useUserStore } from '../store/useUserStore'
 import { Game, GameDB } from '../../models/Game'
@@ -30,6 +27,7 @@ export function Addevent() {
   // const [games, setGames] = useState<Game[]>([])
   const [selectedGameId, setSelectedGameId] = useState('')
   const [gameName, setGameName] = useState('')
+  const [disButton, setDisButton] = useState(false)
 
   const [success, setSuccess] = useState<boolean>(false)
   const [filteredGames, setFilteredGames] = useState<GameDB[]>(games)
@@ -124,7 +122,7 @@ export function Addevent() {
         await addEvents(newEvent)
       }
     }
-
+    setDisButton(true)
     setSuccess(true)
     setTimeout(() => {
       navigate('/my-events')
@@ -229,7 +227,6 @@ export function Addevent() {
                   placeholder="Enter your address"
                 />
               </div>
-              <p className="text-blue-500">{address}</p>
               <br></br>
 
               <div>
@@ -244,12 +241,14 @@ export function Addevent() {
                 />
               </div>
               <br></br>
-              <button
-                type="submit"
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              >
-                Add
-              </button>
+              {!disButton && (
+               <button
+               type="submit"
+               className="inline-flex items-center px-4 py-2 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+             >
+               Add
+             </button>
+              )}
             </div>
           </form>
         </div>
