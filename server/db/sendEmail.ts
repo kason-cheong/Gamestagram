@@ -6,21 +6,21 @@ export async function sendEmails(eventId: number) {
 
   sgMail.setApiKey(process.env.APIKEYSG as string)
   const data = await getEventsById(eventId)
-  if (data) {
-    const recipients = data.users.map((user) => user.email)
-
+  function sendEmail(userEmail: string, userName: string) {
     const msg = {
-      to: recipients,
+      to: userEmail,
       from: {
         name: 'Gamestagram',
         email: 'maxeipk@gmail.com',
       },
       subject: 'Message from Gamestagram',
-      text: 'the event have attented has been canceled.',
-      html: 'the event have attented has been canceled.',
+      text: `dear ${userName}, we are sorry to inform you that the event<${data?.eventName}> held on ${data?.time} has been canceled, welcome to join another event.`,
+      html: `dear ${userName}, we are sorry to inform you that the event<${data?.eventName}> held on ${data?.time} has been canceled, welcome to join another event.`,
     }
-
     sgMail.send(msg)
+  }
+  if (data) {
+    data.users.map((user) => sendEmail(user.email, user.name))
   } else {
     console.log('email not send')
   }
