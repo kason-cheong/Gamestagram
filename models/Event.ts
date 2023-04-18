@@ -42,7 +42,7 @@ export interface FormattedEventWithUser {
   eventId: number
   hostId: number
   eventName: string
-  gameId: number
+  gameId: string
   location: string
   time: string
   status: string
