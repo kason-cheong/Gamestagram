@@ -43,8 +43,18 @@ const MyEventCard = ({
 
   return (
     <>
-      <div className="border p-2 w-1/3 mb-12" style={{ color: textColor }}>
-        <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
+      <div
+        className="rounded-2xl p-2 w-1/3 mb-12 shadow-md shadow-slate-200"
+        style={{ color: textColor }}
+      >
+        {event.status === 'open' ? (
+          <Link to={`/events/${event.eventId}`}>
+            <h2 className="mb-4 font-bold text-lg hover:underline">{event.eventName}</h2>
+          </Link>
+        ) : (
+          <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
+        )}
+        
         <p className="text-blue-500" style={{ color: textColor }}>
           <b className="text-black" style={{ color: textColor }}>
             Role:
