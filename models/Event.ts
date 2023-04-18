@@ -13,6 +13,7 @@ export interface EventDB {
   userId: number
   userName: string
   photoUrl: string
+  email: string
 }
 
 export interface Event extends EventDB {
@@ -34,13 +35,14 @@ export interface EventUser {
   userId: number
   name: string
   photoUrl: string
+  email: string
 }
 
 export interface FormattedEventWithUser {
   eventId: number
   hostId: number
   eventName: string
-  gameId: number
+  gameId: string
   location: string
   time: string
   status: string

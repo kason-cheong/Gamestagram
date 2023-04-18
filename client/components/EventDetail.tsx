@@ -1,7 +1,7 @@
 import { useEventStore } from '../store/useEventStore'
 
 import { shallow } from 'zustand/shallow'
-import { getUserById, getUserByAuth0Id } from '../apis/apiClientUsers'
+import { getUserById} from '../apis/apiClientUsers'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { addUserEvent } from '../apis/apiClientEvents'
@@ -109,7 +109,7 @@ function EventDetail() {
               </div>
             </div>
           </div>
-          <Map />
+          <Map address={event.location} />
         </div>
         <div className="flex justify-around items-center mt-6 space-x-2 text-base">
           <div>
@@ -147,6 +147,7 @@ function EventDetail() {
                     key={user.name}
                     className=" group text-right sm:h-32 h-14 mt-10 group relative duration-300"
                   >
+
                     <Link to={`/users/${user.userId}`}>
                       <img
                         className="object-center inline-block w-2/3 h-1/2 rounded-full ring-2 ring-white"
@@ -157,6 +158,7 @@ function EventDetail() {
                         {user.name}
                       </span>
                     </Link>
+
                   </div>
                 )
               })}
@@ -192,9 +194,7 @@ function EventDetail() {
             </button>
           </div>
         </div>
-        <div>
-          <Map />
-        </div>
+        <div></div>
       </div>
     </>
   )

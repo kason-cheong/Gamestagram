@@ -7,6 +7,7 @@ import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
+import { sendEmails } from '../apis/apiClientSendEmails'
 
 const MyEventCard = ({
   event,
@@ -16,7 +17,6 @@ const MyEventCard = ({
   fetchMyEvents: (id: number) => Promise<void>
 }) => {
   const [textColor, setTextColor] = useState('')
-
 
   useEffect(() => {
     if (event.status === 'closed') {
@@ -28,8 +28,8 @@ const MyEventCard = ({
     await cancelEvent(event.eventId)
     fetchMyEvents(event.userId)
     setOpen(false)
+    sendEmails(event.eventId)
   }
-
 
   function handleOpen() {
     setOpen(true)
@@ -37,51 +37,48 @@ const MyEventCard = ({
 
   const [open, setOpen] = useState(false)
 
-
-
   const handleClose = () => {
     setOpen(false)
   }
 
-
   return (
     <>
-    <div className="border p-2 w-1/3 mb-12" style={{ color: textColor }}>
-      <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
-      <p className="text-blue-500" style={{ color: textColor }}>
-        <b className="text-black" style={{ color: textColor }}>
-          Role:
-        </b>{' '}
-        host
-      </p>
-      <p className="text-green-500" style={{ color: textColor }}>
-        <b className="text-black" style={{ color: textColor }}>
-          Status:
-        </b>{' '}
-        {event.status}
-      </p>
-      <p>
-        <b>Date:</b>
-        {event.time}
-      </p>
-      <p>
-        <b>Location:</b> {event.location}
-      </p>
-      {event.status === 'open' && (
-        <>
-          <Link to={`/events/${event.eventId}/edit`}>
-            <button className="px-4 py-2 bg-purple-200 rounded-2xl my-3">
-              Edit Event
+      <div className="border p-2 w-1/3 mb-12" style={{ color: textColor }}>
+        <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
+        <p className="text-blue-500" style={{ color: textColor }}>
+          <b className="text-black" style={{ color: textColor }}>
+            Role:
+          </b>{' '}
+          host
+        </p>
+        <p className="text-green-500" style={{ color: textColor }}>
+          <b className="text-black" style={{ color: textColor }}>
+            Status:
+          </b>{' '}
+          {event.status}
+        </p>
+        <p>
+          <b>Date:</b>
+          {event.time}
+        </p>
+        <p>
+          <b>Location:</b> {event.location}
+        </p>
+        {event.status === 'open' && (
+          <>
+            <Link to={`/events/${event.eventId}/edit`}>
+              <button className="px-4 py-2 bg-purple-200 rounded-2xl my-3">
+                Edit Event
+              </button>
+            </Link>
+            <button
+              onClick={handleOpen}
+              className="px-4 py-2 bg-purple-200 rounded-2xl my-3 mx-4"
+            >
+              Cancel Event
             </button>
-          </Link>
-          <button
-            onClick={handleOpen}
-            className="px-4 py-2 bg-purple-200 rounded-2xl my-3 mx-4"
-          >
-            Cancel Event
-          </button>
-        </>
-      )}
+          </>
+        )}
       </div>
       <div>
         <Dialog
@@ -101,7 +98,7 @@ const MyEventCard = ({
           </DialogActions>
         </Dialog>
       </div>
-      </>
+    </>
   )
 }
 

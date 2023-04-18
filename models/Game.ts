@@ -1,4 +1,5 @@
 export interface GameDB {
+  apiId:string
   name: string
   description: string
   averagePlayTime: string
@@ -11,6 +12,7 @@ export interface Game extends GameDB {
 }
 
 export interface GameSnake{
+  api_id:string
   name: string
   description: string
   play_time: string
