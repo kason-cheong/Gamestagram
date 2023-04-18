@@ -41,7 +41,7 @@ export default function UserDetails() {
             </p>
 
             <img
-              src={user.photoUrl}
+              src={user.photoUrl ? user.photoUrl : '/pics/default-avatar.png'}
               alt="userPhoto"
               className="mt-4 h-32 w-32 rounded-full mx-auto"
             ></img>

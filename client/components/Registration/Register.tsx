@@ -67,7 +67,6 @@ export default function Register() {
 
   return (
     <>
-      {isLoading && <h1>Loading...</h1>}
       {showRegister && !isLoading ? (
         <>
           <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -79,8 +78,8 @@ export default function Register() {
               </div>
               <form onSubmit={handleSubmit} className="mt-8 space-y-6">
                 <input type="hidden" name="remember" value="true" />
-                <div className="rounded-md shadow-sm -space-y-px">
-                  <div>
+                <div className="shadow-sm space-y-4">
+                  <div className='rounded'>
                     <label htmlFor="userName" className="sr-only">
                       User name
                     </label>
@@ -108,7 +107,7 @@ export default function Register() {
                       placeholder="Bio"
                     />
                   </div>
-                  <div>
+                  <div className='rounded-lg'>
                     <label htmlFor="photoUrl" className="sr-only">
                       Photo Url
                     </label>
@@ -116,7 +115,6 @@ export default function Register() {
                       type="photoUrl"
                       name="photoUrl"
                       id="photoUrl"
-                      required
                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                       placeholder="Photo Url"
                     />
@@ -144,9 +142,12 @@ export default function Register() {
                   <p className="mt-2 text-lg font-medium text-gray-900">
                     {currentUser.userName}
                   </p>
-
                   <img
-                    src={currentUser.photoUrl}
+                    src={
+                      currentUser.photoUrl
+                        ? currentUser.photoUrl
+                        : '/pics/default-avatar.png'
+                    }
                     alt="userPhoto"
                     className="mt-4 h-32 w-32 rounded-full mx-auto"
                   ></img>
@@ -163,8 +164,10 @@ export default function Register() {
             </div>
           </>
         )
-      ) : (
+      ) : currentUser.id ? (
         <p>Please log in</p>
+      ) : (
+        <h1>Loading...</h1>
       )}
     </>
   )

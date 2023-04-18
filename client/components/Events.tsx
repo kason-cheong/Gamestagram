@@ -64,7 +64,7 @@ const Events = () => {
             </button>
           </div>
         </form>
-        <section className="flex mt-32">
+        <section className="flex mt-32 flex-wrap justify-start">
           {events[0] ? (
             events.map((event) => {
               if (event.status === 'open') {
