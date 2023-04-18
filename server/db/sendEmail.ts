@@ -16,7 +16,7 @@ export async function sendEmails(eventId: number) {
         email: 'maxeipk@gmail.com',
       },
       subject: 'Message from Gamestagram',
-      text: 'the event have attented has been canceled.',
+      text: `dear gamestergramthe the ${data.gameName} has been canceled by the host for some reason.`,
       html: 'the event have attented has been canceled.',
     }
 
