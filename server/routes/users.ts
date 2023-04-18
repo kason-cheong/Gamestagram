@@ -37,6 +37,19 @@ router.post('/add', (req, res) => {
     })
 })
 
+router.patch('/:id', (req, res) => {
+  const id = req.params.id
+  const photoUrl = req.body.photoUrl
+
+  db.updateUserPhoto(+id, photoUrl)
+    .then(() => {
+      res.status(200).json({ message: 'Profile picture updated successfully' })
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json({ message: 'Something went wrong' })
+    })
+})
 
 router.get('/auth0/:id', (req, res) => {
   db.getUsersByAuthId(req.params.id)

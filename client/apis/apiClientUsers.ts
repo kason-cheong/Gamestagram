@@ -3,10 +3,13 @@ import { User, UserDB } from '../../models/Users'
 
 const rootUrlUsers = '/api/v1/users'
 
-interface EditUser {
-  userName: string
-  bio: string
-}
+// interface EditUser {
+//   userName: string
+//   bio: string
+// }
+// interface EditUserPhoto {
+//   photo_url: string
+// }
 interface snakeCaseUser {
   user_name: string
   email: string
@@ -20,8 +23,9 @@ export async function getUserById(id: number) {
   return res.body as Promise<User>
 }
 
-export async function editUserById(id: number, input: EditUser) {
-  return await request.post(`${rootUrlUsers}/${id}`).send(input)
+export async function editUserById(id: number, input: string) {
+  console.log('edituser is here:', input)
+  return await request.patch(`${rootUrlUsers}/${id}`).send({ photoUrl:input })
 }
 
 export async function addUser(user: snakeCaseUser) {
@@ -30,8 +34,6 @@ export async function addUser(user: snakeCaseUser) {
 
 export async function getUserByAuth0Id(authId: string) {
   const res = await request.get(`${rootUrlUsers}/auth0/${authId}`)
-  console.log(res.body)
+
   return res.body as Promise<User>
 }
-
-

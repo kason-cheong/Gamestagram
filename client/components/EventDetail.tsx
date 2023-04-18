@@ -40,7 +40,6 @@ function EventDetail() {
   useEffect(() => {
     fetchGame(event.gameId)
     fetchEvent()
-    console.log(event.users)
 
     if (event.hostId) {
       fetchHost(event.hostId)
