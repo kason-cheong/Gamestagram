@@ -18,25 +18,22 @@ export default function Nav() {
   const setUser = useUserStore((state) => state.setUser)
   const currentUser = useUserStore((state) => state.currentUser)
 
-
   useEffect(() => {
     async function fetchProfilePic() {
       if (user) {
         const userData = await getUserByAuth0Id(String(user.sub))
         setPhotoUrl(userData.photoUrl)
-         setUser({
-        id: userData.id,
-        userName: userData.username,
-        photoUrl: userData.photoUrl,
-        bio: userData.bio,
-        email: userData.email,
-      })
+        setUser({
+          id: userData.id,
+          userName: userData.username,
+          photoUrl: userData.photoUrl,
+          bio: userData.bio,
+          email: userData.email,
+        })
       }
     }
     fetchProfilePic()
-  }, [user,currentUser.id])
-
-
+  }, [user, currentUser.id])
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
@@ -106,12 +103,14 @@ export default function Nav() {
               <div className="relative flex flex-row">
                 {/* <img className='rounded-full w-20 h-20' src={photoUrl} alt="profile pic"></img> */}
                 <button onClick={toggleDropdown}>{user?.name}</button>
+
                 <img
                   className="rounded-full w-16 h-16"
-                  src={photoUrl}
+                  src={photoUrl ? photoUrl : '/pics/default-avatar.png'}
                   alt="profile pic"
                   onClick={toggleDropdown}
-                ></img>
+                />
+
                 {dropdownOpen && (
                   <div className="absolute z-10 mt-16 py-2 w-48 bg-white rounded-md shadow-xl">
                     <NavLink

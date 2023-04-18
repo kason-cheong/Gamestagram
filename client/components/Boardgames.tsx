@@ -70,7 +70,7 @@ export default function Boardgames() {
           </div>
         </form>
         {!isLoading ? (
-          <section className="flex mt-32 flex-wrap justify-between">
+          <section className="flex mt-32 flex-wrap justify-start">
             {games.map((game) => (
               <GameCard key={game.name} game={game} />
             ))}

@@ -11,7 +11,7 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
 
   return (
     <motion.div
-      className=" bg-slate-200 w-80 rounded-2xl shadow-2xl shadow-slate-400 ml-12"
+      className=" bg-slate-200 w-80 rounded-2xl shadow-2xl shadow-slate-400 ml-12 mb-8"
       whileHover={{ scale: 1.2 }}
     >
       <Link to={`/events/${event.eventId}`}>
