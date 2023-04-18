@@ -40,16 +40,6 @@ export function Addevent() {
     componentRestrictions: { country: 'nz' },
   }
   useEffect(() => {
-    // async function getGame() {
-    //   try {
-    //     const data = await getGamesFromAPI(100)
-
-    //     setGames(data)
-    //   } catch (error) {
-    //     console.error('Error fetching games:', error)
-    //   }
-    // }
-    // getGame()
     fetchGamesFromAPI(100)
   }, [])
 
@@ -148,7 +138,7 @@ export function Addevent() {
           <div>
             {success && (
               <p className="text-green-500 mb-5 text-center">
-                Event updated successfully!
+                Event added successfully!
               </p>
             )}
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

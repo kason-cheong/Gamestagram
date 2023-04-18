@@ -1,7 +1,7 @@
 import { useEventStore } from '../store/useEventStore'
 
 import { shallow } from 'zustand/shallow'
-import { getUserById, getUserByAuth0Id } from '../apis/apiClientUsers'
+import { getUserById} from '../apis/apiClientUsers'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { addUserEvent } from '../apis/apiClientEvents'
