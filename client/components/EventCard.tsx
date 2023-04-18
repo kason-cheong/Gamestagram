@@ -1,18 +1,14 @@
 import type { FormattedEventWithUser } from '../../models/Event'
 import { Link } from 'react-router-dom'
-import { formatTime } from '../helper/helperFunction'
+import { formatTime, limitLocationLength } from '../helper/helperFunction'
 import { motion } from 'framer-motion'
 
 function EventCard({ event }: { event: FormattedEventWithUser }) {
   const date = event.time.slice(0, 10)
   const time = event.time.slice(10)
+  const location = limitLocationLength(event.location)
 
   const formattedTime = formatTime(date)
-
-  function limitLocationLength(locationName: string): string {
-    return locationName.slice(0, 23)
-  }
-  const location = limitLocationLength(event.location)
 
   return (
     <motion.div
