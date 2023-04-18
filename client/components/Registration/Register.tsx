@@ -3,7 +3,12 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 
-import { addUser, getUserByAuth0Id } from '../../apis/apiClientUsers'
+import {
+  addUser,
+  getUserByAuth0Id,
+  editUserById,
+  getUserById,
+} from '../../apis/apiClientUsers'
 import { useUserStore } from '../../store/useUserStore'
 
 export default function Register() {
@@ -12,33 +17,35 @@ export default function Register() {
 
   const { user, isLoading } = useAuth0()
   const [showRegister, setshowRegister] = useState(false)
-  console.log(user?.sub)
+  const [showForm, setShowForm] = useState(false)
+  const [photoUrl, setPhotoUrl] = useState('')
 
-  useEffect(() => {
-    if (user?.sub) {
-      {
-        fetchUser(user.sub)
-      }
-    }
-    console.log(currentUser.id)
-  }, [user, showRegister, currentUser.id])
+  // useEffect(() => {
+  //   if (user?.sub) {
+  //     {
+  //       fetchUser(user.sub)
+  //     }
+  //   }
+  //   console.log(currentUser.id)
+  // }, [user, showRegister, currentUser.id])
 
-  async function fetchUser(authId: string) {
-    const userDB = await getUserByAuth0Id(authId)
+  // async function fetchUser(authId: string) {
+  //   const userDB = await getUserByAuth0Id(authId)
 
-    if (userDB) {
-      setUser({
-        id: userDB.id,
-        userName: userDB.username,
-        photoUrl: userDB.photoUrl,
-        bio: userDB.bio,
-        email: userDB.email,
-      })
-    } else {
-      setshowRegister(true)
-    }
-  }
-
+  //   if (userDB) {
+  //     setUser({
+  //       id: userDB.id,
+  //       userName: userDB.username,
+  //       photoUrl: userDB.photoUrl,
+  //       bio: userDB.bio,
+  //       email: userDB.email,
+  //     })
+  //   } else {
+  //     setshowRegister(true)
+  //   }
+  // }
+  ;(';')
+  ;('   ')
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (user && user.email && user.sub) {
@@ -63,6 +70,30 @@ export default function Register() {
     } else {
       console.log('user not signed in')
     }
+  }
+
+  const handleClickImageButton = () => {
+    setShowForm(!showForm)
+  }
+
+  async function handlePhotoUrlChange(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    setPhotoUrl(event.target.value)
+    console.log(photoUrl)
+
+    const userAuthId = user?.sub
+    const userId = await getUserByAuth0Id(userAuthId as string)
+    console.log('user id: ', userId.id)
+    console.log(photoUrl)
+  }
+
+  async function updateProfilePic() {
+    const userAuthId = user?.sub
+    const userId = await getUserByAuth0Id(userAuthId as string)
+    // console.log('user id: ', userId.id)
+
+    await editUserById(currentUser.id, photoUrl)
   }
 
   return (
@@ -151,6 +182,26 @@ export default function Register() {
                     alt="userPhoto"
                     className="mt-4 h-32 w-32 rounded-full mx-auto"
                   ></img>
+
+                  <button onClick={handleClickImageButton}>
+                    Update Profile Pic
+                  </button>
+                  {showForm && (
+                    <form>
+                      <label htmlFor="photoUrl">Image:</label>
+                      <input
+                        type="photoUrl"
+                        name="photoUrl"
+                        id="photoUrl"
+                        placeholder="Update your Profile Pic"
+                        value={photoUrl}
+                        onChange={handlePhotoUrlChange}
+                      ></input>
+                      <button type="submit" onClick={updateProfilePic}>
+                        Submit
+                      </button>
+                    </form>
+                  )}
 
                   <p className="mt-1 text-md text-gray-500">
                     {currentUser.bio}
