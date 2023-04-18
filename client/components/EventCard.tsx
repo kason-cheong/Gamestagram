@@ -11,25 +11,27 @@ function EventCard({ event }: { event: FormattedEventWithUser }) {
 
   return (
     <motion.div
-      className=" bg-slate-200 w-80 rounded-2xl shadow-2xl shadow-slate-400 ml-12"
+      className="inline-block  cursor-pointer bg-slate-200 w-60 h-80 rounded-2xl shadow-2xl shadow-slate-400 mx-4 my-20"
       whileHover={{ scale: 1.2 }}
     >
       <Link to={`/events/${event.eventId}`}>
         <img
           src={`${event.gamePhoto}`}
-          alt=""
+          alt={`${event.gameName}`}
           className="h-3/5 rounded-t-2xl w-full"
         />
 
-        <div className="p-2 text-center h-2/5">
+        <div className="p-2 text-center h-2/5 w-full">
           <h4 className="text-orange-900 mb-2">
             {formattedTime}
             {time}
             {/* {event.time} */}
           </h4>
-          <p className="font-semibold mb-1">{event.eventName}</p>
-          <p className="italic mb-1">{event.gameName}</p>
-          <p className="font-thin">{event.location}</p>
+          <p className="font-semibold mb-1 text-center">{event.eventName}</p>
+          <p className="italic mb-1 ">{event.gameName}</p>
+          <p className="font-thin text-ellipsis overflow-hidden ">
+            {event.location}
+          </p>
         </div>
       </Link>
     </motion.div>
