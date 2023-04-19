@@ -130,7 +130,6 @@ export function Addevent() {
   }
   return (
     <>
-      (
       <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md mx-auto">
           <div>
@@ -253,7 +252,6 @@ export function Addevent() {
           </form>
         </div>
       </div>
-      )
     </>
   )
 }
