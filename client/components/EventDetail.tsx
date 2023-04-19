@@ -77,7 +77,7 @@ function EventDetail() {
               src={`${event.gamePhoto}`}
               alt={`${event.gameName}`}
             />
-            <div className="my-6">
+            <div className="my-6 w-2/3 mx-6">
               <ul>
                 <li>
                   <span className="font-bold text-2xl">
@@ -90,26 +90,34 @@ function EventDetail() {
                   </span>
                 </li>
                 <li>
-                  <span className="">Description: {event.description}</span>
+                  <span className="my-2 text-lg">
+                    <b>Description:</b> {event.description}
+                  </span>
                 </li>
 
                 <li>
-                  <span className="">
-                    Suggested Players: {event.numberOfPeople}
+                  <span className="my-2 text-lg">
+                    <b>Suggested Players: </b>
+                    {event.numberOfPeople}
                   </span>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="flex flex-col w-2/5  justify-center">
-            <div className="">
+          <div className="flex flex-col w-2/5  justify-center ">
+            <div className="my-5">
               <ul>
-                <li>Location: {event.location}</li>
-                <li>Time: {event.time}</li>
+                <li>
+                  <b>Location:</b> {event.location}
+                </li>
+                <li>
+                  <b>Time:</b> {event.time}
+                </li>
               </ul>
             </div>
-
-            <Map address={event.location} />
+            <div>
+              <Map address={event.location} />
+            </div>
           </div>
         </div>
 
