@@ -2,7 +2,7 @@ import { render, screen, fireEvent, } from '@testing-library/react'
 import { BrowserRouter, MemoryRouter } from 'react-router-dom'
 import Nav from './Nav'
 import '@testing-library/jest-dom'
-import userEvent from '@testing-library/user-event'
+// import userEvent from '@testing-library/user-event'
 
 //Checks whether there are any console errors and checks whether "container" (navbar) is in the document
 describe('Nav', () => {
