@@ -1,3 +1,5 @@
+// this is register page
+
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 
@@ -5,6 +7,7 @@ import {
   addUser,
   getUserByAuth0Id,
   editUserById,
+  getUserById,
 } from '../../apis/apiClientUsers'
 import { useUserStore } from '../../store/useUserStore'
 
@@ -23,6 +26,7 @@ export default function Register() {
         fetchUser(user.sub)
       }
     }
+    console.log(currentUser.id)
   }, [user, showRegister, currentUser.id])
 
   async function fetchUser(authId: string) {
@@ -40,6 +44,7 @@ export default function Register() {
       setshowRegister(true)
     }
   }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (user && user.email && user.sub) {
@@ -74,9 +79,19 @@ export default function Register() {
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     setPhotoUrl(event.target.value)
+    console.log(photoUrl)
+
+    const userAuthId = user?.sub
+    const userId = await getUserByAuth0Id(userAuthId as string)
+    console.log('user id: ', userId.id)
+    console.log(photoUrl)
   }
 
   async function updateProfilePic() {
+    const userAuthId = user?.sub
+    const userId = await getUserByAuth0Id(userAuthId as string)
+    // console.log('user id: ', userId.id)
+
     await editUserById(currentUser.id, photoUrl)
   }
 
@@ -149,49 +164,30 @@ export default function Register() {
         !isLoading && (
           <>
             <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-              <div className="max-w-md mx-auto ">
+              <div className="max-w-md mx-auto">
                 <div className="text-center">
                   <h2 className="text-3xl font-extrabold text-gray-900">
-                  {currentUser.userName}
+                    Profile
                   </h2>
-                  <div className="flex flex-col items-center">
-                    <div className="mt-4 mb-2 h-64 w-64 rounded-full">
-                      <img
-                        src={
-                          currentUser.photoUrl
-                            ? currentUser.photoUrl
-                            : '/pics/default-avatar.png'
-                        }
-                        alt="userPhoto"
-                        className="object-cover h-full w-full rounded-full"
-                      />
-                    </div>
-                    <div className="mt-4 ">
-                      <button
-                        onClick={handleClickImageButton}
-                        className="w-8 h-8 rounded-full bg-gray-400 hover:bg-indigo-500 text-white flex items-center justify-center text-2xl focus:outline-none"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 4v16m8-8H4"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
+                  <p className="mt-2 text-lg font-medium text-gray-900">
+                    {currentUser.userName}
+                  </p>
+                  <img
+                    src={
+                      currentUser.photoUrl
+                        ? currentUser.photoUrl
+                        : '/pics/default-avatar.png'
+                    }
+                    alt="userPhoto"
+                    className="mt-4 h-32 w-32 rounded-full mx-auto"
+                  ></img>
 
+                  <button onClick={handleClickImageButton}>
+                    Update Profile Pic
+                  </button>
                   {showForm && (
-                    <form className="mt-4">
-                      <label htmlFor="photoUrl">Updated Image: </label>
+                    <form>
+                      <label htmlFor="photoUrl">Image:</label>
                       <input
                         type="photoUrl"
                         name="photoUrl"
@@ -200,19 +196,19 @@ export default function Register() {
                         value={photoUrl}
                         onChange={handlePhotoUrlChange}
                       ></input>
-                      <button
-                        type="submit"
-                        onClick={updateProfilePic}
-                        className="bg-gray-400 hover:bg-indigo-500 text-white font-bold py-1 px-2 rounded ml-1"
-                      >
+                      <button type="submit" onClick={updateProfilePic}>
                         Submit
                       </button>
                     </form>
                   )}
 
-                  <p className="mt-6 mb-2 text-md text-gray-500 text-center">
+                  <p className="mt-1 text-md text-gray-500">
                     {currentUser.bio}
                   </p>
+                  {/* <p>
+                    Signed Up Since:{' '}
+                    {currentUser.signedUpAt.toLocaleDateString()}
+                  </p> */}
                 </div>
               </div>
             </div>
