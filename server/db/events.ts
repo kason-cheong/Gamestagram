@@ -74,17 +74,17 @@ export function getEventsByUserId(id: number, db = connection) {
     )
 }
 
-export function getEventsByHostId(id: number, db = connection) {
-  return db('events')
-    .where('host_id', id)
-    .select(
-      'events.id as eventId',
-      'events.host_id as hostId',
-      'events.event_name as eventName',
-      'time',
-      'location'
-    )
-}
+// export function getEventsByHostId(id: number, db = connection) {
+//   return db('events')
+//     .where('host_id', id)
+//     .select(
+//       'events.id as eventId',
+//       'events.host_id as hostId',
+//       'events.event_name as eventName',
+//       'time',
+//       'location'
+//     )
+// }
 
 export function addEvent(data: EventDB, db = connection): Promise<number[]> {
   const timestamp = new Date(Date.now())
