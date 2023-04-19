@@ -49,6 +49,7 @@
     "@redux-devtools/extension": "^3.2.3",
     "@sendgrid/mail": "^7.7.0",
     "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/user-event": "^14.4.3",
     "coverage": "^0.4.1",
     "dotenv": "^16.0.3",
     "express": "^4.17.2",

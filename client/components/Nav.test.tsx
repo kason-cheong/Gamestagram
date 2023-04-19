@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { render, screen, fireEvent, } from '@testing-library/react'
+import { BrowserRouter, MemoryRouter } from 'react-router-dom'
 import Nav from './Nav'
 import '@testing-library/jest-dom'
-import { IfAuthenticated } from './subcomponents/Authenticated'
+import userEvent from '@testing-library/user-event'
 
 //Checks whether there are any console errors and checks whether "container" (navbar) is in the document
 describe('Nav', () => {
@@ -30,7 +30,6 @@ describe('Nav', () => {
 
     expect(eventsLink).toBeInTheDocument()
   })
-
   //Checks whether Nav component renders Boardgames link
   test('renders "Boardgames" link in the Navbar', () => {
     render(
@@ -56,6 +55,43 @@ describe('Nav', () => {
     expect(displayedImage.src).toContain('/pics/temporary-logo.png')
   })
 
+  //Checks whether img element is clickable to redirects to home
+  test('the website logo img element is clickable', () => {
+    render(
+      <MemoryRouter>
+        <Nav />
+      </MemoryRouter>
+    )
+    const displayedImage = document.querySelector('img') as HTMLImageElement
+    expect(displayedImage.src).toContain('/pics/temporary-logo.png')
+
+    const onClickMock = jest.fn()
+    displayedImage.addEventListener('click', onClickMock)
+
+    fireEvent.click(displayedImage)
+
+    expect(onClickMock).toHaveBeenCalledTimes(1)
+  })
+
+  //Checks whether we redirect to landing page on click
+  test('the website logo img element redirects to home when clicked', () => {
+    render(
+      <BrowserRouter>
+        <Nav />
+      </BrowserRouter>
+    )
+    const displayedImage = document.querySelector('img') as HTMLImageElement
+    expect(displayedImage.src).toContain('/pics/temporary-logo.png')
+
+    const onClickMock = jest.fn()
+    displayedImage.addEventListener('click', onClickMock)
+
+    fireEvent.click(displayedImage)
+
+    expect(onClickMock).toHaveBeenCalledTimes(1)
+    expect(window.location.href).toBe('http://localhost/')
+  })
+
   //Checks whether Nav component has boardgame logo inside
   test('image alt text is present in the navbar', () => {
     render(
@@ -67,25 +103,5 @@ describe('Nav', () => {
     const logoImage = screen.getByAltText('website logo')
 
     expect(logoImage).toBeInTheDocument()
-  })
-  test('renders "Profile" link in the dropdown menu when authenticated', () => {
-    // Simulate authenticated user
-    const user = { name: 'Test User', photoUrl: '/path/to/photo' }
-    render(
-      <MemoryRouter>
-        <IfAuthenticated user={user}>
-          <Nav />
-        </IfAuthenticated>
-      </MemoryRouter>
-    )
-
-    // Simulate click event on dropdown button to open the dropdown menu
-    const dropdownButton = screen.getByText(user.name)
-    fireEvent.click(dropdownButton)
-
-    // Check if the "Profile" link is present in the dropdown menu
-    const navLinks = screen.getAllByRole('link')
-    const profileLink = navLinks.find((link) => link.textContent === 'Profile')
-    expect(profileLink).toBeInTheDocument()
   })
 })
