@@ -19,62 +19,65 @@ import UserDetails from './UserDetails'
 
 function App() {
   return (
-    <div>
-      <Nav />
-      <Notice />
+    <>
+      <div>
+        <Nav />
+        <Notice />
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PageTransition>
-              <Home />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/events/:id"
-          element={
-            <PageTransition>
-              <EventDetail />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/boardgames"
-          element={
-            <PageTransition>
-              <Boardgames />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/events"
-          element={
-            <PageTransition>
-              <Events />
-            </PageTransition>
-          }
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PageTransition>
+                <Home />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/events/:id"
+            element={
+              <PageTransition>
+                <EventDetail />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/boardgames"
+            element={
+              <PageTransition>
+                <Boardgames />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/events"
+            element={
+              <PageTransition>
+                <Events />
+              </PageTransition>
+            }
+          />
 
-        <Route path="/profile" element={<Register />} />
+          <Route path="/profile" element={<Register />} />
 
-        <Route path="/my-events" element={<MyEvents />} />
+          <Route path="/my-events" element={<MyEvents />} />
 
-        <Route path="/events/add" element={<Addevent />} />
+          <Route path="/events/add" element={<Addevent />} />
 
-        <Route
-          path="/events/:id/edit"
-          element={
-            <PageTransition>
-              <EditEvent />
-            </PageTransition>
-          }
-        />
-        <Route path="/users/:id" element={<UserDetails />} />
-      </Routes>
-      <Footer />
-    </div>
+          <Route
+            path="/events/:id/edit"
+            element={
+              <PageTransition>
+                <EditEvent />
+              </PageTransition>
+            }
+          />
+          <Route path="/users/:id" element={<UserDetails />} />
+        </Routes>
+        <Footer />
+      </div>
+      <div className="py-10"></div>
+    </>
   )
 }
 

@@ -42,19 +42,21 @@ const MyEventCard = ({
   }
 
   return (
-    <>
+    
       <div
-        className="rounded-2xl p-2 w-1/3 mb-12 shadow-md shadow-slate-200"
+        className="rounded-2xl p-4 w-4/5 mb-12 shadow-md shadow-slate-200 bg-slate-100 ml-8"
         style={{ color: textColor }}
       >
         {event.status === 'open' ? (
           <Link to={`/events/${event.eventId}`}>
-            <h2 className="mb-4 font-bold text-lg hover:underline">{event.eventName}</h2>
+            <h2 className="mb-4 font-bold text-lg hover:underline">
+              {event.eventName}
+            </h2>
           </Link>
         ) : (
           <h2 className="mb-4 font-bold text-lg">{event.eventName}</h2>
         )}
-        
+
         <p className="text-blue-500" style={{ color: textColor }}>
           <b className="text-black" style={{ color: textColor }}>
             Role:
@@ -74,8 +76,8 @@ const MyEventCard = ({
         <p>
           <b>Location:</b> {event.location}
         </p>
-        {event.status === 'open' && (
-          <>
+        {event.status === 'open' ? (
+          <div className='flex justify-between'>
             <Link to={`/events/${event.eventId}/edit`}>
               <button className="px-4 py-2 bg-purple-200 rounded-2xl my-3">
                 Edit Event
@@ -87,28 +89,44 @@ const MyEventCard = ({
             >
               Cancel Event
             </button>
-          </>
+          </div>
+        ) : (
+          <div className='flex justify-between'>
+            <button
+              disabled
+              className="px-4 py-2 bg-purple-200 rounded-2xl my-3"
+            >
+              Edit Event
+            </button>
+
+            <button
+              disabled
+              className="px-4 py-2 bg-purple-200 rounded-2xl my-3 mx-4"
+            >
+              Cancel Event
+            </button>
+            </div>
         )}
+        <div>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {'Are you sure you want to cancel this event?'}
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={handleClose}>No</Button>
+              <Button onClick={handleCancel} autoFocus>
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
-      <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {'Are you sure you want to cancel this event?'}
-          </DialogTitle>
-          <DialogActions>
-            <Button onClick={handleClose}>No</Button>
-            <Button onClick={handleCancel} autoFocus>
-              Yes
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    </>
+ 
   )
 }
 
