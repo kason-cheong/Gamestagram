@@ -1,5 +1,3 @@
-// this is register page
-
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect, useState } from 'react'
 
@@ -25,7 +23,6 @@ export default function Register() {
         fetchUser(user.sub)
       }
     }
-    console.log(currentUser.id)
   }, [user, showRegister, currentUser.id])
 
   async function fetchUser(authId: string) {
@@ -77,12 +74,6 @@ export default function Register() {
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     setPhotoUrl(event.target.value)
-    console.log(photoUrl)
-
-    const userAuthId = user?.sub
-    const userId = await getUserByAuth0Id(userAuthId as string)
-    console.log('user id: ', userId.id)
-    console.log(photoUrl)
   }
 
   async function updateProfilePic() {
