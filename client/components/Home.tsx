@@ -27,7 +27,7 @@ function Home() {
 
   useEffect(() => {
     fetchEvents()
-    fetchGamesFromAPI(6)
+    fetchGamesFromAPI(8)
   }, [])
 
   return (

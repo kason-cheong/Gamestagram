@@ -80,10 +80,9 @@ function Map({ address }: MapProps) {
     if (!isLoaded) {
       initMap()
     }
-
   }, [address, userLocation])
 
-  return <div id="map" className="w-1/4 h-40" />
+  return <div id="map" className="w-80 h-80" />
 }
-
+// style={{ width: '200px', height: '25%' }}
 export default Map
