@@ -38,6 +38,7 @@ router.get('/my-events/user/:userId', (req, res) => {
     })
 })
 
+
 router.post('/add/user-event', async (req, res) => {
   try {
     const { userId, eventId } = req.body
