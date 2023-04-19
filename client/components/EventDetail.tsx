@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { addUserEvent } from '../apis/apiClientEvents'
 import { useGameStore } from '../store/useGameStore'
 import { useAuth0 } from '@auth0/auth0-react'
+import { CiLocationOn, CiTimer } from 'react-icons/ci'
 
 import ImageBanner from './subcomponents/ImageBanner'
 import { Link } from 'react-router-dom'
@@ -107,10 +108,12 @@ function EventDetail() {
           <div className="flex flex-col w-2/5  justify-center ">
             <div className="my-5">
               <ul>
-                <li>
+                <li className="flex">
+                  <CiLocationOn /> &nbsp;&nbsp;&nbsp;
                   <b>Location:</b> {event.location}
                 </li>
-                <li>
+                <li className="flex">
+                  <CiTimer /> &nbsp;&nbsp;&nbsp;
                   <b>Time:</b> {event.time}
                 </li>
               </ul>
