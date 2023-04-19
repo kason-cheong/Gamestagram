@@ -12,7 +12,7 @@ export function getGames(db = connection): Promise<Game[]> {
   )
 }
 
-export function getGamesByApiId(id: string, db = connection): Promise<Game[]> {
+export function getGamesByApiId(id: string, db = connection): Promise<Game> {
   return db('games')
     .select(
       'id',

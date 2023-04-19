@@ -2,10 +2,15 @@ import connection from './connection'
 import type { User, UserDB } from '../../models/Users'
 
 export function getUsers(db = connection): Promise<User[]> {
-  return db('users').select('photo_url as photoUrl', 'user_name as username', 'email', "bio")
+  return db('users').select(
+    'photo_url as photoUrl',
+    'user_name as username',
+    'email',
+    'bio'
+  )
 }
 
-export function getUsersById(id: number, db = connection): Promise<User[]> {
+export function getUsersById(id: number, db = connection): Promise<User> {
   return db('users')
     .select(
       'id',
@@ -15,7 +20,8 @@ export function getUsersById(id: number, db = connection): Promise<User[]> {
       'photo_url as photoUrl',
       'singed_up_at as signedUpAt'
     )
-    .where('id', id).first()
+    .where('id', id)
+    .first()
 }
 
 export function addUser(data: UserDB, db = connection): Promise<User[]> {
@@ -28,7 +34,7 @@ export function addUser(data: UserDB, db = connection): Promise<User[]> {
 export function getUsersByAuthId(
   authId: string,
   db = connection
-): Promise<User[]> {
+): Promise<User> {
   return db('users')
     .select(
       'id',
@@ -44,7 +50,5 @@ export function getUsersByAuthId(
 }
 
 export function updateUserPhoto(id: number, photoUrl: string, db = connection) {
-  return db('users')
-  .where('id', id)
-  .update({photo_url: photoUrl})
+  return db('users').where('id', id).update({ photo_url: photoUrl })
 }
