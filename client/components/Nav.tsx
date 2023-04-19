@@ -102,7 +102,7 @@ export default function Nav() {
             <IfAuthenticated>
               <div className="relative flex flex-row">
                 {/* <img className='rounded-full w-20 h-20' src={photoUrl} alt="profile pic"></img> */}
-                <button onClick={toggleDropdown}>{user?.given_name}</button>
+                <button onClick={toggleDropdown}>{user?.nickname}</button>
 
                 <img
                   className="rounded-full w-16 h-16 ml-4"
