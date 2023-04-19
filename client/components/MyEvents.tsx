@@ -7,6 +7,8 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useUserStore } from '../store/useUserStore'
 import { MyEvent } from '../../models/Event'
 import ImageBanner from './subcomponents/ImageBanner'
+import CircularProgress from '@mui/material/CircularProgress'
+import Box from '@mui/material/Box'
 
 const MyEvents = () => {
   // const { id } = useParams()
@@ -31,7 +33,9 @@ const MyEvents = () => {
     <ImageBanner name="Events" url="/pics/banner3.jpg" />
     
       
-      {isLoading && <h1>Loading...</h1>}
+      {isLoading &&   <Box sx={{ display: 'flex', justifyContent: 'center',marginTop:"50px" }}>
+            <CircularProgress />
+          </Box>}
       {isAuthenticated && !isLoading ? (
         <>
           <div className="mx-auto w-4/5">
@@ -46,6 +50,7 @@ const MyEvents = () => {
             <h2 className="text-xl font-semibold mb-2 text-blue-400">
               {!myEvents.length && 'NO EVENTS'}
             </h2>
+            <div className='grid grid-cols-3'>  
             {myEvents.map((event) => {
               if (event.hostId === event.userId) {
                 return (
@@ -65,6 +70,7 @@ const MyEvents = () => {
                 )
               }
             })}
+              </div>
           </div>
         </>
       ) : (
