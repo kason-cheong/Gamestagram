@@ -62,7 +62,7 @@ function EventDetail() {
       fetchEvent()
     } else {
       loginWithRedirect({
-        redirectUri: 'http://localhost:3000/profile',
+        redirectUri: 'https://gamestagram.vercel.app//profile',
       })
     }
   }

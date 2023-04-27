@@ -42,7 +42,7 @@ export default function Nav() {
     console.log('log in function ran')
 
     loginWithRedirect({
-      redirectUri: 'http://localhost:3000',
+      redirectUri: 'https://gamestagram.vercel.app/',
     })
   }
   const handleLogOut = () => {
@@ -53,7 +53,7 @@ export default function Nav() {
   const handleSignUp = () => {
     console.log('sign up function ran')
     loginWithRedirect({
-      redirectUri: 'http://localhost:3000/profile',
+      redirectUri: 'https://gamestagram.vercel.app/',
     })
   }
 

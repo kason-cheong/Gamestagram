@@ -19,7 +19,7 @@ export default function UserDetails() {
     console.log('log in function ran')
 
     loginWithRedirect({
-      redirectUri: 'http://localhost:3000',
+      redirectUri: 'https://gamestagram.vercel.app/',
     })
   }
   useEffect(() => {
